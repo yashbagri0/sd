@@ -1,0 +1,86 @@
+body {
+    background-color: #121212;
+    color: #ffffff;
+    font-family: 'Arial', sans-serif;
+}
+
+.navbar {
+    background-color: #333;
+}
+
+.navbar-brand {
+    font-weight: bold;
+}
+
+.blog-header {
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    padding: 30px 20px;
+    text-align: center;
+}
+
+.blog-title {
+    font-size: 2rem;
+}
+
+.blog-content {
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.blog-footer {
+    margin-top: 30px;
+}
+
+.footer {
+    background-color: #343a40;
+    text-align: center;
+    padding: 20px 0;
+}
+
+pre {
+    background-color: #f5f5f5;
+    padding: 10px;
+    border-radius: 5px;
+    overflow-x: auto;
+}
+
+code {
+    font-family: Consolas, Monaco, "Courier New", monospace;
+    color: #d63384;
+}
+
+.formula {
+    overflow-y: hidden; 
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.pagination .page-link {
+    color: white; /* Ensure the text color of the links is white */
+}
+
+.pagination .page-link:hover {
+    background-color: #555; /* Optional: Darker hover effect */
+    color: white; /* Ensure text color stays white on hover */
+}
+
+.pagination .page-link {
+    background-color: #343a40; /* Matches dark background */
+}
+
+.card {
+    background-color: #1c1c1c;
+    border: none;
+    margin-bottom: 20px;
+}
+
+.card-header {
+    background-color: #333;
+    color: #ffffff;
+}
+
+.card-body {
+    color: #bbb;
+}

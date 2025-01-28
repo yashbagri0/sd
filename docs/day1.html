@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 1</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/katex.min.css">
+    <link rel="stylesheet" href="assets/css/custom.css">
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">Home</a>
+            <a class="navbar-brand" href="https://github.com/yashbagri0/sd" class="btn btn-primary me-2" target="_blank">Github</a>
+            <ul class="navbar-nav ms-auto"></ul>
+        </div>
+    </nav>
+    
+
+    <header class="blog-header">
+        <div class="container">
+            <h1 class="blog-title">Day 1: Basic Stats Required for Any AI Model (Part 1)</h1>
+            <p>By Yash (a very cool guy) | January 28, 2025</p>
+        </div>
+    </header>
+
+    <main class="container my-5" style="max-width: 1200px;">
+        <div class="blog-content">
+            <b><span style="font-size: 24px;">
+                    A Little Speech Before We Begin</span></b>
+            <br>
+            <br>People often say that mathematics is tough. But let me tell you a secret: you don't need to memorize
+            everything. That's what AI is for—memorizing stuff and doing it faster and better than we ever could. So, if
+            you're here trying to beat AI
+            by being a human calculator, stop right now. It's not worth it.
+            <br>
+            <br> What sets us apart from AI is something far more extraordinary: our ability to understand and apply
+            concepts. Remember, deep learning and neural networks are just cheap knock-offs of us humans. We are the
+            original innovators. Neural networks?
+            They're just glorified flowcharts wearing a fancy mathematical suit. Don't be intimidated—it's your brain
+            playing a sneaky trick on you.
+            <br>
+            <br>So here's my advice: grab a pen and paper and write things down as you read this blog. Take your time.
+            This journey isn't about speed; it's about building that understanding. Stay curious, and don't let the fear
+            of equations scare you off.
+            Once you understand the logic, the math will feel like second nature.
+            <br>
+            <br>This blog is here to make things easier for you. I'll break down the math, provide intuition, and make
+            sure you're equipped with everything you need. Ready? Let's get started.
+            <br>
+            <hr>
+            <b><span style="font-size: 24px;">Probability: More Than Just Coin Flips</span></b>
+            <br>
+            <br>
+            <p>Probability, at its core, is the science of uncertainty — the mathematics of <i>maybe</i>.
+                <br>
+                <br>In plain English, probability measures how likely something is to happen. Mathematically, it's a
+                number between 0 and 1:
+                <br>
+                <br>0: That's a hard <b>nope</b> (e.g., the probability of your cat doing your taxes).
+                <br>
+            </p>
+            <p>
+                <span>1</span><span>: An absolute certainty (e.g., the probability of your alarm failing only on the day
+                    of your biggest meeting)<br></span>
+                <br>If we're formal about it, probability is written as P(A), where 'A' is the event we're interested
+                in. For example:
+                <br>
+                <br><b>Tossing a coin: </b>P(Heads) = 0.5. That's 50% because there are two equally likely outcomes.
+            </p>
+            <p>Now you must be thinking,</p>
+            <p><b>Why Care About Probability?</b>
+                <br>When we talk about probability, we're really talking about quantifying uncertainty. But <b>what is
+                    uncertainty?</b> Uncertainty is simply the feeling we get when we don't know what will happen next.
+                It's the unknown in any situation—whether
+                it's how a coin will land, whether it'll rain tomorrow, or if your favorite team will win the game. In
+                life, we're constantly making decisions based on things we can't predict with certainty. That's where
+                probability comes in. It helps
+                us quantify uncertainty, turning what we don't know into something we can measure and reason about.
+                <br>When we say something has a 70% chance of happening, we're putting a number on our uncertainty. It
+                doesn't guarantee the outcome, but it gives us a clearer idea of what to expect. Understanding
+                uncertainty through probability helps us
+                make better choices, whether we're deciding when to take an umbrella or calculating the risks of an
+                investment.
+                <br>
+            </p>
+            <p>Think of it as your brain's way of saying <i>I'm about X% sure this will happen</i>. For example:
+                <br>
+            </p>
+            <ul>
+                <li>The probability your code will compile (let's stay optimistic)</li>
+                <li>How likely it is to win the lotto</li>
+                <li>Your chances of not failing the exam after playing DnD the whole night.
+                    <br>
+                </li>
+            </ul>
+            <p><b>It's everywhere.<br></b></p>
+            <p>But how do we actually define uncertainty? Enter the sample space.
+                <br>
+            </p>
+            <br>
+            <p><span style="font-size: 24px;"><b>Sample Space: The Universe of Possibilities</b></span>
+                <br>
+            </p>
+            <p>When you want to find out the probability of something happening, you first need to understand what could
+                happen. This is where the <i>sample space</i> comes in. It's essentially the set of all possible
+                outcomes of an experiment or event.
+                Think of it as your universe of possibilities.
+                <br>
+                <br>For example:
+                <br>
+            </p>
+            <ul>
+                <li>When flipping a coin, the sample space is:
+                    <br>&nbsp;&nbsp;&nbsp; S={Heads,Tails}
+                    <br>
+                    <br>&nbsp;&nbsp;&nbsp; In this case, there are two possible outcomes, so the probability of each is
+                    <span>½</span>.
+                </li>
+            </ul>
+            <ul>
+                <li>When rolling a six-sided die, the sample space is:
+                    <br>&nbsp;&nbsp;&nbsp; S={1,2,3,4,5,6}
+                    <br>&nbsp;&nbsp;&nbsp; S={1,2,3,4,5,6}
+                    <br>
+                    <br>&nbsp;&nbsp;&nbsp; There are six possible outcomes, and each outcome has a probability of ⅙.
+                    <br>
+                </li>
+            </ul>
+            <br>In other words, you know what's on the table, but you've got no clue what's coming your way.
+            <p>
+                <span style="font-size: 24px;"><b><br>Understanding Probability: Independent, Dependent, and
+                        Mutually Exclusive Events</b></span>
+                <br>
+                <br>Have you ever wondered about the chances of getting heads twice when flipping a coin? Or what about
+                picking a heart card and then a spade from a deck? Let's break down these probability concepts in simple
+                terms.
+                <br>
+                <br><b><span style="font-size: 20px;">Independent Events: They Don't Affect Each Other</span></b>
+                <br>
+                <br>Think of independent events as things that happen without influencing each other. The classic
+                example is flipping a coin twice:
+                <br>
+            </p>
+            <ul>
+                <li>Getting heads on the first flip doesn't affect your chances of getting heads on the second flip</li>
+                <li> Each flip always has a 50-50 chance, no matter what happened before
+                </li>
+            </ul>
+            <p>
+                <br>When events are independent, we multiply their individual probabilities. For example:
+                <br>
+            </p>
+            <ul>
+                <li>Chance of heads on first flip = 1/2</li>
+                <li>Chance of heads on second flip = 1/2</li>
+                <li>Chance of getting heads twice (continuously) = (1/2)x(1/2) = 1/4 (or 25%)
+                </li>
+            </ul>
+            <p>
+                <br><b><span style="font-size: 20px;">Dependent Events: One Affects the Other</span><br></b>
+                <br>Dependent events are different — the first event changes the probability of the second. Think about
+                drawing cards from a deck(a deck has 52 cards, and 4 aces):
+                <br>
+            </p>
+            <ul>
+                <li>First, you draw an ace (4/52 chance)</li>
+                <li>Now there are only 51 cards left, and only 3 aces (because we removed one card, and that was the
+                    ace)
+                    <br>
+                </li>
+                <li>So your chance of drawing another ace is now 3/51
+                    <br>
+                </li>
+            </ul>
+            <p>For dependent events, we multiply the first probability by the new, changed probability. Chance of two
+                aces (back to back) = (4/52) x (3/51) = 12/2652 ≈ 0.45%
+                <br>
+                <br>
+            </p>
+            <span style="font-size: 22px;"><b>Mutually Exclusive Events: Can't Happen
+                    Together</b></span>
+            <br>
+            <br>Mutually exclusive events are like trying to be in two places at once — it's impossible! For example:
+            <br>
+            <ul>
+                <li>A single coin flip can't be both heads and tails</li>
+                <li> Drawing a card can't give you both a heart and a spade
+                    <br>
+                </li>
+            </ul>
+            <p>When calculating the probability of either one happening, we add their individual probabilities:
+                <br>
+            </p>
+            <ul>
+                <li>Chance of getting heads OR tails = 1/2 + 1/2 = 1 (100%)</li>
+                <li>Chance of drawing a heart OR spade = 13/52 + 13/52 = 26/52 (50%)
+                </li>
+            </ul>
+            <br>
+            <br>
+            <b><span style="font-size: 24px;">Understanding Expectation: The
+                    <i>Average</i> That's Not Just Average</span></b>
+            <br>
+            <br>
+            Think of expectation as the universe's best prediction. When we say E[X], we're asking <i>What value
+                should I reasonably expect to get in the long
+                run?</i>
+            <br>
+            <br>Here's a real-world way to think about it: Imagine you're waiting for the bus. Some days it's 2
+            minutes late, sometimes 5 minutes early, occasionally 10 minutes late. The expectation isn't what
+            happens most often — it's the <i>center of gravity</i> of all possible outcomes, weighted by how likely
+            they are to happen.
+            <br>
+            <p><b>Why does this matter?</b> <b>Why learn this concept?</b> Imagine you're building an AI system that
+                needs to make decisions in an uncertain world. Should your self-driving car brake now or wait? Should
+                your recommendation system suggest
+                this movie or that one? These decisions aren't just yes/no – they need to account for all possible
+                outcomes and their likelihoods. It tells us where things <i>tend to
+                    go</i> in the long run. In machine learning, this becomes crucial when we're trying to predict
+                outcomes or understand how our models might behave on average.
+                <br>
+            </p>
+            <p><b><span style="font-size: 24px;"><br>The Math Behind the Magic: Discrete Case</span></b></p>
+
+            Discrete events are like steps on a staircase: they jump
+            from one value to another. Think dice rolls (1,2,3,4,5,6) or number of bugs in your code
+            (0,1,2...).
+            <p>Let's make this super concrete. Imagine you're predicting how many bugs you'll find in your code:</p>0
+            bugs: 20% chance (0.2)
+            <br>1 bug: 50% chance (0.5)
+            <br>2 bugs: 30% chance (0.3)
+            <br>
+            <br>The expectation is: (0 x 0.2) + (1 x 0.5) + (2 x 0.3) = 1.1 bugs
+            <br>Wait... 1.1 bugs? But you can't have 1.1 bugs! This shows something important: expectation tells you the
+            <i>long-term average</i>, not what will actually happen in any single case.
+            <p></p>
+            <p>This is how you get the <i>average</i> outcome from a discrete set of possibilities. It's helpful when
+                making predictions about repeated events (like how many times you'll get at least 1 bug).
+                <br>
+                <br>
+            </p>
+            <p></p>
+            <p><b><span style="font-size: 24px;">The Continuous Case: Why Integrals?</span></b></p>
+            <p>Continuous events are like sliding on a ramp: they can take any value within a range. Think temperature,
+                time, or the accuracy of your model (could be 75.324...%).
+                <br>
+            </p>
+            <p>Because there's infinite quantity, you can't find it's average. Why? Well to give you an intuition,
+                suppose I ask you to list all the numbers between 1 to 10. You will say 2, 3, 4...9. That's cool. But I
+                ask you to be more specific. You say,
+                1.1, 1.2, ..., 9.8, 9.9. But I need you to be more specific, i.e., 1.01, 1.02, ..., 9.99. More specific?
+                I see a flying slipper on my way. </p>
+            <p>It's meaningless, you can't average them. But humans are smart. We've created integrals. No, don't leave.
+                It's not a difficult topic. I remember always running away from it, but in essence, it's very very
+                simple.
+                <br>
+                <br>Imagine you're filling a bathtub. To know how much water is in it after 5 minutes, you could either:
+                <br>1. Try to count every single droplet (impossible - like trying to count infinite points)
+                <br>2. OR simply measure how fast water flows (say 10 liters/minute) and multiply by time (=60 liters)
+                <br>
+                <br>The second approach is essentially what integration does! Instead of counting infinite points, we
+                look at the continuous flow and measure its cumulative effect.
+                <br><b><br>Now for the math
+                    part:</b>
+                <br>
+                <br>Let's say we want to find the average of a continuous function f(x) from 0(a) to 1(b):
+                <br>1. With infinite points, both numerator and denominator become infinite! (∞/∞ is undefined)
+                <br>2. So instead, we use integration:
+                <br>
+                <br>Average = 1/(b-a) <sub>a</sub>∫<sup>b</sup>f(x) dx
+            </p>
+            <p>Now, don't get scared about these weird symbols. I'll explain them.
+                <br>
+            </p>
+            <p>What integration does:
+                <br>Think of it as finding the area under a curve. If f(x) draws a line or curve, integration finds the
+                space beneath it.
+            </p>
+            <p align="center"><img class="img-fluid" style="width: 75%;"
+                    src="assets/images/blog_imgs/image_1736631145001_0.png">
+            </p>
+            <p>In this figure, you can see that we make a line/curve using f(x), and then calculate the area under it.
+                That's it.
+                <br>
+                <br>When we calculate the average, we are essentially <i>spreading out</i> the total sum over the range
+                to find the value that represents the entire interval<b>.<br><br>∫</b>: This symbol indicates that
+                you're performing integration. In this
+                context, it's used to sum or accumulate values over a continuous range.
+            </p>
+            <p>1. <b>Numerator (Second term)</b>:
+                <br>The integral <sub>a</sub>∫<sup>b</sup>f(x) dx gives the
+                <b>total sum of values</b> under the curve. We use a and b to define the range (so that we only get the
+                area till a and b, i.e., our bounds). A more intuitive example would be how, to get the area of a
+                rectangle, you get the area by L*B.
+                Suppose if S = 4, and L = 5, the area is 20 units. Here, 4 and 5 are our bounds. We don't go beyond
+                them. So we have the area.
+                <br>
+                <br> <b>2. Denominator (First term)</b>:
+                <br>Now the average. Something we're interested in. Why b-a? b &gt; a, therefore, it'll
+                always give a positive value (10 - 5 will always be 5, a positive value. If we take 5 - 10 (a-b), we'll
+                get a negative value.) And as we know
+                average can't be negative, so it works well here. And b-a gives us the <b>length of the interval</b>
+                over which the values are spread, i.e., the distance between a and b.
+            </p>
+            <p>Now, when we divide the area/length(width), we get height, or, in our case the average value, i.e.,
+                <b>expectation</b>.
+            </p>So when you see 1/(b-a) a∫bf(x) dx, it's just saying:
+            <p><b>Find the area under
+                    the curve, then divide by the width to get the average</b>
+                <br>
+            </p>
+
+            <p>
+                <hr>
+                <b><span><span
+                            style="font-size: 24px; font-family: Comic Sans MS">CONGRATULATIONS!!!</span><br></span></b>
+            </p>
+            <p><span style="font-family: Comic Sans MS;">You have just completed Day 1. Now do
+                    re-read</span><b><span style="font-family: Comic Sans MS;"> </span></b><span
+                    style="font-family: Comic Sans MS;">the whole thing again. Until you can understand
+                    every concept. Take a pen and paper; and make notes. Revise. And remember, nothing is tough. You
+                    just need to have the hunger for knowledge.</span></p>
+        </div>
+    </main>
+
+        <hr>
+
+        <div class="mx-5 mt-4">
+            <p>If you found this content helpful and would like to support, feel free to contribute. Your support isn’t
+                just a donation—it’s a step toward building something bigger, together.</p>
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#scannerModal">
+                UPI (for Indians)
+            </button>
+            <a href="https://paypal.me/regenerationdetox?country.x=IN&locale.x=en_GB" class="btn btn-primary me-2"
+                target="_blank">Donate via PayPal</a>
+        </div>
+        <div id="scannerModal" class="modal fade" tabindex="-1" aria-labelledby="scannerModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="scannerModalLabel">My Scanner</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body d-flex justify-content-center align-items-center">
+                        <img src="assets/images/scanner.png" alt="Scanner" class="img-fluid rounded" />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer mt-3">
+            <p>&copy; 2025 Stable Diffusion Blog</p>
+        </footer>
+
+
+</body>
+<script src="assets/js/jquery-3.7.0.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/navigate.js"></script>
+<script src="assets/js/donation.js"></script>
+
+</html>
