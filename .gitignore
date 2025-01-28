@@ -1,0 +1,13 @@
+# Ignore everything
+*
+
+# Don't ignore .gitignore itself
+!.gitignore
+
+# Specifically track the 'scripts' directory and some files within it
+!scripts/
+!scripts/assets/
+!scripts/assets/**
+!scripts/index.html
+!scripts/day0.html
+!scripts/day1.html
