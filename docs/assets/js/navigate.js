@@ -1,5 +1,5 @@
 document.addEventListener("keydown", (event) => {
-  const match = window.location.pathname.match(/day(\d+)\.html/);
+  const match = window.location.pathname.match(/day(\d+)/);
 
   if (match) {
     let currentPage = parseInt(match[1], 10);
@@ -9,9 +9,9 @@ document.addEventListener("keydown", (event) => {
 
     if (event.ctrlKey) {
       if (event.key === "ArrowRight" && currentPage < maxPage) {
-        window.location.href = `day${currentPage + 1}.html`;
+        window.location.href = `day${currentPage + 1}`;
       } else if (event.key === "ArrowLeft" && currentPage > minPage) {
-        window.location.href = `day${currentPage - 1}.html`;
+        window.location.href = `day${currentPage - 1}`;
       }
     }
   }
