@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 2</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/katex.min.css">
+    <link rel="stylesheet" href="assets/css/custom.css">
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">DL Blog</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">.
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Projects</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Blog</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class="blog-header">
+        <div class="container">
+            <h1 class="blog-title">Day 2: Basic Stats Required for Any AI Model (Part 2)</h1>
+            <p>By Yash (a very cool guy) | January 31, 2025</p>
+        </div>
+    </header>
+
+    <main class="container my-5" style="max-width: 1200px;">
+        <div class="blog-content">
+            <b><span style="font-size: 24px;">
+                    A Little Speech Before We Begin</span></b>
+                    <br>
+                    <br>
+                    Alright, you made it to Day 2. That means you're serious about this, and I respect that.
+<br><br>
+                    By now, you’re probably seeing that AI isn’t just about slapping some fancy models together—it’s about understanding the foundations. And that’s exactly why we’re still here, grinding through the stats. Because without this, everything else is just guesswork.
+<br><br>                    
+                    Some of this might feel basic, some of it might stretch your brain a little, but trust me—it <i>all</i> matters. Every concept we cover is another building block toward coding Stable Diffusion from scratch. So stay focused, take notes, and push through.
+      <br><br>              
+                    Because the people who truly <i>understand</i> AI? They don’t just copy code. They <i>build</i> it.
+                    <br><br>
+                    Let’s get started.
+            <br>
+            <hr>
+            <b><span style="font-size: 24px;">Understanding Conditional Probability and Bayes'
+                Theorem<br></span></b>
+        <p>
+            <br><span style="font-size: 22px;"><b>Conditional Probability: The <i>Given That</i>
+                    Probability</b></span>
+            <br>
+            <br>Imagine you have a room with 100 people:
+            <br>- 40 people wear glasses
+            <br>- 25 of these glasses-wearers also drink coffee
+            <br>- 45 people in total drink coffee
+            <br>
+            <br>If I randomly pick someone who drinks coffee, what's the chance they wear glasses?
+            <br>This is conditional probability: P(Glasses | Coffee) = <b>Probability of glasses GIVEN THAT they
+                drink
+                coffee</b>
+            <br>
+            <br>The first term is what we want to find the probability of, the pipe (|), means GIVEN THAT, and
+            Coffee is the conditioned path.
+            <br>
+            <br>The formula is super simple:
+            <br>
+        </p>
+        <p><b>P(A|B) = P(A and B) / P(B)</b>
+            <br>
+            <br>For our example:
+            <br>P(Glasses | Coffee) = 25/45 ≈ 0.56 or 56%
+            <br>
+            <br>Because: 25 people have both traits, divided by 45 total coffee drinkers.
+            <br>
+            <br>Intuitively, it's pretty easy. As our problem was, glasses GIVEN THAT they drink coffee, so they
+            must be drinking coffee is the first part. Out of those, they then mus be wearing glasses, hence the
+            AND. Then we're just dividing the total
+            number of people that drink coffee to get our probability.
+            <br>
+            <br>Okay cool, but, why learn it? Will learning it give me 1 million bucks?
+            <br>
+            <br>
+            Probably not, but here is one intuitive reason,
+            <br>
+            <br><i>Because life isn't binary. Life rarely gives you black-and-white choices. Continuous
+                probability helps you navigate those shades of gray with mathematical precision—like calculating the
+                odds of getting rained on during your picnic or how much caffeine is too much before
+                bed.</i>
+            <br>
+            <br>
+
+            <br><b><span style="font-size: 22px;">Bayes' Theorem: Flipping the
+                    Condition</span></b>
+            <br>
+            <br>Sometimes we know P(B|A) but want P(A|B). Bayes' Theorem helps us
+            <i>flip</i> the condition.
+            <br>
+            </p>
+            <p>At first glance, Bayes' Theorem might look like one of those intimidating equations that only
+                statisticians care about. But don't be fooled—it's a simple, powerful tool for updating your beliefs
+                when you get new information. It's the math
+                behind how we learn from experience and make better decisions, whether you're a doctor diagnosing a
+                patient or just trying to figure out if you should trust that weather app predicting a sunny day.
+                <br>
+            </p>
+            <p><b>P(A|B) = P(B|A) x P(A) / P(B)<br></b>
+                <br>In words, this reads: <b>The probability of event A
+                    happening, given that B is true, depends on how likely B is when A happens, multiplied by the
+                    overall likelihood of A, and divided by how likely B is overall</b>.
+                <br>
+                <br>Imagine you're trying to figure out if it's worth bringing an umbrella based on the weather report.
+                You know that rain is rare, but when it rains, the forecast is usually accurate. Here's how you can
+                think about the components:
+                <br>
+                <br>- P(A) = Prior belief: This is your starting assumption—what's the probability it will rain in
+                general? Maybe it's 20% on any given day(0.2).
+                <br>- P(B|A) = Likelihood: Now, you look at the weather report. Given that it's going to rain, how
+                likely is it that the forecast says rain? Let's say the forecast is right 90% of the time(0.9).
+                <br>- P(B) = Total probability of B (forecast says rain): This is the overall probability that the
+                forecast says rain, no matter what. It's made up of both the true positive (forecasting rain when it
+                rains) and false positive (forecasting
+                rain when it doesn't). If the forecast predicts rain 20% of the time and it's right 90% of those times,
+                the total probability of B is a mix of these scenarios.
+                <br>
+            </p>
+            <ul>
+                <li><b>True positive (forecast says rain and it rains)</b>:
+                    <br>- This is given by P(A) x P(B|A). The probability it rains P(A) is 0.2, and
+                    the likelihood the forecast says rain given that it rains P(B|A) is 0.9.
+                    <br>- P(True Positive)=0.2 x 0.9=0.18
+                </li>
+                <li><b>False positive (forecast says rain and it doesn't rain)</b> <i>(¬ here just means the complement,
+                        i.e.,
+                        P(¬X) = 1 - P(X))</i>:
+                    <br>- This is given by P(¬A)⋅P(B|¬A). The probability it doesn't rain P(¬A) = 1 -
+                    P(A) = 0.2 = 0.8, and the probability the forecast says rain given that it doesn't rain P(B|¬A),
+                    i.e., the complement of the forecast being correct (1 - 0.9 = 0.1).
+                </li>
+            </ul>
+            <p>P(False Positive) = 0.8 x 0.1= 0.08
+                <br>
+                <br>P(B)=P(True Positive)+P(False Positive)=0.18+0.08=0.26
+                <br>
+                <br>P(A|B) = (0.9 x 0.2)/0.26 = 0.18/0.26 ≈ 0.6923
+                <br>
+                <br>
+                <br><b>Why Is Bayes' Theorem So Important?</b>
+            </p>- It's how we learn from new information. Bayes' Theorem formalizes the process of updating your beliefs
+            as you gather evidence. This is crucial in science, medicine, and even everyday reasoning.
+            For instance, a doctor diagnosing a disease considers both prior probabilities (how common the disease is)
+            and test results (the likelihood of symptoms given the disease).
+            <br>
+            <br>- It's counterintuitive and eye-opening. Sometimes, our instincts about probability are dead wrong.
+            Bayes' Theorem forces us to confront those biases and shows why certain conclusions (like misinterpreting
+            medical test results) might not be
+            as straightforward as they seem.
+            <br>
+            <br>
+            A classic example from <i>Thinking, Fast and Slow</i> by <i>Daniel Kahneman</i> illustrates this well. 
+            <br>
+            <br>
+            Imagine a city where <b>85% of taxis are green and 15% are blue</b>. 
+            <br>
+            <br>
+            A taxi was involved in a hit-and-run accident, and a witness identified it as blue. However, tests show that the witness correctly identifies taxi colors 80% of the time and makes mistakes 20% of the time.
+            <br>
+            <br>
+            At first glance, we might assume the probability that the taxi was actually blue is 80%, matching the witness’s accuracy. 
+            <br>
+            <br>
+            But Bayes' theorem tells us to also consider the base rate—the fact that blue taxis are much rarer in the city. Applying the formula, we find that the actual probability of the taxi being blue is closer to 41%, not 80%. This is a classic example of how our intuition often neglects base rates, and Bayes' theorem helps us make better judgments.
+            <br>
+            <p>
+                <hr>
+                <b><span><span
+                            style="font-size: 24px; font-family: Comic Sans MS">CONGRATULATIONS!!!</span><br></span></b>
+            </p>
+            <p><span style="font-family: Comic Sans MS;">You have just completed Day 2. Now do
+                    re-read</span><b><span style="font-family: Comic Sans MS;"> </span></b><span
+                    style="font-family: Comic Sans MS;">the whole thing again. Until you can understand
+                    every concept. Take a pen and paper; and make notes. Revise. And remember, nothing is tough. You
+                    just need to have the hunger for knowledge.</span></p>
+        </div>
+    </main>
+    </div>
+    <nav aria-label="Page navigation" class="mt-4">
+      <ul class="pagination justify-content-center">
+        <li class="page-item">
+          <a class="page-link" href="day1.html" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li class="page-item"><a class="page-link" href="day1.html">1</a></li>
+      </ul>
+    </nav>
+
+
+    <hr>
+  
+    <div class="mx-5 mt-4">
+        <p>If you found this content helpful and would like to support, feel free to contribute. Your support isn’t just a donation—it’s a step toward building something bigger, together.</p>
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#scannerModal">
+          UPI (for Indians)
+        </button>
+      <a href="https://paypal.me/regenerationdetox?country.x=IN&locale.x=en_GB" class="btn btn-primary me-2" target="_blank">Donate via PayPal</a>
+    </div>
+    <div 
+        id="scannerModal" 
+        class="modal fade" 
+        tabindex="-1" 
+        aria-labelledby="scannerModalLabel" 
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="scannerModalLabel">My Scanner</h5>
+              <button 
+                type="button" 
+                class="btn-close" 
+                data-bs-dismiss="modal" 
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body d-flex justify-content-center align-items-center">
+              <img 
+                src="assets/images/scanner.png" 
+                alt="Scanner" 
+                class="img-fluid rounded"
+              />
+            </div>
+            <div class="modal-footer">
+              <button 
+                type="button" 
+                class="btn btn-secondary" 
+                data-bs-dismiss="modal">
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <footer class="footer mt-3">
+        <p>&copy; 2025 Stable Diffusion Blog</p>
+    </footer>
+
+
+</body>
+<script src="assets/js/jquery-3.7.0.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/navigate.js"></script>
+<script src="assets/js/donation.js"></script>
+
+</html>
