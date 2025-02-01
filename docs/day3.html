@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 3</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/katex.min.css">
+    <link rel="stylesheet" href="assets/css/custom.css">
+
+</head>
+
+<body>  
+   
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">Home</a>
+            <a class="navbar-brand" href="https://github.com/yashbagri0/sd" class="btn btn-primary me-2" target="_blank">Github</a>
+            <ul class="navbar-nav ms-auto"></ul>
+        </div>
+    </nav>
+
+        <header class="blog-header">
+        <div class="container">
+            <h1 class="blog-title">Day 3: Basic Stats Required for Any AI Model (Part 3)</h1>
+            <p>By Yash (a very cool guy) | February 1, 2025</p>
+        </div>
+    </header>
+
+    <main class="container my-5" style="max-width: 1200px;">
+        <div class="blog-content">
+            <b><span style="font-size: 24px;">
+                A Little Speech Before We Begin</span></b>
+        <br>
+        <br>
+        Day 3. You’re still here. That means you’re built different.
+<br><br>
+At this point, you might be wondering, <i>Do I really need all this stats stuff?</i> The answer? Absolutely. AI isn’t magic—it’s math in disguise. And the deeper you understand it, the more control you have over what you're building.
+<br><br>
+This is the part most people skim over. They want shortcuts. But you? You’re putting in the work. And that’s what’s going to set you apart when it’s time to actually build something powerful.
+<br><br>
+So let’s lock in, power through, and add another solid piece to your AI toolkit.
+        <br>
+        <hr>
+            <b><span style="font-size: 24px;">Joint and Marginal Probability: A Deep Dive into Probability
+                    Distributions</span></b>
+            <br>
+            <br>Joint probability represents the likelihood of two or more events occurring simultaneously. We
+            denote the joint probability of events A and B as P(A,B) or P(A∩B).
+
+            <br>That's it really.
+            </p>
+            <p>
+                Now, let's talk about <b>marginal probability</b>.
+                <br>
+                <br>
+                <br><b><span style="font-size: 22px;">Marginal Probability</span></b>
+                <br>
+                <br>Marginalization is the process of converting a joint probability distribution into a marginal
+                probability distribution by summing over one or more variables. It's called <i>marginalization</i>
+                because traditionally, the sums were written
+                in the margins of joint probability tables.
+                <br>
+                <br>Now you may be wondering what crap did I just talked about? Well, in simple terms, the marginal
+                probability is the probability of a single event occurring, independent of other events. So instead of
+                P(A∩B), we just want to find P(A) happening.
+                And marginalization means converting a joint probability distribution into a marginal probability.
+                <br>
+                <br><b>For discrete variables:</b>
+                <br>P(A) = <span class="note-math"><span class="katex"><span class="katex-mathml"><math>
+                                <semantics>
+                                    <mrow>
+                                        <mstyle scriptlevel="0" displaystyle="false">
+                                            <msub>
+                                                <mo>∑</mo>
+                                                <mi>B</mi>
+                                            </msub>
+                                        </mstyle>
+                                    </mrow>
+                                    <annotation encoding="application/x-tex">\textstyle\sum_{B}</annotation>
+                                </semantics>
+                            </math></span><span class="katex-html" aria-hidden="true"><span class="strut"
+                                style="height: 0.75em;"></span><span class="strut bottom"
+                                style="height: 1.04971em; vertical-align: -0.29971em;"></span><span class="base"><span
+                                    class="mop"><span class="mop op-symbol small-op"
+                                        style="position: relative; top: -0.000005em;">∑</span><span
+                                        class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span
+                                                    class="vlist" style="height: 0.178621em;"><span class=""
+                                                        style="top: -2.40029em; margin-left: 0em; margin-right: 0.05em;"><span
+                                                            class="pstrut" style="height: 2.7em;"></span><span
+                                                            class="sizing reset-size6 size3 mtight"><span
+                                                                class="mord mtight"><span
+                                                                    style="margin-right: 0.05017em;"
+                                                                    class="mord mathit mtight">B</span></span>
+                                                        </span>
+                                                    </span>
+                                                </span><span class="vlist-s"></span></span><span class="vlist-r"><span
+                                                    class="vlist" style="height: 0.29971em;"></span></span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </span>
+                        </span>
+                    </span><span class="note-latex" style="display: none;"></span></span>P(A,B) (sum over all values of
+                B)
+                <br>
+                <br><span class="note-math"><span class="katex"><span class="katex-mathml"><math>
+                                <semantics>
+                                    <mrow>
+                                        <mi mathvariant="normal">Σ</mi>
+                                    </mrow>
+                                    <annotation encoding="application/x-tex">\Sigma</annotation>
+                                </semantics>
+                            </math></span><span class="katex-html" aria-hidden="true"><span class="strut"
+                                style="height: 0.68333em;"></span><span class="strut bottom"
+                                style="height: 0.68333em; vertical-align: 0em;"></span><span class="base"><span
+                                    class="mord">Σ</span></span>
+                        </span>
+                    </span><span class="note-latex" style="display: none;"></span></span> is called sigma, and basically
+                means sum everything inside me. It's typically for a range, i.e., <span class="note-math"><span
+                        class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span
+                                    class="mop"><span class="mop op-symbol small-op"
+                                        style="position: relative; top: -0.000005em;">∑</span><span
+                                        class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span
+                                                    class="vlist" style="height: 0.981231em;"><span class=""
+                                                        style="top: -2.40029em; margin-left: 0em; margin-right: 0.05em;"><span
+                                                            class="pstrut" style="height: 2.7em;"></span><span
+                                                            class="sizing reset-size6 size3 mtight"><span
+                                                                class="mord mtight"><span
+                                                                    class="mord mathit mtight">n</span><span
+                                                                    class="mrel mtight">=</span><span
+                                                                    class="mord mtight">1</span></span>
+                                                        </span>
+                                                    </span><span class=""
+                                                        style="top: -3.2029em; margin-right: 0.05em;"><span
+                                                            class="pstrut" style="height: 2.7em;"></span><span
+                                                            class="sizing reset-size6 size3 mtight"><span
+                                                                style="margin-right: 0.10903em;"
+                                                                class="mord mathit mtight">N</span></span>
+                                                    </span>
+                                                </span><span class="vlist-s"></span></span><span class="vlist-r"><span
+                                                    class="vlist" style="height: 0.29971em;"></span></span>
+                                        </span>
+                                    </span>
+                                </span><span class="mord rule" style="margin-right: 0.166667em;"></span><span
+                                    class="mord">2</span><span class="mord mathit">i</span></span>
+                        </span>
+                    </span>
+                </span><span class="note-math"><span class="katex"><span class="katex-html" aria-hidden="true"><span
+                                class="base"><span class="mord mathit">&nbsp; </span></span>
+                        </span>
+                    </span>
+                </span>= 2x1 + 2x2 + 2x3 .... 2xN. Here it means just over B.
+            </p>
+            <p><b>Why Do We Add Over B?</b>
+                <br>
+                <br>When we calculate P(A), we are trying to ignore or <i>marginalizing
+                    out</i> the effect of B. Essentially, B could be any of its possible values, and we want to include
+                all those possibilities in our calculation. Adding up the joint probabilities ensures we account for
+                every scenario where A happens.
+                <br>
+                <br>For example:
+                <br>&nbsp;&nbsp; - If A is "It rains today" and B is "I take an umbrella,"
+                the joint probabilities P(A,B) cover cases like:
+                <br>&nbsp;&nbsp; - It rains, and I take an umbrella.
+                <br>&nbsp;&nbsp; - It rains, and I don't take an umbrella.
+                <br>
+                <br>To find the total probability that "It rains today" (P(A)), regardless of whether
+                I take an umbrella, we add the probabilities for both scenarios:
+                <br>P(Rain)=P(Rain,Umbrella)+P(Rain,No Umbrella)
+                <br>
+                <br>Another example;
+                <br>
+                <br>
+            <p align="center"><img style="width: 90%;" src="assets/images/blog_imgs/image_1736663121910_0.png"
+                    data-filename="image.png"></p>
+            </p>
+            <p>Here's a table showing all possible combinations of the die roll (X) and coin flip (Y), along with their
+                joint probabilities. Since the die has 6 sides and the coin has 2 outcomes, there are 6x2 = 12 equally
+                likely outcomes. And if we add,
+                our total will always come out to be 1 (1/12 + 1/12 + ... + 1/12 = 12/12 = 1).
+                <br>
+                <br>
+                <br><b><span style="font-size: 18px;">Marginal Probability of X</span></b>
+                <br>
+                <br>Now, let's say we want to find the marginal probability of X, i.e., the probability of getting a
+                certain die roll, regardless of the coin flip.
+                <br>
+                <br>For example, let's calculate P(X=1), the probability of rolling a 1 on the die.
+                <br>&nbsp;&nbsp; In the table, when X=1, there are two possible outcomes for the coin flip:
+                <br>&nbsp;&nbsp;&nbsp;- Heads: P(X=1,Y=Heads)=1/12
+                <br>&nbsp;&nbsp;&nbsp;- Tails: P(X=1,Y=Tails)=1/12
+                <br>
+                <br>To find P(X=1), we add these joint probabilities together, because we're interested in all the ways
+                that X=1 can happen, no matter what the coin flip is:
+                <br>P(X=1)=P(X=1,Y=Heads)+P(X=1,Y=Tails)
+                <br>
+                <br>So,
+                <br>P(X=1)=1/12+1/12=2/12
+                <br>
+                <br>This is the
+                <b>marginal probability of X=1</b>, which means the probability of rolling a 1, no matter whether it's
+                heads or tails on the coin.
+            </p>
+            <p>That's it. Now, let's spice things up,
+                <br>
+            </p>
+            <p><b><br>For continuous variables:<br></b>P(A) = ∫ P(A,B) dB
+                <br>
+                <br>When dealing with continuous random variables, the process of finding marginal probabilities is
+                similar to the discrete case, but instead of summing over the possible values of B, we integrate over
+                the possible range of values for B. Let's
+                go through this with an example.
+                <br>
+            </p>
+            <p>Let's imagine we have two continuous random variables:
+                <br>- X represents the height of a person in centimeters, which can range from 150 cm
+                to 200 cm.
+                <br>- Y represents the weight of a person in kilograms, which can range from 40 kg to
+                100 kg.
+                <br>
+                <br>We want to calculate the marginal probability of X (height), regardless of the value of Y (weight).
+                <br>
+                <br>
+                <br><b><span style="font-size: 22px;">Joint Probability Density Function:</span></b>
+                <br>
+                <br>In the continuous case, to find the joint probability density function P(X,Y), we can't use addition
+                as we were in the discrete variables, because, as you know, we are dealing with infinite values here.
+                Now what? For simplicity, let's
+                assume that the values for both height and weight are equally likely within their ranges. This is called
+                a <b>uniform
+                    distribution</b>. In simple terms, it means that every height (from 150 cm to 200 cm) and every
+                weight (from 40 kg to 100 kg) has the same chance of occurring.
+            </p>
+            <p>
+                First, we find the <b>total area</b>: The total area of the rectangle formed by the ranges of X and
+                Y is the product of the lengths of the sides of the rectangle.
+            </p>
+            <p><b>Range of X (Height):</b>
+                <br>- X (height) can range from 150 cm to 200 cm.
+                <br>- So, the total possible range for X is: 200-150= <b>50 cm</b>
+                <br>
+                <br><b>Range
+                    of Y (Weight):</b>
+                <br>- Y (weight) can range from 40 kg to 100 kg.
+                <br>- So, the total possible range for Y is: 100-40= <b>60
+                    kg</b>
+                <br>
+                <br>Area=(200-150)x(100-40)=50x60=3000 units
+                <br>
+                <br>This area represents the total
+                <b>probability mass</b> over the entire range of X and Y. Basically the addition of every variable.
+                <br>
+                <br>Since the distribution is uniform, the total probability is spread evenly across the entire area.
+                Therefore, the probability density function P(X=x,Y=y) is constant across the entire area. To ensure
+                that the total probability adds up to
+                1, we divide by the total area:
+                <br>
+                <br>P(X=x,Y=y)=1/Area=1/3000
+                <br>
+                <br>We can easily represent the uniform probability over the ranges X∈[150,200] and Y∈[40,100].
+                <br>
+                <br>∈ is simply means, <b>IS AN ELEMENT OF</b>, i.e., X∈[150,200] means X is an element from 150 and
+                200. The square brackets ([]) mean that 150 and 200 are both
+                <b>inclusive </b>here.
+                <br>
+                <br>And now to find the marginal probability of X (height), we integrate the joint probability density
+                function
+                P(X,Y) over all possible values of Y. In this case, Y ranges from 40 kg to 100 kg.
+                <br>
+                <br>The formula for the marginal probability P(X) is:
+                <br>P(X)= <sub>40</sub>∫<sup>100</sup> P(X=x,Y=y) dy
+                <br>
+                <br>Now, substitute the joint probability density P(X=x,Y=y)=<b>1/3000</b> into the equation:
+                <br>P(X)=
+                <sub>40</sub>∫<sup>100</sup> 1/3000 dy
+                <br>
+                <br>The integral of 1/3000 with respect to y over the range from 40 to 100 is:
+                <br>P(X)=<span class="note-math"><span class="katex"><span class="katex-mathml"><math>
+                                <semantics>
+                                    <mrow>
+                                        <mfrac>
+                                            <mrow>
+                                                <mn>1</mn>
+                                            </mrow>
+                                            <mrow>
+                                                <mn>3</mn>
+                                                <mn>0</mn>
+                                                <mn>0</mn>
+                                                <mn>0</mn>
+                                            </mrow>
+                                        </mfrac>
+                                        <mo>∗</mo>
+                                        <mo>(</mo>
+                                        <mn>1</mn>
+                                        <mn>0</mn>
+                                        <mn>0</mn>
+                                        <mo>—</mo>
+                                        <mn>4</mn>
+                                        <mn>0</mn>
+                                        <mo>)</mo>
+                                        <mo>=</mo>
+                                        <mfrac>
+                                            <mrow>
+                                                <mn>6</mn>
+                                                <mn>0</mn>
+                                            </mrow>
+                                            <mrow>
+                                                <mn>3</mn>
+                                                <mn>0</mn>
+                                                <mn>0</mn>
+                                                <mn>0</mn>
+                                            </mrow>
+                                        </mfrac>
+                                        <mo>=</mo>
+                                        <mn>1</mn>
+                                        <mn>5</mn>
+                                        <mn>0</mn>
+                                    </mrow>
+                                    <annotation encoding="application/x-tex">\frac{1}{3000} * (100 - 40) =
+                                        \frac{60}{3000} = 150</annotation>
+                                </semantics>
+                            </math></span><span class="katex-html" aria-hidden="true"><span class="strut"
+                                style="height: 0.845108em;"></span><span class="strut bottom"
+                                style="height: 1.19011em; vertical-align: -0.345em;"></span><span class="base"><span
+                                    class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span
+                                            class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist"
+                                                    style="height: 0.845108em;"><span class=""
+                                                        style="top: -2.655em;"><span class="pstrut"
+                                                            style="height: 3em;"></span><span
+                                                            class="sizing reset-size6 size3 mtight"><span
+                                                                class="mord mtight"><span
+                                                                    class="mord mtight">3</span><span
+                                                                    class="mord mtight">0</span><span
+                                                                    class="mord mtight">0</span><span
+                                                                    class="mord mtight">0</span></span>
+                                                        </span>
+                                                    </span><span class="" style="top: -3.15em;"><span class="pstrut"
+                                                            style="height: 3em;"></span><span class="stretchy"
+                                                            style="height: 0.2em;"><svg width="400em" height="0.2em"
+                                                                viewBox="0 0 400000 200"
+                                                                preserveAspectRatio="xMinYMin slice">
+                                                                <path d="M0 80H400000 v40H0z M0 80H400000 v40H0z">
+                                                                </path>
+                                                            </svg></span></span><span class=""
+                                                        style="top: -3.394em;"><span class="pstrut"
+                                                            style="height: 3em;"></span><span
+                                                            class="sizing reset-size6 size3 mtight"><span
+                                                                class="mord mtight"><span
+                                                                    class="mord mtight">1</span></span>
+                                                        </span>
+                                                    </span>
+                                                </span><span class="vlist-s"></span></span><span class="vlist-r"><span
+                                                    class="vlist" style="height: 0.345em;"></span></span>
+                                        </span></span><span class="mclose nulldelimiter"></span></span><span
+                                    class="mord rule" style="margin-right: 0.222222em;"></span><span
+                                    class="mbin">∗</span><span class="mord rule"
+                                    style="margin-right: 0.222222em;"></span><span class="mopen">(</span><span
+                                    class="mord">1</span><span class="mord">0</span><span class="mord">0</span><span
+                                    class="mord rule" style="margin-right: 0.222222em;"></span><span
+                                    class="mbin">—</span><span class="mord rule"
+                                    style="margin-right: 0.222222em;"></span><span class="mord">4</span><span
+                                    class="mord">0</span><span class="mclose">)</span><span class="mord rule"
+                                    style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span
+                                    class="mord rule" style="margin-right: 0.277778em;"></span><span class="mord"><span
+                                        class="mopen nulldelimiter"></span><span class="mfrac"><span
+                                            class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist"
+                                                    style="height: 0.845108em;"><span class=""
+                                                        style="top: -2.655em;"><span class="pstrut"
+                                                            style="height: 3em;"></span><span
+                                                            class="sizing reset-size6 size3 mtight"><span
+                                                                class="mord mtight"><span
+                                                                    class="mord mtight">3</span><span
+                                                                    class="mord mtight">0</span><span
+                                                                    class="mord mtight">0</span><span
+                                                                    class="mord mtight">0</span></span>
+                                                        </span>
+                                                    </span><span class="" style="top: -3.15em;"><span class="pstrut"
+                                                            style="height: 3em;"></span><span class="stretchy"
+                                                            style="height: 0.2em;"><svg width="400em" height="0.2em"
+                                                                viewBox="0 0 400000 200"
+                                                                preserveAspectRatio="xMinYMin slice">
+                                                                <path d="M0 80H400000 v40H0z M0 80H400000 v40H0z">
+                                                                </path>
+                                                            </svg></span></span><span class=""
+                                                        style="top: -3.394em;"><span class="pstrut"
+                                                            style="height: 3em;"></span><span
+                                                            class="sizing reset-size6 size3 mtight"><span
+                                                                class="mord mtight"><span
+                                                                    class="mord mtight">6</span><span
+                                                                    class="mord mtight">0</span></span>
+                                                        </span>
+                                                    </span>
+                                                </span><span class="vlist-s"></span></span><span class="vlist-r"><span
+                                                    class="vlist" style="height: 0.345em;"></span></span>
+                                        </span>
+                                    </span><span class="mclose nulldelimiter"></span></span><span class="mord rule"
+                                    style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span
+                                    class="mord rule" style="margin-right: 0.277778em;"></span><span
+                                    class="mord">1</span><span class="mord">5</span><span class="mord">0</span></span>
+                        </span>
+                    </span><span class="note-latex" style="display: none;"></span></span>
+                <br>
+                <br>So, the marginal probability of X (height) is 150, which reflects the likelihood of any specific
+                height within the range of 150 cm to 200 cm, regardless of the weight.
+            </p>
+            <p>
+                <hr>
+                <b><span><span
+                            style="font-size: 24px; font-family: Comic Sans MS">CONGRATULATIONS!!!</span><br></span></b>
+            </p>
+            <p><span style="font-family: Comic Sans MS;">You have just completed Day 3. Now do
+                    re-read</span><b><span style="font-family: Comic Sans MS;"> </span></b><span
+                    style="font-family: Comic Sans MS;">the whole thing again. Until you can understand
+                    every concept. Take a pen and paper; and make notes. Revise. And remember, nothing is tough. You
+                    just need to have the hunger for knowledge.</span></p>
+        </div>
+        </div>
+        <nav aria-label="Page navigation" class="mt-4">
+            <ul class="pagination justify-content-center">
+              <li class="page-item">
+                <a class="page-link" href="day2" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              <li class="page-item"><a class="page-link" href="day2">2</a></li>
+            </ul>
+          </nav>
+
+        <div class="blog-footer mt-4">
+            <a href="/" class="btn btn-primary">Back to Blog</a>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 Stable Diffusion Blog </p>
+    </footer>
+
+
+</body>
+<script src="assets/js/navigate.js"></script>
+<script src="assets/js/donation.js"></script>
+
+</html>
