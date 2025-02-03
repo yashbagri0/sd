@@ -1,10 +1,7 @@
-# Ignore everything
 *
 
-# Don't ignore .gitignore itself
 !.gitignore
 
-# Specifically track the 'scripts' directory and some files within it
 !docs/
 !docs/assets/
 !docs/assets/**
@@ -13,5 +10,6 @@
 !docs/day1.html
 !docs/day2.html
 !docs/day3.html
+!docs/day4.html
 !LICENSE
 !README.md

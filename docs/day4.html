@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 4</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/katex.min.css">
+    <link rel="stylesheet" href="assets/css/custom.css">
+    <style>
+        .responsive-img {
+            width: 30%;
+        }
+    
+        @media (max-width: 768px) {
+            .responsive-img {
+                width: 90%;
+            }
+        }
+    </style>
+
+</head>
+
+<body>  
+   
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">Home</a>
+            <a class="navbar-brand" href="https://github.com/yashbagri0/sd" class="btn btn-primary me-2" target="_blank">Github</a>
+            <ul class="navbar-nav ms-auto"></ul>
+        </div>
+    </nav>
+
+        <header class="blog-header">
+        <div class="container">
+            <h1 class="blog-title">Day 4: Basic Stats Required for Any AI Model (Part 4)</h1>
+            <p>By Yash (a very cool guy) | February 3, 2025</p>
+        </div>
+    </header>
+
+    <main class="container my-5" style="max-width: 1200px;">
+        <div class="blog-content">
+            <b><span style="font-size: 24px;">
+                    A Little Speech Before We Begin</span></b>
+            <br><br>
+            Day 4. If you’ve made it this far, you’re already ahead of most people who give up when things get “too technical.” But not you. You’re here, stacking up knowledge, one concept at a time.
+<br><br>
+By now, stats might be starting to feel less like random numbers and more like the secret language of AI. That’s because <i>it is</i>. Every formula, every concept—it’s all leading up to the moment when you start coding and actually see everything come to life.
+<br><br>
+So keep going. You’re building the kind of foundation that most people skip—and that’s exactly why you’ll be the one who <i>really</i> understands how AI works. Let’s get to it.
+<br>
+            <hr>
+            <p><b><span style="font-size: 24px;">Understanding the Chain Rule of Probability: Breaking Down Complex
+                Events</span></b>
+        <br>
+        <br>In its essence, the chain rule expresses the joint probability of a sequence of events as the
+        product of conditional probabilities. Mathematically, for events A, B, and C, we write this as:
+        <br>
+        <br><b>P(A ∩ B ∩ C) = P(A) x P(B|A) x P(C|A,B)</b>
+        <br>
+    </p>
+    <p>A more generalized version would be, for any random variables X1,X2,…,XnX1,X2,…,Xn, the chain rule
+        states:
+        <br>
+        <br><b>P(X1,X2,…,Xn)=P(X1) x <span class="note-math"><span class="katex"><span class="katex-html"
+                        aria-hidden="true"><span class="base"><span
+                                class="mord"></span></span></span></span></span>P(X2|X1)&nbsp;x P(X3|X1,X2) x …
+            xP(Xn|X1,X2,…,Xn—1)</b>
+    </p>
+    <p>In plain English, this means: the probability of all these events happening together can be built
+        step-by-step by multiplying the probability of the first event with the conditional probabilities of
+        each subsequent event given the earlier
+        ones.
+        <br>
+        <br>And it's pretty intuitive if you think about it. Let's consider a simple scenario: You're getting
+        ready for work in the morning, and you need three things to go right:
+        <br>1. Your alarm needs to work (Event A)
+        <br>2. Your car needs to start (Event B)
+        <br>3. Traffic needs to be light (Event C)
+        <br>
+        <br>To calculate the probability of having a perfect morning commute:
+        <br>- Let's say you wake up on time with your alarm 95% of the time: P(A) = 0.95
+        <br>- Given that you wake up on time, your car starts 90% of the time: P(B|A) = 0.90
+        <br>- Given both previous events, traffic is light 70% of the time: P(C|A,B) = 0.70
+        <br>
+        <br>Using the chain rule:
+        <br>P(perfect commute) = 0.95 x 0.90 x 0.70 = 0.5985 or about 60%
+        <br>
+        <br><b>But what if the events are independent of
+            each other?<br></b>
+        <br>Then it's even easier.
+        <br>
+        <br>If two events A and B are independent, the occurrence of one does not affect the probability of the
+        other. In this case:
+        <br>
+        <br>P(A|B)=P(A)
+        <br>and
+        <br>P(B|A)=P(B)
+        <br>
+        <br>So, in the chain rule, if the events are independent, you don't need the conditional part. The
+        formula simplifies to:
+        <br>P(A,B)=P(A)xP(B)
+        <br>and
+        <br>P(B,A)=P(B)xP(A)<b><br></b>
+        <br><b><span style="font-size: 24px;"><br>Markov
+                Chains: A Practical Guide to State Transitions and Probability<br></span></b>
+        <br>A Markov chain is a mathematical system that describes a sequence of possible events where the
+        probability of each event depends only on the state in the previous event, not on the events that
+        happened before it. This
+        <i>memoryless</i> property, known as the <b>Markov property</b>, is what makes <b>Markov chains </b>both
+        powerful and practical.
+        <br>
+        <br>The defining characteristic of a Markov chain is that future predictions are based solely on the
+        present state, not on the sequence of events that preceded it. Mathematically:
+        <br>
+        <br>P(Xn+1 = x | X1 = x1, X2 = x2, ..., Xn = xn) = P(Xn+1 = x | Xn = xn)
+        <br>
+        <br>Take some time to digest this.
+    </p>
+    <p>Instead of this complex calculation, we just need to check the previous state. That's it.
+        <br>
+        <br>Let's say we want to model the weather with the states:
+        <br>- Sunny (S)
+        <br>- Cloudy (C)
+        <br>- Rainy (R)
+        <br>
+        <br>We're given the information that,
+        <br>
+    </p>
+    <ol>
+        <li>If it's Sunny today, there's a 70% chance it will be Sunny tomorrow, a 20% chance it will be Cloudy,
+            and a 10% chance it will be Rainy.</li>
+        <li>If it's Cloudy today, there's a 30% chance it will be Sunny tomorrow, a 40% chance it will be
+            Cloudy, and a 30% chance it will be Rainy.</li>
+        <li>If it's Rainy today, there's a 10% chance it will be Sunny tomorrow, a 30% chance it will be Cloudy,
+            and a 60% chance it will be Rainy.
+            <br>
+        </li>
+    </ol>
+    <p>
+        <br>This can be represented in a matrix, which we give the fancy name of <i>transition matrix</i>, where
+        <b>each row corresponds to the current state and each column corresponds to the next
+            state</b>.
+        <br>
+        <br>It's pretty easy to understand.
+    </p>
+    <p align="center"><img class="img-fluid rounded responsive-img"  src="assets/images/blog_imgs/image_1736663121911_1.png"
+            data-filename="image.png">
+        <br>
+    </p>
+    <p>
+        <br>Each value in the table represents the probability of moving from one state to another. The rows
+        portion is the current weather, and the columns(top) one is the predicted weather. For example, from
+        Sunny to Cloudy has a probability of
+        0.2.
+    </p>
+    <p>This matrix gave us a nice view of all the possibilities. See, how we didn't dependent on any other value
+        for our prediction other than the previous one? That's the power of Markov chains.
+        <br>
+    </p>
+
+            <p>
+                <hr>
+                <b><span><span
+                            style="font-size: 24px; font-family: Comic Sans MS">CONGRATULATIONS!!!</span><br></span></b>
+            </p>
+            <p><span style="font-family: Comic Sans MS;">You have just completed Day 4. Now do
+                    re-read</span><b><span style="font-family: Comic Sans MS;"> </span></b><span
+                    style="font-family: Comic Sans MS;">the whole thing again. Until you can understand
+                    every concept. Take a pen and paper; and make notes. Revise. And remember, nothing is tough. You
+                    just need to have the hunger for knowledge.</span></p>
+        </div>
+        <nav aria-label="Page navigation" class="mt-4">
+            <ul class="pagination justify-content-center">
+              <li class="page-item">
+                <a class="page-link" href="day3" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              <li class="page-item"><a class="page-link" href="day3">3</a></li>
+            </ul>
+          </nav>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 Stable Diffusion Blog </p>
+    </footer>
+
+
+</body>
+<script src="assets/js/navigate.js"></script>
+<script src="assets/js/donation.js"></script>
+
+</html>

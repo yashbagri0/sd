@@ -43,6 +43,8 @@ pre {
     padding: 10px;
     border-radius: 5px;
     overflow-x: auto;
+    overflow-y: auto;
+    max-height: 600px; 
 }
 
 code {
