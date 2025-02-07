@@ -1,0 +1,1946 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 6</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/katex.min.css">
+    <link rel="stylesheet" href="assets/css/custom.css">
+    <style>
+        .responsive-img {
+            width: 40%;
+        }
+    
+        @media (max-width: 768px) {
+            .responsive-img {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>  
+   
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">Home</a>
+            <a class="navbar-brand" href="https://github.com/yashbagri0/sd" class="btn btn-primary me-2" target="_blank">Github</a>
+            <ul class="navbar-nav ms-auto"></ul>
+        </div>
+    </nav>
+
+        <header class="blog-header">
+        <div class="container">
+            <h1 class="blog-title">Day 6: The Essentials! (Part 2)</h1>
+            By Yash (a very cool guy) | February 7, 2025
+        </div>
+    </header>
+
+    <main class="container my-5" style="max-width: 1200px;">
+        <div class="blog-content">
+            <b><span style="font-size: 24px;">
+                    A Little Speech Before We Begin</span></b>
+            <br>
+            <br>
+            Alright, Day 6. You’ve been grinding through the essentials, and maybe you’re wondering—<i>when 
+                do we get to the cool AI stuff?</i>
+<br><br>
+Here’s the truth: everyone wants to build powerful AI models, but most don’t want to put in the work to <i>really</i> understand them. They copy code, tweak a few parameters, and hope for the best. That’s not what we’re doing here.
+<br><br>
+We’re learning things properly. We’re building real intuition. And yeah, some of it isn’t flashy—but when the time comes to actually <i>code</i> Stable Diffusion, you’ll be glad you stuck with it.
+<br><br>
+So take a breath, refocus, and let’s knock this out.
+            <hr><b><span style="font-size: 24px;">The Gaussian Distribution: Nature's Favorite
+                    Pattern</span><br></b>
+            <br>The Gaussian distribution, also known as the <i>normal
+                distribution</i> or the <i>bell curve</i>, is perhaps the <b>most important</b> probability
+            distribution (<i>a function</i>) in statistics. It appears so frequently in nature and society that it's
+            often called <i>nature's favorite pattern</i>.
+            <br>
+            <br><b>What is a Gaussian Distribution?<br></b>
+            <br>The Gaussian distribution is a way of describing how data is spread out. It’s called a <i>normal
+                distribution</i> because many natural phenomena, like people’s heights or test scores, tend to
+            follow this kind of distribution. The distribution looks like a bell curve—most data points are
+            clustered around the mean (the center),
+            and fewer points are found as you move further away from the mean.
+            <br>
+            <br>The shape is symmetric, meaning if you were to fold it in half at the center, both sides would
+            match. The center is where the <b>mean</b> of the data lies, and as you move away from the center, the
+            probability of data points decreases.
+            <br>
+            <br>
+            <p align="center"><img class="responsive-img"
+                    src="assets/images/blog_imgs/image_1736698508340_0.png" data-filename="image.png">
+            </p>
+            In this figure, you can see the Gaussian distribution with a mean of 0 and a standard deviation
+            (denoted by σ) of 1. Just a quick note: the tails of the curve (both on the left and right) are
+            <i>asymptotic</i>, which is a fancy way
+            of saying they approach the x-axis but never quite touch it. In simpler terms, the tails get lower and
+            lower as they stretch out, but they never reach zero. And that’s exactly what matters here—while the
+            curve flattens out, it never
+            truly ends.
+            </p>
+            <p>
+                You might be wondering, out of the millions of probability distributions out there, why focus on
+                this specific one—the Gaussian distribution? Well, here’s the thing: the Gaussian distribution is
+                <b>everywhere</b> in nature. It pops up all the time when you measure things like people’s heights, test
+                scores, or even natural phenomena like the distribution of error in scientific experiments.
+                <br>
+                <br>But why is it so common? The answer lies in what the Gaussian distribution captures: the average.
+                Now, let’s pause for a second and think about why we even call something an "average." An average is the
+                middle—it’s the point where
+                most of the data is concentrated. The idea is that, in a typical population, you’re much more likely to
+                find people whose heights are around the average (let’s say 170 cm) than you are to find someone who is
+                200 cm or 100 cm tall.
+                <br>
+                <br>Think about it: not everyone can be extremely tall or short. Those are the extremes, and while they
+                exist, they’re far less common. The majority of people (or data points) will be clustered around the
+                middle. In other words, the Gaussian
+                distribution beautifully models how things naturally tend to gather around the average, with fewer and
+                fewer occurrences as you move away from the center.
+                <br>
+                <br>This is why it’s so useful: it mirrors real-life data distributions, where most things tend to fall
+                near the middle, and the extremes are rare. So, whether it’s human height, intelligence scores, or even
+                the spread of errors in a system,
+                the Gaussian distribution helps us understand and predict what’s most likely to happen. It gives us a
+                powerful tool to describe how things are typically distributed, making it easier to analyze and work
+                with data.
+                <br>
+            </p>
+            <p>
+                <br>The Gaussian distribution is defined by a simple equation. Here it is:
+            </p>
+            <p>
+                <span id="eq1" class="note-math"><span class="katex"><span class="katex-mathml"><math>
+                                <semantics>
+                                    <mrow>
+                                        <mi>f</mi>
+                                        <mo>(</mo>
+                                        <mi>x</mi>
+                                        <mo>)</mo>
+                                        <mo>=</mo>
+                                        <mfrac>
+                                            <mrow>
+                                                <mn>1</mn>
+                                            </mrow>
+                                            <mrow>
+                                                <mi>σ</mi>
+                                                <msqrt>
+                                                    <mrow>
+                                                        <mn>2</mn>
+                                                        <mi>π</mi>
+                                                    </mrow>
+                                                </msqrt>
+                                            </mrow>
+                                        </mfrac>
+                                        <msup>
+                                            <mi>e</mi>
+                                            <mrow>
+                                                <mo>-</mo>
+                                                <mfrac>
+                                                    <mrow>
+                                                        <mo>(</mo>
+                                                        <mi>x</mi>
+                                                        <mo>-</mo>
+                                                        <mi>μ</mi>
+                                                        <msup>
+                                                            <mo>)</mo>
+                                                            <mn>2</mn>
+                                                        </msup>
+                                                    </mrow>
+                                                    <mrow>
+                                                        <mn>2</mn>
+                                                        <msup>
+                                                            <mi>σ</mi>
+                                                            <mn>2</mn>
+                                                        </msup>
+                                                    </mrow>
+                                                </mfrac>
+                                            </mrow>
+                                        </msup>
+                                    </mrow>
+                                    <annotation encoding="application/x-tex">f(x) = \frac{1}{\sigma \sqrt{2\pi}}
+                                        e^{-\frac{(x - \mu)^2}{2\sigma^2}}</annotation>
+                                </semantics>
+                            </math></span><span class="katex-html" aria-hidden="true"><span class="strut"
+                                style="height: 1.32909em;"></span><span class="strut bottom"
+                                style="height: 1.86709em; vertical-align: -0.538em;"></span><span class="base"><span
+                                    style="margin-right: 0.10764em;" class="mord mathit">f</span><span
+                                    class="mopen">(</span><span class="mord mathit">x</span><span
+                                    class="mclose">)</span><span class="mord rule"
+                                    style="margin-right: 0.277778em;"></span>
+                                <span class="mrel">=</span><span class="mord rule"
+                                    style="margin-right: 0.277778em;"></span><span class="mord"><span
+                                        class="mopen nulldelimiter"></span><span class="mfrac"><span
+                                            class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist"
+                                                    style="height: 0.845108em;"><span class=""
+                                                        style="top: -2.55101em;"><span class="pstrut"
+                                                            style="height: 3em;"></span><span
+                                                            class="sizing reset-size6 size3 mtight"><span
+                                                                class="mord mtight"><span
+                                                                    style="margin-right: 0.03588em;"
+                                                                    class="mord mathit mtight">σ</span><span
+                                                                    class="mord sqrt mtight"><span
+                                                                        class="vlist-t vlist-t2"><span
+                                                                            class="vlist-r"><span class="vlist"
+                                                                                style="height: 0.912845em;"><span
+                                                                                    class="svg-align"
+                                                                                    style="top: -3em;"><span
+                                                                                        class="pstrut"
+                                                                                        style="height: 3em;"></span><span
+                                                                                        class="mord mtight"
+                                                                                        style="padding-left: 0.833em;"><span
+                                                                                            class="mord mtight">2</span><span
+                                                                                            style="margin-right: 0.03588em;"
+                                                                                            class="mord mathit mtight">π</span></span>
+                                                                                </span><span class=""
+                                                                                    style="top: -2.87285em;"><span
+                                                                                        class="pstrut"
+                                                                                        style="height: 3em;"></span><span
+                                                                                        class="hide-tail mtight"
+                                                                                        style="min-width: 0.853em; height: 1.08em;"><svg
+                                                                                            width="400em"
+                                                                                            height="1.08em"
+                                                                                            viewBox="0 0 400000 1080"
+                                                                                            preserveAspectRatio="xMinYMin slice">
+                                                                                            <path d="M95,702c-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,
+        -10,-9.5,-14c0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54c44.2,-33.3,65.8,
+        -50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10s173,378,173,378c0.7,0,
+        35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429c69,-144,104.5,-217.7,106.5,
+        -221c5.3,-9.3,12,-14,20,-14H400000v40H845.2724s-225.272,467,-225.272,467
+        s-235,486,-235,486c-2.7,4.7,-9,7,-19,7c-6,0,-10,-1,-12,-3s-194,-422,-194,-422
+        s-65,47,-65,47z M834 80H400000v40H845z"></path>
+                                                                                        </svg></span></span>
+                                                                            </span><span
+                                                                                class="vlist-s"></span></span><span
+                                                                            class="vlist-r"><span class="vlist"
+                                                                                style="height: 0.127155em;"></span></span>
+                                                                    </span>
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                    </span><span class="" style="top: -3.15em;"><span class="pstrut"
+                                                            style="height: 3em;"></span><span class="stretchy"
+                                                            style="height: 0.2em;"><svg width="400em" height="0.2em"
+                                                                viewBox="0 0 400000 200"
+                                                                preserveAspectRatio="xMinYMin slice">
+                                                                <path d="M0 80H400000 v40H0z M0 80H400000 v40H0z">
+                                                                </path>
+                                                            </svg></span></span><span class=""
+                                                        style="top: -3.394em;"><span class="pstrut"
+                                                            style="height: 3em;"></span><span
+                                                            class="sizing reset-size6 size3 mtight"><span
+                                                                class="mord mtight"><span
+                                                                    class="mord mtight">1</span></span>
+                                                        </span>
+                                                    </span>
+                                                </span><span class="vlist-s"></span></span><span class="vlist-r"><span
+                                                    class="vlist" style="height: 0.538em;"></span></span>
+                                        </span>
+                                    </span><span class="mclose nulldelimiter"></span></span><span class="mord"><span
+                                        class="mord mathit">e</span><span class="msupsub"><span class="vlist-t"><span
+                                                class="vlist-r"><span class="vlist" style="height: 1.32909em;"><span
+                                                        class="" style="top: -3.45342em; margin-right: 0.05em;"><span
+                                                            class="pstrut" style="height: 3em;"></span><span
+                                                            class="sizing reset-size6 size3 mtight"><span
+                                                                class="mord mtight"><span
+                                                                    class="mord mtight">-</span><span
+                                                                    class="mord mtight"><span
+                                                                        class="mopen nulldelimiter sizing reset-size3 size6"></span><span
+                                                                        class="mfrac"><span
+                                                                            class="vlist-t vlist-t2"><span
+                                                                                class="vlist-r"><span class="vlist"
+                                                                                    style="height: 1.25096em;"><span
+                                                                                        class=""
+                                                                                        style="top: -2.50619em;"><span
+                                                                                            class="pstrut"
+                                                                                            style="height: 3em;"></span><span
+                                                                                            class="sizing reset-size3 size1 mtight"><span
+                                                                                                class="mord mtight"><span
+                                                                                                    class="mord mtight">2</span><span
+                                                                                                    class="mord mtight"><span
+                                                                                                        style="margin-right: 0.03588em;"
+                                                                                                        class="mord mathit mtight">σ</span><span
+                                                                                                        class="msupsub"><span
+                                                                                                            class="vlist-t"><span
+                                                                                                                class="vlist-r"><span
+                                                                                                                    class="vlist"
+                                                                                                                    style="height: 0.93844em;"><span
+                                                                                                                        class=""
+                                                                                                                        style="top: -2.93844em; margin-right: 0.1em;"><span
+                                                                                                                            class="pstrut"
+                                                                                                                            style="height: 2.64444em;"></span><span
+                                                                                                                            class="mord mtight">2</span></span>
+                                                                                                                </span>
+                                                                                                            </span>
+                                                                                                        </span>
+                                                                                                    </span>
+                                                                                                </span>
+                                                                                            </span>
+                                                                                        </span>
+                                                                                    </span><span class=""
+                                                                                        style="top: -3.1275em;"><span
+                                                                                            class="pstrut"
+                                                                                            style="height: 3em;"></span><span
+                                                                                            class="stretchy mtight"
+                                                                                            style="height: 0.245em;"><svg
+                                                                                                width="400em"
+                                                                                                height="0.245em"
+                                                                                                viewBox="0 0 400000 200"
+                                                                                                preserveAspectRatio="xMinYMin slice">
+                                                                                                <path
+                                                                                                    d="M0 80H400000 v40H0z M0 80H400000 v40H0z">
+                                                                                                </path>
+                                                                                            </svg></span></span><span
+                                                                                        class=""
+                                                                                        style="top: -3.50207em;"><span
+                                                                                            class="pstrut"
+                                                                                            style="height: 3em;"></span><span
+                                                                                            class="sizing reset-size3 size1 mtight"><span
+                                                                                                class="mord mtight"><span
+                                                                                                    class="mopen mtight">(</span><span
+                                                                                                    class="mord mathit mtight">x</span><span
+                                                                                                    class="mbin mtight">
+                                                                                                    - </span><span
+                                                                                                    class="mord mathit mtight">μ</span>
+                                                                                                <span
+                                                                                                    class="mclose mtight"><span
+                                                                                                        class="mclose mtight">)</span><span
+                                                                                                        class="msupsub"><span
+                                                                                                            class="vlist-t"><span
+                                                                                                                class="vlist-r"><span
+                                                                                                                    class="vlist"
+                                                                                                                    style="height: 1.04844em;"><span
+                                                                                                                        class=""
+                                                                                                                        style="top: -3.04844em; margin-right: 0.1em;"><span
+                                                                                                                            class="pstrut"
+                                                                                                                            style="height: 2.64444em;"></span><span
+                                                                                                                            class="mord mtight">2</span></span>
+                                                                                                                </span>
+                                                                                                            </span>
+                                                                                                        </span>
+                                                                                                    </span>
+                                                                                                </span>
+                                                                                            </span>
+                                                                                        </span>
+                                                                                    </span>
+                                                                                </span><span
+                                                                                    class="vlist-s"></span></span><span
+                                                                                class="vlist-r"><span class="vlist"
+                                                                                    style="height: 0.493814em;"></span></span>
+                                                                        </span>
+                                                                    </span><span
+                                                                        class="mclose nulldelimiter sizing reset-size3 size6"></span></span>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </span>
+                        </span>
+                    </span><span class="note-latex" style="display: none;"></span></span>
+                <br>
+                <br>No, I'm not an alien who wrote this in another language. Just give me a second, and I'll make you
+                understand this extremely simple and easy equation.
+                <br>
+            </p>
+            <p>Let’s break it down:
+                <br>
+                <br>- <span class="note-math"><span class="katex"><span class="katex-html" aria-hidden="true"><span
+                                class="base"><span class="mord mathit">μ<br></span></span>
+                        </span>
+                    </span>
+                </span> (pronounced <i>mu</i>): Just the symbol for mean. Nothing new here.
+                <br>-<span class="note-math"><span class="katex"><span class="katex-mathml"><math>
+                                <semantics>
+                                    <mrow>
+                                        <mi>σ</mi>
+                                    </mrow>
+                                    <annotation encoding="application/x-tex">\sigma</annotation>
+                                </semantics>
+                            </math></span><span class="katex-html" aria-hidden="true"><span class="strut"
+                                style="height: 0.43056em;"></span><span class="strut bottom"
+                                style="height: 0.43056em; vertical-align: 0em;"></span><span class="base"><span
+                                    style="margin-right: 0.03588em;" class="mord mathit">&nbsp;σ</span></span>
+                        </span>
+                    </span><span class="note-latex" style="display: none;"></span></span>: The standard deviation
+                symbol. Easy.
+                <br>
+                <br>Okay before moving forward, I'll like to explain why we are using the mean and standard deviation in
+                Gaussian Distributions.
+            </p>
+            <p>Okay, suppose we've a normal distribution with mean = 0, and standard deviation as 1.
+                <br>
+            <p align="center">
+                <img class="responsive-img" src="assets/images/blog_imgs/image_1736698508344_1.png"
+                    data-filename="image.png">
+            </p>
+            </p><i>Ahem</i>. Stop fawning over my top-tier editing skills! Let’s get back to business, shall we?
+            <p>
+                <br>Here, we’re going to focus on the orange graph, which represents a specific Gaussian distribution.
+                The blue graph, on the other hand, serves as a reference for comparison. It’s a standard Gaussian
+                distribution where the mean is set
+                to 0, and the standard deviation is set to 1. This is a special case known as the <b>standard normal
+                    distribution</b>.
+                <br>
+                <br>I'll talk about standard normal distribution in the end.
+                <br>
+            </p>
+            <p>
+                Now, here mean was 0, but what if we changed it to something else? Nobody can stop us!!
+            </p>
+            <p align="center"><img class="responsive-img" src="assets/images/blog_imgs/image_1736698508346_2.png"
+                    data-filename="image.png">
+                <br>
+            </p>Here, the mean is 2, and the standard deviation is 1. Pretty neat, right? By changing the mean, we can
+            slide the entire distribution left or right along the x-axis, effectively <i>re-centering</i> it wherever we
+            want. Think of the
+            mean as the anchor point of the distribution—it determines the middle of the bell curve, where most of the
+            data clusters.
+            <br>
+            <br>Now, if we set the mean to a <i>negative value</i>, the distribution shifts to the <i>left</i>. It’s the
+            same bell curve, the same symmetrical shape, but it’s now centered at a point less than zero. This
+            flexibility is what makes the Gaussian
+            distribution so versatile: by simply tweaking the mean, you can make it fit different types of data.
+            <br>
+            <br>Ah, and for anyone wondering—yes, <i>negative means are completely possible</i>! The mean doesn’t always
+            have to be a shiny, positive number. It all depends on the data you're working with. For example,
+            temperatures measured in Celsius
+            can easily be negative. Similarly, in finance, if you’re analyzing profit and loss, a mean loss—represented
+            as a negative number—is quite common when a company is having a rough quarter.
+            <br>
+            <br>So, whether it’s positive, zero, or negative, the mean simply tells us <b>where the distribution is
+                centered</b>, and shifting it is as easy as changing its value. This sliding property of the Gaussian
+            distribution makes it incredibly useful for modeling data, no matter where the center of that data happens
+            to be.
+            <p>
+                <br>Enough about means, let's talk about standard deviation.
+                <br>
+                <br>
+            <p align="center">
+                <img class="responsive-img" src="assets/images/blog_imgs/image_1736699562056_0.png"
+                    data-filename="image.png">
+            </p>
+
+            Wait, what’s this? Our distribution just turned <i>fat</i> when we increased the standard deviation
+            to 2? Does this mean that if we could shrink the standard deviation enough, we’d magically lose weight?
+            If you figure out how to market
+            that as a business idea, don’t forget to cut me in for at least 75% equity, because it was my genius
+            idea to begin with. &nbsp;
+            <br>
+            <br>But jokes aside, why did the distribution get fatter? The answer is actually quite simple: the
+            <b>standard deviation</b> controls the spread of the data around the mean. When the standard deviation
+            is larger, the data is more spread
+            out, meaning more values fall further away from the mean. The result? A wider, flatter curve.
+            <br>
+            <br>Think of it this way: if the standard deviation is small, most of the data is tightly packed around
+            the mean, creating a tall and skinny distribution. This is like a neat little package where almost
+            everything is close to the center.
+            But when the standard deviation increases, the data starts to spread out like a messy room, and fewer
+            points are close to the mean. The distribution "stretches," becoming wider and flatter, and that’s why
+            it looks fatter on the graph.
+            &nbsp;
+            <br>
+            <br>Let’s put this in context: imagine test scores in a classroom. If the standard deviation is small,
+            it means most students scored similarly to the average—there’s less variation. But if the standard
+            deviation is large, the scores are
+            all over the place, with some students scoring way above or below the mean. &nbsp;
+            <br>
+            <br>So, the standard deviation doesn’t just affect how <i>fat</i> or <i>thin</i> the curve looks—it
+            directly tells us how much variability exists in the data. And this variability is crucial in real-world
+            scenarios. For example: &nbsp;
+            <br>- In manufacturing, a small standard deviation means consistent quality, while a large one suggests
+            issues with reliability. &nbsp;
+            <br>- In finance, a large standard deviation in stock prices signals high risk, while a small one
+            suggests stability. &nbsp;
+            <br>
+            <br>
+            </p>
+            <p></p>
+            Last example,
+            <p align="center">
+                <br><img class="responsive-img" src="assets/images/blog_imgs/image_1736699562057_1.png"
+                    data-filename="image.png">
+            </p>
+            <p>We have a thin distribution, who is shifted to the left, Mean is -2, and standard deviation is 0.5.</p>
+            <p>I think all of you have understood all this. But if you still want more examples, visit <a
+                    href="https://samp-suman-normal-dist-visualize-app-lkntug.streamlit.app/" target="_blank">this
+                    site</a>.</p>
+            <p>
+                Now, back to our <a href="#eq1">equation</a>.
+                <br>
+            </p>
+            <p></p>We'll first see the exponent part.
+            <br>
+            <br><span class="note-math"><span class="katex"><span class="katex-mathml"><math>
+                            <semantics>
+                                <mrow>
+                                    <msup>
+                                        <mi>e</mi>
+                                        <mrow>
+                                            <mo>—</mo>
+                                            <mfrac>
+                                                <mrow>
+                                                    <mo>(</mo>
+                                                    <mi>x</mi>
+                                                    <mo>—</mo>
+                                                    <mi>μ</mi>
+                                                    <msup>
+                                                        <mo>)</mo>
+                                                        <mn>2</mn>
+                                                    </msup>
+                                                </mrow>
+                                                <mrow>
+                                                    <mn>2</mn>
+                                                    <msup>
+                                                        <mi>σ</mi>
+                                                        <mn>2</mn>
+                                                    </msup>
+                                                </mrow>
+                                            </mfrac>
+                                        </mrow>
+                                    </msup>
+                                </mrow>
+                                <annotation encoding="application/x-tex">e^{-\frac{(x - \mu)^2}{2\sigma^2}}</annotation>
+                            </semantics>
+                        </math></span><span class="katex-html" aria-hidden="true"><span class="strut"
+                            style="height: 1.32909em;"></span><span class="strut bottom"
+                            style="height: 1.32909em; vertical-align: 0em;"></span><span class="base"><span
+                                class="mord"><span class="mord mathit">e</span><span class="msupsub"><span
+                                        class="vlist-t"><span class="vlist-r"><span class="vlist"
+                                                style="height: 1.32909em;"><span class=""
+                                                    style="top: -3.45342em; margin-right: 0.05em;"><span class="pstrut"
+                                                        style="height: 3em;"></span><span
+                                                        class="sizing reset-size6 size3 mtight"><span
+                                                            class="mord mtight"><span class="mord mtight">-</span><span
+                                                                class="mord mtight"><span
+                                                                    class="mopen nulldelimiter sizing reset-size3 size6"></span><span
+                                                                    class="mfrac"><span class="vlist-t vlist-t2"><span
+                                                                            class="vlist-r"><span class="vlist"
+                                                                                style="height: 1.25096em;"><span
+                                                                                    class=""
+                                                                                    style="top: -2.50619em;"><span
+                                                                                        class="pstrut"
+                                                                                        style="height: 3em;"></span><span
+                                                                                        class="sizing reset-size3 size1 mtight"><span
+                                                                                            class="mord mtight"><span
+                                                                                                class="mord mtight">2</span><span
+                                                                                                class="mord mtight"><span
+                                                                                                    style="margin-right: 0.03588em;"
+                                                                                                    class="mord mathit mtight">σ</span><span
+                                                                                                    class="msupsub"><span
+                                                                                                        class="vlist-t"><span
+                                                                                                            class="vlist-r"><span
+                                                                                                                class="vlist"
+                                                                                                                style="height: 0.93844em;"><span
+                                                                                                                    class=""
+                                                                                                                    style="top: -2.93844em; margin-right: 0.1em;"><span
+                                                                                                                        class="pstrut"
+                                                                                                                        style="height: 2.64444em;"></span><span
+                                                                                                                        class="mord mtight">2</span></span>
+                                                                                                            </span>
+                                                                                                        </span>
+                                                                                                    </span>
+                                                                                                </span>
+                                                                                            </span>
+                                                                                        </span>
+                                                                                    </span>
+                                                                                </span><span class=""
+                                                                                    style="top: -3.1275em;"><span
+                                                                                        class="pstrut"
+                                                                                        style="height: 3em;"></span><span
+                                                                                        class="stretchy mtight"
+                                                                                        style="height: 0.245em;"><svg
+                                                                                            width="400em"
+                                                                                            height="0.245em"
+                                                                                            viewBox="0 0 400000 200"
+                                                                                            preserveAspectRatio="xMinYMin slice">
+                                                                                            <path
+                                                                                                d="M0 80H400000 v40H0z M0 80H400000 v40H0z">
+                                                                                            </path>
+                                                                                        </svg></span></span><span
+                                                                                    class=""
+                                                                                    style="top: -3.50207em;"><span
+                                                                                        class="pstrut"
+                                                                                        style="height: 3em;"></span><span
+                                                                                        class="sizing reset-size3 size1 mtight"><span
+                                                                                            class="mord mtight"><span
+                                                                                                class="mopen mtight">(</span><span
+                                                                                                class="mord mathit mtight">x</span><span
+                                                                                                class="mbin mtight"> -
+                                                                                            </span><span
+                                                                                                class="mord mathit mtight">μ</span><span
+                                                                                                class="mclose mtight"><span
+                                                                                                    class="mclose mtight">)</span><span
+                                                                                                    class="msupsub"><span
+                                                                                                        class="vlist-t"><span
+                                                                                                            class="vlist-r"><span
+                                                                                                                class="vlist"
+                                                                                                                style="height: 1.04844em;"><span
+                                                                                                                    class=""
+                                                                                                                    style="top: -3.04844em; margin-right: 0.1em;"><span
+                                                                                                                        class="pstrut"
+                                                                                                                        style="height: 2.64444em;"></span><span
+                                                                                                                        class="mord mtight">2</span></span>
+                                                                                                            </span>
+                                                                                                        </span>
+                                                                                                    </span>
+                                                                                                </span>
+                                                                                            </span>
+                                                                                        </span>
+                                                                                    </span>
+                                                                                </span>
+                                                                            </span><span
+                                                                                class="vlist-s"></span></span><span
+                                                                            class="vlist-r"><span class="vlist"
+                                                                                style="height: 0.493814em;"></span></span>
+                                                                    </span>
+                                                                </span><span
+                                                                    class="mclose nulldelimiter sizing reset-size3 size6"></span></span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </span>
+                        </span>
+                    </span>
+                </span><span class="note-latex" style="display: none;"></span></span>
+            <br>
+            <span class="mord mtight"><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span
+                                class="vlist-s"></span></span><span class="vlist-r"><span
+                                class="vlist"><span></span></span>
+                        </span>
+                    </span>
+                </span><span class="mclose nulldelimiter sizing reset-size3 size6"></span></span>
+            <br>You might be wondering? What's e doing here? What does that even mean? Well, it's something you
+            really don't need to learn. I'll tell you something even more interesting.
+            <br>
+            <p align="center">
+                <br><img class="responsive-img" src="assets/images/blog_imgs/image_1736702548381_0.png"
+                    data-filename="image.png">
+                <br>Graph of <span class="note-math"><span class="katex"><span class="katex-mathml"><math>
+                                <semantics>
+                                    <mrow>
+                                        <msup>
+                                            <mi>e</mi>
+                                            <mi>x</mi>
+                                        </msup>
+                                    </mrow>
+                                    <annotation encoding="application/x-tex">e^x</annotation>
+                                </semantics>
+                            </math></span><span class="katex-html" aria-hidden="true"><span class="strut"
+                                style="height: 0.664392em;"></span><span class="strut bottom"
+                                style="height: 0.664392em; vertical-align: 0em;"></span><span class="base"><span
+                                    class="mord"><span class="mord mathit">e</span><span class="msupsub"><span
+                                            class="vlist-t"><span class="vlist-r"><span class="vlist"
+                                                    style="height: 0.664392em;"><span class=""
+                                                        style="top: -3.063em; margin-right: 0.05em;"><span
+                                                            class="pstrut" style="height: 2.7em;"></span><span
+                                                            class="sizing reset-size6 size3 mtight"><span
+                                                                class="mord mathit mtight">x</span></span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </span>
+                        </span>
+                    </span><span class="note-latex" style="display: none;"></span></span>
+                <br>
+            </p>
+            <p>and</p>
+            <p align="center"><img class="responsive-img" src="assets/images/blog_imgs/image_1736702548388_1.png"
+                    data-filename="image.png">
+                <br>Graph of <span class="note-math"><span class="katex"><span class="katex-mathml"><math>
+                                <semantics>
+                                    <mrow>
+                                        <msup>
+                                            <mi>e</mi>
+                                            <mrow>
+                                                <mo>—</mo>
+                                                <mi>x</mi>
+                                            </mrow>
+                                        </msup>
+                                    </mrow>
+                                    <annotation encoding="application/x-tex">e^{-x}</annotation>
+                                </semantics>
+                            </math></span><span class="katex-html" aria-hidden="true"><span class="strut"
+                                style="height: 0.771331em;"></span><span class="strut bottom"
+                                style="height: 0.771331em; vertical-align: 0em;"></span><span class="base"><span
+                                    class="mord"><span class="mord mathit">e</span><span class="msupsub"><span
+                                            class="vlist-t"><span class="vlist-r"><span class="vlist"
+                                                    style="height: 0.771331em;"><span class=""
+                                                        style="top: -3.063em; margin-right: 0.05em;"><span
+                                                            class="pstrut" style="height: 2.7em;"></span><span
+                                                            class="sizing reset-size6 size3 mtight"><span
+                                                                class="mord mtight"><span
+                                                                    class="mord mtight">-</span><span
+                                                                    class="mord mathit mtight">x</span></span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </span>
+                        </span>
+                    </span><span class="note-latex" style="display: none;"></span></span>
+                <br>
+                <br>But here's the real deal,
+            <p align="center"><img class="responsive-img" src="assets/images/blog_imgs/image_1736702548496_2.png"
+                    data-filename="image.png">
+            <p align="center">Graph of <span class="note-math"><span class="katex"><span class="katex-mathml"><math>
+                                <semantics>
+                                    <mrow>
+                                        <msup>
+                                            <mi>e</mi>
+                                            <mrow>
+                                                <mo>—</mo>
+                                                <msup>
+                                                    <mi>x</mi>
+                                                    <mn>2</mn>
+                                                </msup>
+                                            </mrow>
+                                        </msup>
+                                    </mrow>
+                                    <annotation encoding="application/x-tex">e^{-x^2}</annotation>
+                                </semantics>
+                            </math></span><span class="katex-html" aria-hidden="true"><span class="strut"
+                                style="height: 0.98692em;"></span><span class="strut bottom"
+                                style="height: 0.98692em; vertical-align: 0em;"></span><span class="base"><span
+                                    class="mord"><span class="mord mathit">e</span><span class="msupsub"><span
+                                            class="vlist-t"><span class="vlist-r"><span class="vlist"
+                                                    style="height: 0.98692em;"><span class=""
+                                                        style="top: -3.063em; margin-right: 0.05em;"><span
+                                                            class="pstrut" style="height: 2.7em;"></span><span
+                                                            class="sizing reset-size6 size3 mtight"><span
+                                                                class="mord mtight"><span class="mord mtight">-
+                                                                </span><span class="mord mtight"><span
+                                                                        class="mord mathit mtight">x</span><span
+                                                                        class="msupsub"><span class="vlist-t"><span
+                                                                                class="vlist-r"><span class="vlist"
+                                                                                    style="height: 0.891314em;"><span
+                                                                                        class=""
+                                                                                        style="top: -2.931em; margin-right: 0.0714286em;"><span
+                                                                                            class="pstrut"
+                                                                                            style="height: 2.5em;"></span><span
+                                                                                            class="sizing reset-size3 size1 mtight"><span
+                                                                                                class="mord mtight">2</span></span>
+                                                                                    </span>
+                                                                                </span>
+                                                                            </span>
+                                                                        </span>
+                                                                    </span>
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </span>
+                        </span>
+                    </span><span class="note-latex" style="display: none;"></span></span>
+            </p>
+            </p>
+            But if you look at our formula, we also have a μ (mean)?
+            <br>
+            <br>Well, intuitively, it's used to make adjustments to our graph. About where we want it on the
+            horizontal line? We use mean.
+            </p>
+            <br>
+            <p align="center"><img class="responsive-img" src="assets/images/blog_imgs/image_1736702548509_3.png"
+                    data-filename="image.png">
+                <br>Here, <span class="note-math"><span class="katex"><span class="katex-mathml"><math>
+                                <semantics>
+                                    <mrow>
+                                        <msup>
+                                            <mi>e</mi>
+                                            <mrow>
+                                                <mo>—</mo>
+                                                <msup>
+                                                    <mrow>
+                                                        <mo fence="true">(</mo>
+                                                        <mi>x</mi>
+                                                        <mo>—</mo>
+                                                        <mn>2</mn>
+                                                        <mo fence="true">)</mo>
+                                                    </mrow>
+                                                    <mn>2</mn>
+                                                </msup>
+                                            </mrow>
+                                        </msup>
+                                    </mrow>
+                                    <annotation encoding="application/x-tex">e^{-\left(x-2\right)^{2}}</annotation>
+                                </semantics>
+                            </math></span><span class="katex-html" aria-hidden="true"><span class="strut"
+                                style="height: 0.98692em;"></span><span class="strut bottom"
+                                style="height: 0.98692em; vertical-align: 0em;"></span><span class="base"><span
+                                    class="mord"><span class="mord mathit">e</span><span class="msupsub"><span
+                                            class="vlist-t"><span class="vlist-r"><span class="vlist"
+                                                    style="height: 0.98692em;"><span class=""
+                                                        style="top: -3.063em; margin-right: 0.05em;"><span
+                                                            class="pstrut" style="height: 2.7em;"></span><span
+                                                            class="sizing reset-size6 size3 mtight"><span
+                                                                class="mord mtight"><span
+                                                                    class="mord mtight">-</span><span
+                                                                    class="minner mtight"><span
+                                                                        class="minner mtight"><span
+                                                                            class="mopen mtight delimcenter"
+                                                                            style="top: 0em;"><span
+                                                                                class="mtight">(</span></span><span
+                                                                            class="mord mathit mtight">x</span><span
+                                                                            class="mbin mtight"> - </span><span
+                                                                            class="mord mtight">2</span><span
+                                                                            class="mclose mtight delimcenter"
+                                                                            style="top: 0em;"><span
+                                                                                class="mtight">)</span></span>
+                                                                    </span><span class="msupsub"><span
+                                                                            class="vlist-t"><span class="vlist-r"><span
+                                                                                    class="vlist"
+                                                                                    style="height: 0.891314em;"><span
+                                                                                        class=""
+                                                                                        style="top: -2.931em; margin-right: 0.0714286em;"><span
+                                                                                            class="pstrut"
+                                                                                            style="height: 2.5em;"></span><span
+                                                                                            class="sizing reset-size3 size1 mtight"><span
+                                                                                                class="mord mtight"><span
+                                                                                                    class="mord mtight">2</span></span>
+                                                                                        </span>
+                                                                                    </span>
+                                                                                </span>
+                                                                            </span>
+                                                                        </span>
+                                                                    </span>
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </span>
+                        </span>
+                    </span><span class="note-latex" style="display: none;"></span></span>
+                <br>with mean=2.
+            </p>
+            <br>
+
+            <p align="center"><img class="responsive-img" src="assets/images/blog_imgs/image_1736702548525_4.png"
+                    data-filename="image.png">
+                <br>Here, <span class="note-math"><span class="katex"><span class="katex-mathml"><math>
+                                <semantics>
+                                    <mrow>
+                                        <msup>
+                                            <mi>e</mi>
+                                            <mrow>
+                                                <mo>—</mo>
+                                                <mfrac>
+                                                    <mrow>
+                                                        <msup>
+                                                            <mrow>
+                                                                <mo fence="true">(</mo>
+                                                                <mi>x</mi>
+                                                                <mo>—</mo>
+                                                                <mn>0</mn>
+                                                                <mo fence="true">)</mo>
+                                                            </mrow>
+                                                            <mn>2</mn>
+                                                        </msup>
+                                                    </mrow>
+                                                    <mrow>
+                                                        <mn>2</mn>
+                                                        <mo>⋅</mo>
+                                                        <mn>5</mn>
+                                                    </mrow>
+                                                </mfrac>
+                                            </mrow>
+                                        </msup>
+                                    </mrow>
+                                    <annotation encoding="application/x-tex">e^{-\frac{\left(x-0\right)^{2}}{2\cdot5}}
+                                    </annotation>
+                                </semantics>
+                            </math></span><span class="katex-html" aria-hidden="true"><span class="strut"
+                                style="height: 1.23867em;"></span><span class="strut bottom"
+                                style="height: 1.23867em; vertical-align: 0em;"></span><span class="base"><span
+                                    class="mord"><span class="mord mathit">e</span><span class="msupsub"><span
+                                            class="vlist-t"><span class="vlist-r"><span class="vlist"
+                                                    style="height: 1.23867em;"><span class=""
+                                                        style="top: -3.363em; margin-right: 0.05em;"><span
+                                                            class="pstrut" style="height: 3em;"></span><span
+                                                            class="sizing reset-size6 size3 mtight"><span
+                                                                class="mord mtight"><span
+                                                                    class="mord mtight">-</span><span
+                                                                    class="mord mtight"><span
+                                                                        class="mopen nulldelimiter sizing reset-size3 size6"></span><span
+                                                                        class="mfrac"><span
+                                                                            class="vlist-t vlist-t2"><span
+                                                                                class="vlist-r"><span class="vlist"
+                                                                                    style="height: 1.25096em;"><span
+                                                                                        class=""
+                                                                                        style="top: -2.656em;"><span
+                                                                                            class="pstrut"
+                                                                                            style="height: 3em;"></span><span
+                                                                                            class="sizing reset-size3 size1 mtight"><span
+                                                                                                class="mord mtight"><span
+                                                                                                    class="mord mtight">2</span><span
+                                                                                                    class="mbin mtight">⋅</span><span
+                                                                                                    class="mord mtight">5</span></span>
+                                                                                        </span>
+                                                                                    </span><span class=""
+                                                                                        style="top: -3.1275em;"><span
+                                                                                            class="pstrut"
+                                                                                            style="height: 3em;"></span><span
+                                                                                            class="stretchy mtight"
+                                                                                            style="height: 0.245em;"><svg
+                                                                                                width="400em"
+                                                                                                height="0.245em"
+                                                                                                viewBox="0 0 400000 200"
+                                                                                                preserveAspectRatio="xMinYMin slice">
+                                                                                                <path
+                                                                                                    d="M0 80H400000 v40H0z M0 80H400000 v40H0z">
+                                                                                                </path>
+                                                                                            </svg></span></span><span
+                                                                                        class=""
+                                                                                        style="top: -3.50207em;"><span
+                                                                                            class="pstrut"
+                                                                                            style="height: 3em;"></span><span
+                                                                                            class="sizing reset-size3 size1 mtight"><span
+                                                                                                class="mord mtight"><span
+                                                                                                    class="minner mtight"><span
+                                                                                                        class="minner mtight"><span
+                                                                                                            class="mopen mtight delimcenter"
+                                                                                                            style="top: 0em;"><span
+                                                                                                                class="mtight">(</span></span><span
+                                                                                                            class="mord mathit mtight">x</span><span
+                                                                                                            class="mbin mtight">
+                                                                                                            -
+                                                                                                        </span><span
+                                                                                                            class="mord mtight">0</span>
+                                                                                                        <span
+                                                                                                            class="mclose mtight delimcenter"
+                                                                                                            style="top: 0em;"><span
+                                                                                                                class="mtight">)</span></span>
+                                                                                                    </span><span
+                                                                                                        class="msupsub"><span
+                                                                                                            class="vlist-t"><span
+                                                                                                                class="vlist-r"><span
+                                                                                                                    class="vlist"
+                                                                                                                    style="height: 1.04844em;"><span
+                                                                                                                        class=""
+                                                                                                                        style="top: -3.04844em; margin-right: 0.1em;"><span
+                                                                                                                            class="pstrut"
+                                                                                                                            style="height: 2.64444em;"></span><span
+                                                                                                                            class="mord mtight"><span
+                                                                                                                                class="mord mtight">2</span></span>
+                                                                                                                    </span>
+                                                                                                                </span>
+                                                                                                            </span>
+                                                                                                        </span>
+                                                                                                    </span>
+                                                                                                </span>
+                                                                                            </span>
+                                                                                        </span>
+                                                                                    </span>
+                                                                                </span><span
+                                                                                    class="vlist-s"></span></span><span
+                                                                                class="vlist-r"><span class="vlist"
+                                                                                    style="height: 0.344em;"></span></span>
+                                                                        </span>
+                                                                    </span><span
+                                                                        class="mclose nulldelimiter sizing reset-size3 size6"></span></span>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </span>
+                        </span>
+                    </span><span class="note-latex" style="display: none;"></span></span>
+                <br>
+            </p>
+            <p>Mean is 0, while standard deviation is 5. We use standard deviation for scaling, and multiply by 2 to
+                scale in both direction.</p>
+            <p>
+                <br>Well, we got our <b>exponential part</b>. Congrats. We're almost there.
+                <br>
+                <br>Now <span class="note-math"><span class="katex"><span class="katex-mathml"><math>
+                                <semantics>
+                                    <mrow>
+                                        <mfrac>
+                                            <mrow>
+                                                <mn>1</mn>
+                                            </mrow>
+                                            <mrow>
+                                                <mi>σ</mi>
+                                                <msqrt>
+                                                    <mrow>
+                                                        <mn>2</mn>
+                                                        <mi>π</mi>
+                                                    </mrow>
+                                                </msqrt>
+                                            </mrow>
+                                        </mfrac>
+                                    </mrow>
+                                    <annotation encoding="application/x-tex">\frac{1}{\sigma \sqrt{2\pi}}</annotation>
+                                </semantics>
+                            </math></span><span class="katex-html" aria-hidden="true"><span class="strut"
+                                style="height: 0.845108em;"></span><span class="strut bottom"
+                                style="height: 1.38311em; vertical-align: -0.538em;"></span><span class="base"><span
+                                    class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span
+                                            class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist"
+                                                    style="height: 0.845108em;"><span class=""
+                                                        style="top: -2.55101em;"><span class="pstrut"
+                                                            style="height: 3em;"></span><span
+                                                            class="sizing reset-size6 size3 mtight"><span
+                                                                class="mord mtight"><span
+                                                                    style="margin-right: 0.03588em;"
+                                                                    class="mord mathit mtight">σ</span><span
+                                                                    class="mord sqrt mtight"><span
+                                                                        class="vlist-t vlist-t2"><span
+                                                                            class="vlist-r"><span class="vlist"
+                                                                                style="height: 0.912845em;"><span
+                                                                                    class="svg-align"
+                                                                                    style="top: -3em;"><span
+                                                                                        class="pstrut"
+                                                                                        style="height: 3em;"></span><span
+                                                                                        class="mord mtight"
+                                                                                        style="padding-left: 0.833em;"><span
+                                                                                            class="mord mtight">2</span><span
+                                                                                            style="margin-right: 0.03588em;"
+                                                                                            class="mord mathit mtight">π</span></span>
+                                                                                </span><span class=""
+                                                                                    style="top: -2.87285em;"><span
+                                                                                        class="pstrut"
+                                                                                        style="height: 3em;"></span><span
+                                                                                        class="hide-tail mtight"
+                                                                                        style="min-width: 0.853em; height: 1.08em;"><svg
+                                                                                            width="400em"
+                                                                                            height="1.08em"
+                                                                                            viewBox="0 0 400000 1080"
+                                                                                            preserveAspectRatio="xMinYMin slice">
+                                                                                            <path d="M95,702c-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,
+        -10,-9.5,-14c0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54c44.2,-33.3,65.8,
+        -50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10s173,378,173,378c0.7,0,
+        35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429c69,-144,104.5,-217.7,106.5,
+        -221c5.3,-9.3,12,-14,20,-14H400000v40H845.2724s-225.272,467,-225.272,467
+        s-235,486,-235,486c-2.7,4.7,-9,7,-19,7c-6,0,-10,-1,-12,-3s-194,-422,-194,-422
+        s-65,47,-65,47z M834 80H400000v40H845z"></path>
+                                                                                        </svg></span></span>
+                                                                            </span><span
+                                                                                class="vlist-s"></span></span><span
+                                                                            class="vlist-r"><span class="vlist"
+                                                                                style="height: 0.127155em;"></span></span>
+                                                                    </span>
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                    </span><span class="" style="top: -3.15em;"><span class="pstrut"
+                                                            style="height: 3em;"></span><span class="stretchy"
+                                                            style="height: 0.2em;"><svg width="400em" height="0.2em"
+                                                                viewBox="0 0 400000 200"
+                                                                preserveAspectRatio="xMinYMin slice">
+                                                                <path d="M0 80H400000 v40H0z M0 80H400000 v40H0z">
+                                                                </path>
+                                                            </svg></span></span><span class=""
+                                                        style="top: -3.394em;"><span class="pstrut"
+                                                            style="height: 3em;"></span><span
+                                                            class="sizing reset-size6 size3 mtight"><span
+                                                                class="mord mtight"><span
+                                                                    class="mord mtight">1</span></span>
+                                                        </span>
+                                                    </span>
+                                                </span><span class="vlist-s">,,,,,,,</span></span><span
+                                                class="vlist-r"><span class="vlist"
+                                                    style="height: 0.538em;"></span></span>
+                                        </span>
+                                    </span><span class="mclose nulldelimiter"></span></span>
+                            </span>
+                        </span>
+                    </span><span class="note-latex" style="display: none;"></span></span>
+                <br>
+                <br>Well this part is just the integral of the exponential part <span class="note-math"><span
+                        class="katex"><span class="katex-mathml"><math>
+                                <semantics>
+                                    <mrow>
+                                        <msup>
+                                            <mi>e</mi>
+                                            <mrow>
+                                                <mo>—</mo>
+                                                <mfrac>
+                                                    <mrow>
+                                                        <mo>(</mo>
+                                                        <mi>x</mi>
+                                                        <mo>—</mo>
+                                                        <mi>μ</mi>
+                                                        <msup>
+                                                            <mo>)</mo>
+                                                            <mn>2</mn>
+                                                        </msup>
+                                                    </mrow>
+                                                    <mrow>
+                                                        <mn>2</mn>
+                                                        <msup>
+                                                            <mi>σ</mi>
+                                                            <mn>2</mn>
+                                                        </msup>
+                                                    </mrow>
+                                                </mfrac>
+                                            </mrow>
+                                        </msup>
+                                    </mrow>
+                                    <annotation encoding="application/x-tex">e^{-\frac{(x - \mu)^2}{2\sigma^2}}
+                                    </annotation>
+                                </semantics>
+                            </math></span><span class="katex-html" aria-hidden="true"><span class="strut"
+                                style="height: 1.32909em;"></span><span class="strut bottom"
+                                style="height: 1.32909em; vertical-align: 0em;"></span><span class="base"><span
+                                    class="mord"><span class="mord mathit">e</span><span class="msupsub"><span
+                                            class="vlist-t"><span class="vlist-r"><span class="vlist"
+                                                    style="height: 1.32909em;"><span class=""
+                                                        style="top: -3.45342em; margin-right: 0.05em;"><span
+                                                            class="pstrut" style="height: 3em;"></span><span
+                                                            class="sizing reset-size6 size3 mtight"><span
+                                                                class="mord mtight"><span class="mord mtight"> -
+                                                                </span><span class="mord mtight"><span
+                                                                        class="mopen nulldelimiter sizing reset-size3 size6"></span><span
+                                                                        class="mfrac"><span
+                                                                            class="vlist-t vlist-t2"><span
+                                                                                class="vlist-r"><span class="vlist"
+                                                                                    style="height: 1.25096em;"><span
+                                                                                        class=""
+                                                                                        style="top: -2.50619em;"><span
+                                                                                            class="pstrut"
+                                                                                            style="height: 3em;"></span><span
+                                                                                            class="sizing reset-size3 size1 mtight"><span
+                                                                                                class="mord mtight"><span
+                                                                                                    class="mord mtight">2</span><span
+                                                                                                    class="mord mtight"><span
+                                                                                                        style="margin-right: 0.03588em;"
+                                                                                                        class="mord mathit mtight">σ</span><span
+                                                                                                        class="msupsub"><span
+                                                                                                            class="vlist-t"><span
+                                                                                                                class="vlist-r"><span
+                                                                                                                    class="vlist"
+                                                                                                                    style="height: 0.93844em;"><span
+                                                                                                                        class=""
+                                                                                                                        style="top: -2.93844em; margin-right: 0.1em;"><span
+                                                                                                                            class="pstrut"
+                                                                                                                            style="height: 2.64444em;"></span><span
+                                                                                                                            class="mord mtight">2</span></span>
+                                                                                                                </span>
+                                                                                                            </span>
+                                                                                                        </span>
+                                                                                                    </span>
+                                                                                                </span>
+                                                                                            </span>
+                                                                                        </span>
+                                                                                    </span><span class=""
+                                                                                        style="top: -3.1275em;"><span
+                                                                                            class="pstrut"
+                                                                                            style="height: 3em;"></span><span
+                                                                                            class="stretchy mtight"
+                                                                                            style="height: 0.245em;"><svg
+                                                                                                width="400em"
+                                                                                                height="0.245em"
+                                                                                                viewBox="0 0 400000 200"
+                                                                                                preserveAspectRatio="xMinYMin slice">
+                                                                                                <path
+                                                                                                    d="M0 80H400000 v40H0z M0 80H400000 v40H0z">
+                                                                                                </path>
+                                                                                            </svg></span></span><span
+                                                                                        class=""
+                                                                                        style="top: -3.50207em;"><span
+                                                                                            class="pstrut"
+                                                                                            style="height: 3em;"></span><span
+                                                                                            class="sizing reset-size3 size1 mtight"><span
+                                                                                                class="mord mtight"><span
+                                                                                                    class="mopen mtight">(</span><span
+                                                                                                    class="mord mathit mtight">x</span><span
+                                                                                                    class="mbin mtight">
+                                                                                                    - </span><span
+                                                                                                    class="mord mathit mtight">μ</span>
+                                                                                                <span
+                                                                                                    class="mclose mtight"><span
+                                                                                                        class="mclose mtight">)</span><span
+                                                                                                        class="msupsub"><span
+                                                                                                            class="vlist-t"><span
+                                                                                                                class="vlist-r"><span
+                                                                                                                    class="vlist"
+                                                                                                                    style="height: 1.04844em;"><span
+                                                                                                                        class=""
+                                                                                                                        style="top: -3.04844em; margin-right: 0.1em;"><span
+                                                                                                                            class="pstrut"
+                                                                                                                            style="height: 2.64444em;"></span><span
+                                                                                                                            class="mord mtight">2</span></span>
+                                                                                                                </span>
+                                                                                                            </span>
+                                                                                                        </span>
+                                                                                                    </span>
+                                                                                                </span>
+                                                                                            </span>
+                                                                                        </span>
+                                                                                    </span>
+                                                                                </span><span
+                                                                                    class="vlist-s"></span></span><span
+                                                                                class="vlist-r"><span class="vlist"
+                                                                                    style="height: 0.493814em;"></span></span>
+                                                                        </span>
+                                                                    </span><span
+                                                                        class="mclose nulldelimiter sizing reset-size3 size6"></span></span>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </span>
+                        </span>
+                    </span><span class="note-latex" style="display: none;"></span></span>. Don't worry, we won't
+                integrate anything. Instead we will just get the answer. :)
+            </p>
+            <p>But do you remember why we use integration? To find the area under the curve. Basically the addition of
+                all the probabilities in a continious variable. Well, we get the area, and doing the same thing as we
+                did previously to normalize.
+                Therefore, we divide the term and get our formula.</p>
+            <p><span class="note-math"><span class="katex"><span class="katex-mathml"><math>
+                                <semantics>
+                                    <mrow>
+                                        <mi>f</mi>
+                                        <mo>(</mo>
+                                        <mi>x</mi>
+                                        <mo>)</mo>
+                                        <mo>=</mo>
+                                        <mfrac>
+                                            <mrow>
+                                                <mn>1</mn>
+                                            </mrow>
+                                            <mrow>
+                                                <mi>σ</mi>
+                                                <msqrt>
+                                                    <mrow>
+                                                        <mn>2</mn>
+                                                        <mi>π</mi>
+                                                    </mrow>
+                                                </msqrt>
+                                            </mrow>
+                                        </mfrac>
+                                        <msup>
+                                            <mi>e</mi>
+                                            <mrow>
+                                                <mo>—</mo>
+                                                <mfrac>
+                                                    <mrow>
+                                                        <mo>(</mo>
+                                                        <mi>x</mi>
+                                                        <mo>—</mo>
+                                                        <mi>μ</mi>
+                                                        <msup>
+                                                            <mo>)</mo>
+                                                            <mn>2</mn>
+                                                        </msup>
+                                                    </mrow>
+                                                    <mrow>
+                                                        <mn>2</mn>
+                                                        <msup>
+                                                            <mi>σ</mi>
+                                                            <mn>2</mn>
+                                                        </msup>
+                                                    </mrow>
+                                                </mfrac>
+                                            </mrow>
+                                        </msup>
+                                    </mrow>
+                                    <annotation encoding="application/x-tex">f(x) = \frac{1}{\sigma \sqrt{2\pi}}
+                                        e^{-\frac{(x - \mu)^2}{2\sigma^2}}</annotation>
+                                </semantics>
+                            </math></span><span class="katex-html" aria-hidden="true"><span class="strut"
+                                style="height: 1.32909em;"></span><span class="strut bottom"
+                                style="height: 1.86709em; vertical-align: -0.538em;"></span><span class="base"><span
+                                    style="margin-right: 0.10764em;" class="mord mathit">f</span><span
+                                    class="mopen">(</span><span class="mord mathit">x</span><span
+                                    class="mclose">)</span><span class="mord rule"
+                                    style="margin-right: 0.277778em;"></span>
+                                <span class="mrel">=</span><span class="mord rule"
+                                    style="margin-right: 0.277778em;"></span><span class="mord"><span
+                                        class="mopen nulldelimiter"></span><span class="mfrac"><span
+                                            class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist"
+                                                    style="height: 0.845108em;"><span class=""
+                                                        style="top: -2.55101em;"><span class="pstrut"
+                                                            style="height: 3em;"></span><span
+                                                            class="sizing reset-size6 size3 mtight"><span
+                                                                class="mord mtight"><span
+                                                                    style="margin-right: 0.03588em;"
+                                                                    class="mord mathit mtight">σ</span><span
+                                                                    class="mord sqrt mtight"><span
+                                                                        class="vlist-t vlist-t2"><span
+                                                                            class="vlist-r"><span class="vlist"
+                                                                                style="height: 0.912845em;"><span
+                                                                                    class="svg-align"
+                                                                                    style="top: -3em;"><span
+                                                                                        class="pstrut"
+                                                                                        style="height: 3em;"></span><span
+                                                                                        class="mord mtight"
+                                                                                        style="padding-left: 0.833em;"><span
+                                                                                            class="mord mtight">2</span><span
+                                                                                            style="margin-right: 0.03588em;"
+                                                                                            class="mord mathit mtight">π</span></span>
+                                                                                </span><span class=""
+                                                                                    style="top: -2.87285em;"><span
+                                                                                        class="pstrut"
+                                                                                        style="height: 3em;"></span><span
+                                                                                        class="hide-tail mtight"
+                                                                                        style="min-width: 0.853em; height: 1.08em;"><svg
+                                                                                            width="400em"
+                                                                                            height="1.08em"
+                                                                                            viewBox="0 0 400000 1080"
+                                                                                            preserveAspectRatio="xMinYMin slice">
+                                                                                            <path d="M95,702c-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,
+        -10,-9.5,-14c0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54c44.2,-33.3,65.8,
+        -50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10s173,378,173,378c0.7,0,
+        35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429c69,-144,104.5,-217.7,106.5,
+        -221c5.3,-9.3,12,-14,20,-14H400000v40H845.2724s-225.272,467,-225.272,467
+        s-235,486,-235,486c-2.7,4.7,-9,7,-19,7c-6,0,-10,-1,-12,-3s-194,-422,-194,-422
+        s-65,47,-65,47z M834 80H400000v40H845z"></path>
+                                                                                        </svg></span></span>
+                                                                            </span><span
+                                                                                class="vlist-s"></span></span><span
+                                                                            class="vlist-r"><span class="vlist"
+                                                                                style="height: 0.127155em;"></span></span>
+                                                                    </span>
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                    </span><span class="" style="top: -3.15em;"><span class="pstrut"
+                                                            style="height: 3em;"></span><span class="stretchy"
+                                                            style="height: 0.2em;"><svg width="400em" height="0.2em"
+                                                                viewBox="0 0 400000 200"
+                                                                preserveAspectRatio="xMinYMin slice">
+                                                                <path d="M0 80H400000 v40H0z M0 80H400000 v40H0z">
+                                                                </path>
+                                                            </svg></span></span><span class=""
+                                                        style="top: -3.394em;"><span class="pstrut"
+                                                            style="height: 3em;"></span><span
+                                                            class="sizing reset-size6 size3 mtight"><span
+                                                                class="mord mtight"><span
+                                                                    class="mord mtight">1</span></span>
+                                                        </span>
+                                                    </span>
+                                                </span><span class="vlist-s"></span></span><span class="vlist-r"><span
+                                                    class="vlist" style="height: 0.538em;"></span></span>
+                                        </span>
+                                    </span><span class="mclose nulldelimiter"></span></span><span class="mord"><span
+                                        class="mord mathit">e</span><span class="msupsub"><span class="vlist-t"><span
+                                                class="vlist-r"><span class="vlist" style="height: 1.32909em;"><span
+                                                        class="" style="top: -3.45342em; margin-right: 0.05em;"><span
+                                                            class="pstrut" style="height: 3em;"></span><span
+                                                            class="sizing reset-size6 size3 mtight"><span
+                                                                class="mord mtight"><span
+                                                                    class="mord mtight">-</span><span
+                                                                    class="mord mtight"><span
+                                                                        class="mopen nulldelimiter sizing reset-size3 size6"></span><span
+                                                                        class="mfrac"><span
+                                                                            class="vlist-t vlist-t2"><span
+                                                                                class="vlist-r"><span class="vlist"
+                                                                                    style="height: 1.25096em;"><span
+                                                                                        class=""
+                                                                                        style="top: -2.50619em;"><span
+                                                                                            class="pstrut"
+                                                                                            style="height: 3em;"></span><span
+                                                                                            class="sizing reset-size3 size1 mtight"><span
+                                                                                                class="mord mtight"><span
+                                                                                                    class="mord mtight">2</span><span
+                                                                                                    class="mord mtight"><span
+                                                                                                        style="margin-right: 0.03588em;"
+                                                                                                        class="mord mathit mtight">σ</span><span
+                                                                                                        class="msupsub"><span
+                                                                                                            class="vlist-t"><span
+                                                                                                                class="vlist-r"><span
+                                                                                                                    class="vlist"
+                                                                                                                    style="height: 0.93844em;"><span
+                                                                                                                        class=""
+                                                                                                                        style="top: -2.93844em; margin-right: 0.1em;"><span
+                                                                                                                            class="pstrut"
+                                                                                                                            style="height: 2.64444em;"></span><span
+                                                                                                                            class="mord mtight">2</span></span>
+                                                                                                                </span>
+                                                                                                            </span>
+                                                                                                        </span>
+                                                                                                    </span>
+                                                                                                </span>
+                                                                                            </span>
+                                                                                        </span>
+                                                                                    </span><span class=""
+                                                                                        style="top: -3.1275em;"><span
+                                                                                            class="pstrut"
+                                                                                            style="height: 3em;"></span><span
+                                                                                            class="stretchy mtight"
+                                                                                            style="height: 0.245em;"><svg
+                                                                                                width="400em"
+                                                                                                height="0.245em"
+                                                                                                viewBox="0 0 400000 200"
+                                                                                                preserveAspectRatio="xMinYMin slice">
+                                                                                                <path
+                                                                                                    d="M0 80H400000 v40H0z M0 80H400000 v40H0z">
+                                                                                                </path>
+                                                                                            </svg></span></span><span
+                                                                                        class=""
+                                                                                        style="top: -3.50207em;"><span
+                                                                                            class="pstrut"
+                                                                                            style="height: 3em;"></span><span
+                                                                                            class="sizing reset-size3 size1 mtight"><span
+                                                                                                class="mord mtight"><span
+                                                                                                    class="mopen mtight">(</span><span
+                                                                                                    class="mord mathit mtight">x</span><span
+                                                                                                    class="mbin mtight">
+                                                                                                    - </span><span
+                                                                                                    class="mord mathit mtight">μ</span>
+                                                                                                <span
+                                                                                                    class="mclose mtight"><span
+                                                                                                        class="mclose mtight">)</span><span
+                                                                                                        class="msupsub"><span
+                                                                                                            class="vlist-t"><span
+                                                                                                                class="vlist-r"><span
+                                                                                                                    class="vlist"
+                                                                                                                    style="height: 1.04844em;"><span
+                                                                                                                        class=""
+                                                                                                                        style="top: -3.04844em; margin-right: 0.1em;"><span
+                                                                                                                            class="pstrut"
+                                                                                                                            style="height: 2.64444em;"></span><span
+                                                                                                                            class="mord mtight">2</span></span>
+                                                                                                                </span>
+                                                                                                            </span>
+                                                                                                        </span>
+                                                                                                    </span>
+                                                                                                </span>
+                                                                                            </span>
+                                                                                        </span>
+                                                                                    </span>
+                                                                                </span><span
+                                                                                    class="vlist-s"></span></span><span
+                                                                                class="vlist-r"><span class="vlist"
+                                                                                    style="height: 0.493814em;"></span></span>
+                                                                        </span>
+                                                                    </span><span
+                                                                        class="mclose nulldelimiter sizing reset-size3 size6"></span></span>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </span>
+                        </span>
+                    </span><span class="note-latex" style="display: none;"></span></span>
+                <br>
+            </p>
+            <p>Easy. You can make the graph using <a href="https://www.desmos.com/calculator" target="_blank">this
+                    site</a>.
+                <br>
+            </p>
+            <br><b><span style="font-size: 16px;">Now, let's talk about standard normal
+                    distribution.</span></b><span style="font-size: 16px;"><br><br>The <b>standard normal
+                    distribution</b>. It’s the one everyone knows and loves, and for good reason. This specific version
+                of the normal distribution is special because it’s standardized—clean, simple, and universal. Let me
+                explain. &nbsp;<br><br><b>What Makes It <i>Standard</i>?</b><br>The standard normal distribution is just
+                a <b>normal distribution with some very specific parameters</b>: &nbsp;<br>1. </span><span
+                class="note-math"><span class="katex"><span class="katex-mathml"><math>
+                            <semantics>
+                                <mrow>
+                                    <mi>μ</mi>
+                                </mrow>
+                                <annotation encoding="application/x-tex">\mu</annotation>
+                            </semantics>
+                        </math></span><span class="katex-html" aria-hidden="true"><span class="strut"
+                            style="height: 0.43056em;"></span><span class="strut bottom"
+                            style="height: 0.625em; vertical-align: -0.19444em;"></span><span class="base"><span
+                                class="mord mathit">μ <br></span></span>
+                    </span>
+                </span><span class="note-latex" style="display: none;"></span></span><span style="font-size: 16px;">=0:
+                The center of the curve is
+                at 0. &nbsp;<br>2. </span><span class="note-math"><span class="katex"><span class="katex-mathml"><math>
+                            <semantics>
+                                <mrow>
+                                    <mi>σ</mi>
+                                </mrow>
+                                <annotation encoding="application/x-tex">\sigma</annotation>
+                            </semantics>
+                        </math></span><span class="katex-html" aria-hidden="true"><span class="strut"
+                            style="height: 0.43056em;"></span><span class="strut bottom"
+                            style="height: 0.43056em; vertical-align: 0em;"></span><span class="base"><span
+                                style="margin-right: 0.03588em;" class="mord mathit">σ</span></span>
+                    </span>
+                </span><span class="note-latex" style="display: none;"></span></span><span style="font-size: 16px;">=1:
+                The
+                spread of the curve is fixed so that one unit in either direction from the mean equals one standard
+                deviation. &nbsp;<br><br>That’s it. By setting these two parameters, we get a distribution that’s
+                universal and easier to work with. The beauty of the standard normal distribution lies in its
+                simplicity—there’s no need to deal with awkward units or offsets. It’s like starting at the origin of a
+                graph, where everything is centered and aligned just right. &nbsp;<br><br><b>Why Do We Care about This?
+                    &nbsp;</b><br>You might wonder, <i>Why are we obsessed with this one specific distribution?</i>
+                <br></span><span style="font-size: 16px;"><b><br></b>Before telling you why, I'll tell you how you can
+                convert any normal distribution to standardized form.<br><b><br>Z-Scores and
+                    Standardization</b>:<br></span><span style="font-size: 16px;">Most real-world data doesn’t follow a
+                standard normal distribution directly. But we can <i>transform any normal distribution into a standard
+                    normal distribution</i> by converting the values into <i>Z-scores</i>.<br></span><span
+                style="font-size: 16px;"><br>The formula is:</span>
+            <p></p>
+            <p><span class="note-math"><span class="katex"><span class="katex-mathml"><math>
+                                <semantics>
+                                    <mrow>
+                                        <mi>Z</mi>
+                                        <mo>=</mo>
+                                        <mfrac>
+                                            <mrow>
+                                                <mi>X</mi>
+                                                <mo>—</mo>
+                                                <mi>μ</mi>
+                                            </mrow>
+                                            <mrow>
+                                                <mi>σ</mi>
+                                            </mrow>
+                                        </mfrac>
+                                    </mrow>
+                                    <annotation encoding="application/x-tex"> Z = \frac{X - \mu}{\sigma}</annotation>
+                                </semantics>
+                            </math></span><span class="katex-html" aria-hidden="true"><span class="strut"
+                                style="height: 0.924439em;"></span><span class="strut bottom"
+                                style="height: 1.26944em; vertical-align: -0.345em;"></span><span class="base"><span
+                                    style="margin-right: 0.07153em;" class="mord mathit">Z</span><span class="mord rule"
+                                    style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span
+                                    class="mord rule" style="margin-right: 0.277778em;"></span>
+                                <span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span
+                                            class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist"
+                                                    style="height: 0.924439em;"><span class=""
+                                                        style="top: -2.655em;"><span class="pstrut"
+                                                            style="height: 3em;"></span><span
+                                                            class="sizing reset-size6 size3 mtight"><span
+                                                                class="mord mtight"><span
+                                                                    style="margin-right: 0.03588em;"
+                                                                    class="mord mathit mtight">σ</span></span>
+                                                        </span>
+                                                    </span><span class="" style="top: -3.15em;"><span class="pstrut"
+                                                            style="height: 3em;"></span><span class="stretchy"
+                                                            style="height: 0.2em;"><svg width="400em" height="0.2em"
+                                                                viewBox="0 0 400000 200"
+                                                                preserveAspectRatio="xMinYMin slice">
+                                                                <path d="M0 80H400000 v40H0z M0 80H400000 v40H0z">
+                                                                </path>
+                                                            </svg></span></span><span class=""
+                                                        style="top: -3.44611em;"><span class="pstrut"
+                                                            style="height: 3em;"></span><span
+                                                            class="sizing reset-size6 size3 mtight"><span
+                                                                class="mord mtight"><span
+                                                                    style="margin-right: 0.07847em;"
+                                                                    class="mord mathit mtight">X</span><span
+                                                                    class="mbin mtight"> - </span><span
+                                                                    class="mord mathit mtight">μ</span></span>
+                                                        </span>
+                                                    </span>
+                                                </span><span class="vlist-s"></span></span><span class="vlist-r"><span
+                                                    class="vlist" style="height: 0.345em;"></span></span>
+                                        </span>
+                                    </span><span class="mclose nulldelimiter"></span></span>
+                            </span>
+                        </span>
+                    </span><span class="note-latex" style="display: none;"></span></span><span
+                    style="font-size: 16px;"><br><br>-
+                    X is the data point we're interested in.<br>- Mean and standard deviation is something you guys
+                    should know.<br>- Z is the number of standard deviations X is away from the </span><span
+                    style="font-size: 16px;">mean. &nbsp;<br></span><span style="font-size: 16px;"><br>Z-scores allow us
+                    to compare data points from different distributions
+                    on a common scale. For example, if one test has a mean score of 50 and
+                    another has a mean of 100, Z-scores let you figure out how both scores
+                    compare relative to their respective distributions. We subtract mean to make the mean 0( mean
+                    centering), and we divide to scale the values.</span>
+                <br>
+                <br>A standard normal distribution is the ultimate cheat sheet for probabilities. Thanks to its fixed
+                mean and standard deviation, statisticians have pre-computed the probabilities (or areas under the
+                curve) for every possible range
+                of values. These are stored in Z-tables. If you want to know the probability of a random variable being
+                less than, say, 1.3, you don’t have to integrate anything—just look it up! This is huge because directly
+                integrating is very
+                computationally expensive. But as we have this cheat sheet, it becomes very easy.
+                <br>
+                <br>Alright, let’s tackle Z-tables with a simple and fun example. Here’s an example:
+                <br>
+                <br>Imagine you own an ice cream shop. On a hot summer day, you track the sales of ice cream cones. The
+                average number of cones sold per day μ is 100, with a σ of 10. &nbsp;
+                <br>
+                <br>One day, your shop sells 120 cones. Naturally, you’re curious: How unusual is that? Is selling 120
+                cones on a single day normal, or is it a rare occurrence? &nbsp;
+                <br>
+                <br>To answer this, let’s calculate the Z-score for 120 cones and then use a Z-table to find the
+                probability of selling that many cones (or fewer). &nbsp;
+                <br>
+                <br><span class="note-math"><span class="katex"><span class="katex-mathml"><math>
+                                <semantics>
+                                    <mrow>
+                                        <mi>Z</mi>
+                                        <mo>=</mo>
+                                        <mfrac>
+                                            <mrow>
+                                                <mi>X</mi>
+                                                <mo>—</mo>
+                                                <mi>μ</mi>
+                                            </mrow>
+                                            <mrow>
+                                                <mi>σ</mi>
+                                            </mrow>
+                                        </mfrac>
+                                    </mrow>
+                                    <annotation encoding="application/x-tex"> Z = \frac{X - \mu}{\sigma}</annotation>
+                                </semantics>
+                            </math></span><span class="katex-html" aria-hidden="true"><span class="strut"
+                                style="height: 0.924439em;"></span><span class="strut bottom"
+                                style="height: 1.26944em; vertical-align: -0.345em;"></span><span class="base"><span
+                                    style="margin-right: 0.07153em;" class="mord mathit">Z</span><span class="mord rule"
+                                    style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span
+                                    class="mord rule" style="margin-right: 0.277778em;"></span>
+                                <span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span
+                                            class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist"
+                                                    style="height: 0.924439em;"><span class=""
+                                                        style="top: -2.655em;"><span class="pstrut"
+                                                            style="height: 3em;"></span><span
+                                                            class="sizing reset-size6 size3 mtight"><span
+                                                                class="mord mtight"><span
+                                                                    style="margin-right: 0.03588em;"
+                                                                    class="mord mathit mtight">σ</span></span>
+                                                        </span>
+                                                    </span><span class="" style="top: -3.15em;"><span class="pstrut"
+                                                            style="height: 3em;"></span><span class="stretchy"
+                                                            style="height: 0.2em;"><svg width="400em" height="0.2em"
+                                                                viewBox="0 0 400000 200"
+                                                                preserveAspectRatio="xMinYMin slice">
+                                                                <path d="M0 80H400000 v40H0z M0 80H400000 v40H0z">
+                                                                </path>
+                                                            </svg></span></span><span class=""
+                                                        style="top: -3.44611em;"><span class="pstrut"
+                                                            style="height: 3em;"></span><span
+                                                            class="sizing reset-size6 size3 mtight"><span
+                                                                class="mord mtight"><span
+                                                                    style="margin-right: 0.07847em;"
+                                                                    class="mord mathit mtight">X</span><span
+                                                                    class="mbin mtight"> - </span><span
+                                                                    class="mord mathit mtight">μ</span></span>
+                                                        </span>
+                                                    </span>
+                                                </span><span class="vlist-s"></span></span><span class="vlist-r"><span
+                                                    class="vlist" style="height: 0.345em;"></span></span>
+                                        </span>
+                                    </span><span class="mclose nulldelimiter"></span></span>
+                            </span>
+                        </span>
+                    </span><span class="note-latex" style="display: none;"></span></span>
+                <br>
+                <br>Where: &nbsp;
+                <br>- X = 120 (the value you’re interested in) &nbsp;
+                <br>- μ = 100 (the mean) &nbsp;
+                <br>- σ = 10 (the standard deviation) &nbsp;
+                <br>
+                <br>
+                <br>Substitute the values: &nbsp;
+                <br><span class="note-math"><span class="katex"><span class="katex-mathml"><math>
+                                <semantics>
+                                    <mrow>
+                                        <mi>Z</mi>
+                                        <mo>=</mo>
+                                        <mfrac>
+                                            <mrow>
+                                                <mn>1</mn>
+                                                <mn>2</mn>
+                                                <mn>0</mn>
+                                                <mo>—</mo>
+                                                <mn>1</mn>
+                                                <mn>0</mn>
+                                                <mn>0</mn>
+                                            </mrow>
+                                            <mrow>
+                                                <mn>1</mn>
+                                                <mn>0</mn>
+                                            </mrow>
+                                        </mfrac>
+                                        <mo>=</mo>
+                                        <mfrac>
+                                            <mrow>
+                                                <mn>2</mn>
+                                                <mn>0</mn>
+                                            </mrow>
+                                            <mrow>
+                                                <mn>1</mn>
+                                                <mn>0</mn>
+                                            </mrow>
+                                        </mfrac>
+                                        <mo>=</mo>
+                                        <mn>2</mn>
+                                    </mrow>
+                                    <annotation encoding="application/x-tex">Z = \frac{120 - 100}{10} = \frac{20}{10} =
+                                        2</annotation>
+                                </semantics>
+                            </math></span><span class="katex-html" aria-hidden="true"><span class="strut"
+                                style="height: 0.845108em;"></span><span class="strut bottom"
+                                style="height: 1.19011em; vertical-align: -0.345em;"></span><span class="base"><span
+                                    style="margin-right: 0.07153em;" class="mord mathit">Z</span><span class="mord rule"
+                                    style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span
+                                    class="mord rule" style="margin-right: 0.277778em;"></span>
+                                <span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span
+                                            class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist"
+                                                    style="height: 0.845108em;"><span class=""
+                                                        style="top: -2.655em;"><span class="pstrut"
+                                                            style="height: 3em;"></span><span
+                                                            class="sizing reset-size6 size3 mtight"><span
+                                                                class="mord mtight"><span
+                                                                    class="mord mtight">1</span><span
+                                                                    class="mord mtight">0</span></span>
+                                                        </span>
+                                                    </span><span class="" style="top: -3.15em;"><span class="pstrut"
+                                                            style="height: 3em;"></span><span class="stretchy"
+                                                            style="height: 0.2em;"><svg width="400em" height="0.2em"
+                                                                viewBox="0 0 400000 200"
+                                                                preserveAspectRatio="xMinYMin slice">
+                                                                <path d="M0 80H400000 v40H0z M0 80H400000 v40H0z">
+                                                                </path>
+                                                            </svg></span></span><span class=""
+                                                        style="top: -3.394em;"><span class="pstrut"
+                                                            style="height: 3em;"></span><span
+                                                            class="sizing reset-size6 size3 mtight"><span
+                                                                class="mord mtight"><span
+                                                                    class="mord mtight">1</span><span
+                                                                    class="mord mtight">2</span><span
+                                                                    class="mord mtight">0</span><span
+                                                                    class="mbin mtight"> - </span><span
+                                                                    class="mord mtight">1</span><span
+                                                                    class="mord mtight">0</span><span
+                                                                    class="mord mtight">0</span></span></span>
+                                                    </span></span><span class="vlist-s"></span></span><span
+                                                class="vlist-r"><span class="vlist"
+                                                    style="height: 0.345em;"></span></span>
+                                        </span>
+                                    </span><span class="mclose nulldelimiter"></span></span><span class="mord rule"
+                                    style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span
+                                    class="mord rule" style="margin-right: 0.277778em;"></span><span class="mord"><span
+                                        class="mopen nulldelimiter"></span><span class="mfrac"><span
+                                            class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist"
+                                                    style="height: 0.845108em;"><span class=""
+                                                        style="top: -2.655em;"><span class="pstrut"
+                                                            style="height: 3em;"></span><span
+                                                            class="sizing reset-size6 size3 mtight"><span
+                                                                class="mord mtight"><span
+                                                                    class="mord mtight">1</span><span
+                                                                    class="mord mtight">0</span></span></span></span><span
+                                                        class="" style="top: -3.15em;"><span class="pstrut"
+                                                            style="height: 3em;"></span><span class="stretchy"
+                                                            style="height: 0.2em;"><svg width="400em" height="0.2em"
+                                                                viewBox="0 0 400000 200"
+                                                                preserveAspectRatio="xMinYMin slice">
+                                                                <path d="M0 80H400000 v40H0z M0 80H400000 v40H0z">
+                                                                </path>
+                                                            </svg></span></span><span class=""
+                                                        style="top: -3.394em;"><span class="pstrut"
+                                                            style="height: 3em;"></span><span
+                                                            class="sizing reset-size6 size3 mtight"><span
+                                                                class="mord mtight"><span
+                                                                    class="mord mtight">2</span><span
+                                                                    class="mord mtight">0</span></span>
+                                                        </span>
+                                                    </span>
+                                                </span><span class="vlist-s"></span></span><span class="vlist-r"><span
+                                                    class="vlist" style="height: 0.345em;"></span></span>
+                                        </span>
+                                    </span><span class="mclose nulldelimiter"></span></span><span class="mord rule"
+                                    style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span
+                                    class="mord rule" style="margin-right: 0.277778em;"></span><span
+                                    class="mord">2</span></span>
+                        </span>
+                    </span><span class="note-latex" style="display: none;"></span></span>
+                <br>
+                <br>So, the Z-score is 2.
+                <br>
+                <br>Okay, then what?
+                <br>
+                <br><b>Look It Up in the Z-Table &nbsp;</b>
+                <br>
+                <br>We've 2 types of z tables. Positive and negative.
+                <br>
+            <p align="center">
+                <img class="responsive-img" src="assets/images/blog_imgs/image_1736704742076_0.png"
+                    data-filename="image.png">
+                <br>This is the negative one.
+                <br>
+                <br><img class="responsive-img" src="assets/images/blog_imgs/image_1736704742085_1.png"
+                    data-filename="image.png">
+                <br>This is the positive one.
+            </p>
+            As our value is positive, we look at the positive table. In our case, we only need to look for 2,
+            which is pretty easy. I feel it's pretty intuitive as it is. Starting values, we go for left, and the
+            .0x we get from
+            the columns.
+            <br>
+            <br>From the table, the value for Z = 2.00 is 0.9772. But this only gives for the left part of the
+            curve. This means the area under the curve to the left of Z = 2 is 97.72%. &nbsp;
+            <br>
+            <br>
+            <p align="center">
+                <img class="responsive-img" src="assets/images/blog_imgs/image_1736704742097_2.png"
+                    data-filename="image.png">
+            </p>
+            <br>Here, we got the probability for the red part (don't mind the white spots, I couldn't edit this
+            properly). But we want to find the % where we sell more than 120
+            cones. So we subtract the values, 1 - 0.9772 = 0.0228.
+            <br>That leaves
+            <b>2.28%</b> of the time for days when you sell more than 120 cones.&nbsp;
+            <br>
+            <br><b>Why Subtract
+                1 and 0.9772?</b>
+            <br>
+            <br>When we use a Z-table to look up a Z-score, the value we get represents the probability of an event
+            occurring up to that point—in other words, the area under the curve to the left of the Z-score. For our
+            example, Z=2.00
+            gave us 0.9772, meaning 97.72% of sales days will have 120 cones or fewer sold.
+            <br>
+            <br>But our goal was to find the probability of selling more than 120 cones. For that, we need the area
+            to the right of the Z-score (the white part of the graph). Since the total area under the curve is
+            always 1 (representing
+            100% probability), we subtract the left-hand probability:
+            <br>
+            <br><b>1 - 0.9772=0.0228</b>
+            <br>
+            <br>This tells us that the probability of selling more than 120 cones is 2.28%.
+            <br>
+            <br>
+            <br><b><span style="font-size: 22px;">The 68-95-99.7 Rule: The Magic of
+                    Gaussian Distributions</span></b>
+            <br>
+            <br>One of the reasons the
+            Gaussian (normal) distribution is so special is because of this handy rule, which explains how much
+            of your data falls within specific ranges of the mean. Let’s break it down
+            </p>
+            <p><b>Imagine a teacher gives a math
+                    test, and the scores are normally distributed<br></b><br>- The class average (μ) is 70
+                points.<br>- The standard deviation (σ) is 10 points.<br><br>Now, picture the teacher dividing the
+                class into groups based on how far their scores are from the average:<br></p>
+            <ol>
+                <li><b>68% </b>(the average students): Most students (68%) scored within
+                    1 standard deviation of the average—between 70-10=60 and 70+10=80. These are the kids who did
+                    <i>pretty normal</i>. They're not acing the test, but they're not failing either. They're your
+                    typical, dependable middle-of-the-class crowd.
+                </li>
+                <li><b>95% </b>(the overachievers
+                    and the struggling ones): If we extend to 2 standard
+                    deviations, between 70-20=50 and 70+20=90, this now includes 95% of the students.
+                    This range captures both the high-achievers (scores of 80 to 90) and
+                    those who struggled but still passed (scores of 50 to 60). You’d be hard-pressed to find anyone
+                    outside this range.</li>
+                <li><b>99.7% </b>(the extreme cases): Go to 3 standard deviations—between 70-30=40 and 70+30=100—and
+                    you’ve
+                    included almost the entire class (99.7%). These are the absolute outliers: the genius who scored
+                    100 or the poor soul who bombed with a 40. But remember, only 0.3% of students fall outside this
+                    range (those scoring below 40 or above 100). They’re unicorns—rare and unusual.</li>
+            </ol>
+            <hr>
+            <p>
+                <b><span><span
+                            style="font-size: 20px; font-family: Comic Sans MS;">CONGRATULATIONS!!!</span><br></span></b>
+            </p>
+            <p><span style="font-family: Comic Sans MS;">There you have it, folks—our deep dive into the
+                    magical world of ever-glorious Gaussian distribution.
+                    By now, you’re not just looking at data; you’re starting to understand its story.<br><br>From next blog
+                    onwards, we’ll start with Deep Learning.<br><br>Now
+                    do re-read the
+                    whole thing again. Until you can understand every concept. Take a pen
+                    and paper; and make notes. Revise. And remember, nothing is tough. You
+                    just need to have the hunger for knowledge.</span></p>
+
+        </div>
+    </main>
+
+    <nav aria-label="Page navigation" class="mt-4">
+        <ul class="pagination justify-content-center">
+          <li class="page-item">
+            <a class="page-link" href="day5" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item"><a class="page-link" href="day5">5</a></li>
+        </ul>
+      </nav>
+
+<hr>
+
+<div class="mx-5 my-4">
+    <p>If you found this content helpful and would like to support, feel free to contribute. Your support isn’t just a donation—it’s a step toward building something bigger, together.</p>
+    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#scannerModal">
+      UPI (for Indians)
+    </button>
+  <a href="https://paypal.me/regenerationdetox?country.x=IN&locale.x=en_GB" class="btn btn-primary me-2" target="_blank">Donate via PayPal</a>
+</div>
+<div 
+    id="scannerModal" 
+    class="modal fade" 
+    tabindex="-1" 
+    aria-labelledby="scannerModalLabel" 
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="scannerModalLabel">My Scanner</h5>
+          <button 
+            type="button" 
+            class="btn-close" 
+            data-bs-dismiss="modal" 
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body d-flex justify-content-center align-items-center">
+          <img 
+            src="assets/images/scanner.png" 
+            alt="Scanner" 
+            class="img-fluid rounded"
+          />
+        </div>
+        <div class="modal-footer">
+          <button 
+            type="button" 
+            class="btn btn-secondary" 
+            data-bs-dismiss="modal">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<footer class="footer">
+    &copy; 2025 Stable Diffusion Blog
+</footer>
+
+
+</body>
+<script src="assets/js/jquery-3.7.0.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/navigate.js"></script>
+<script src="assets/js/donation.js"></script>
+
+</html>
