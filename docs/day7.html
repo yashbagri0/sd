@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 7</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/katex.min.css">
+    <link rel="stylesheet" href="assets/css/prism.css">
+    <link rel="stylesheet" href="assets/css/custom.css">
+    <style>
+        .responsive-img {
+            width: 40%;
+        }
+        @media (max-width: 768px) {
+            .responsive-img {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>  
+   
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">Home</a>
+            <a class="navbar-brand" href="https://github.com/yashbagri0/sd" class="btn btn-primary me-2" target="_blank">Github</a>
+            <ul class="navbar-nav ms-auto"></ul>
+        </div>
+    </nav>
+
+        <header class="blog-header">
+        <div class="container">
+            <h1 class="blog-title">Day 7: Unveiling Artificial Neural Networks (ANNs) (Part 1)</h1>
+            By Yash (a very cool guy) | February 9, 2025
+        </div>
+    </header>
+
+    <main class="container my-5" style="max-width: 1200px;">
+        <div class="blog-content">
+            </p><b><span style="font-size: 24px;">A Little
+                    Speech Before We Begin<br></span></b>
+            <br>Okay, let’s get real for a moment. Over the last few days, we powered through the essentials, laying the
+            groundwork for understanding AI’s inner workings. You’re probably feeling a mix of curiosity and, let’s be
+            honest, slight terror. And that’s okay!
+            Because today, we’re taking a leap forward into the magical, mysterious world of Artificial Neural Networks
+            (ANNs). &nbsp;
+            <br>
+            <br>But before we dive in, let me ask you this: ever tried to learn how to play a musical instrument? At
+            first, it’s just noise—clumsy fingers, missed notes, frustration galore. You wonder if it’s worth it. But
+            then, one day, you play a little
+            melody. It’s not perfect, but it’s music. And you think, <i>Hey, maybe I can do this</i>. That’s where we’re
+            headed. &nbsp;
+            <br>
+            <br>ANNs might sound intimidating—words like <b><i>activation
+                    functions</i></b> and <b><i>back propagation</i></b> can feel like a foreign language. But don’t
+            freak out. It’s not as scary as it sounds. Trust me, once we break it down, you’ll see these concepts aren’t
+            black magic. They’re just
+            clever math wrapped in layers of logic. &nbsp;
+            <br>
+            <br>So here’s my promise: I’ll make this as painless as possible. By the end of today, you’ll understand how
+            ANNs are inspired by the human brain (kind of), why they’re so powerful, and how they actually work. Think
+            of it as peeling back the layers
+            of an onion, but without the tears. &nbsp;
+            <br>
+            <br>You’ve already made it this far, which proves you’re capable of learning the tough stuff. Keep that
+            momentum going. This isn’t about cramming your brain with jargon—it’s about unlocking a way of thinking that
+            will make you a better coder,
+            problem solver, and all-around genius. &nbsp;
+            <br>
+            <br>Ready? Let’s build some neurons. Well, artificial ones, anyway. Onward!
+            <hr>
+            <p></p><b><span style="font-size: 24px;">Deep Learning: A Simple Introduction<br><br></span></b>
+            <p align="center"><img class="responsive-img" src="assets/images/blog_imgs/image_1736748585949_0.png"
+                    data-filename="image.png"><b><span style="font-size: 20px;"></span></b>
+                <br><b><span style="font-size: 20px;"></span></b>
+                <br>
+            </p>
+            <p>Deep learning is a branch of machine learning, which itself is all about teaching machines to learn and
+                make decisions on their own. While machine learning covers a broad range of methods, deep learning
+                focuses on one specific approach: using
+                <b>artificial neural networks</b>. These networks are inspired by how the human brain works (though
+                they’re much simpler—no mind-reading robots here!).
+                <br>
+                <br>In the real world, deep learning is incredibly useful. It powers technologies in fields like
+                <i>computer
+                    vision</i> (analyzing images), <i>natural language processing</i> (understanding text), and
+                <i>speech recognition</i> (turning spoken words into text). Think of deep learning as one tool in the
+                machine learning toolbox, but one that’s especially powerful for tackling complex tasks involving
+                images, sounds, and words.
+                <br>
+                <br>Now, not all deep learning is about creating human-like intelligence (those movie-style sentient
+                machines aren’t the goal… yet). Instead, most of the work in this field focuses on solving practical
+                problems. Whether it’s teaching a car
+                to recognize stop signs or helping a computer understand your voice, deep learning is already shaping
+                industries in countless ways.
+                <br>
+                <br>
+                <br><b><span style="font-size: 24px;">What is Machine Learning? Think <i> Monkey See, Monkey
+                            Do</span></i></b>
+                <br>
+            </p>Machine learning, at its core, is about <b>teaching computers to learn and adapt</b> instead of rigidly
+            following pre-written instructions. It's like giving <i>computers the ability to learn without being
+                explicitly programmed</i>. In simple
+            terms, it's like showing a computer an example of something and saying, <i>Now, go figure this out
+                yourself!</i>&nbsp;
+            <br>
+            <br>Imagine a monkey watching a human perform a task. The monkey tries to copy what it sees, whether it’s
+            cracking a nut or mimicking facial expressions. Machine learning is a lot like that: <b>Monkey see, monkey
+                do</b>. A machine observes patterns
+            in data and learns to imitate those patterns to perform tasks—whether that’s recognizing cats in photos,
+            predicting the weather, or recommending your next binge-worthy TV show. &nbsp;
+            <br>
+            <br><b>Two Types of <i>Monkey Business</i> in Machine Learning </b>
+            <p></p>
+            <p>There are two main ways a machine learns, much like our monkey friend:&nbsp; </p>
+            <ol>
+                <li><b>Supervised Learning (Direct Imitation)</b>: This is like showing the monkey a nut, cracking it
+                    open, and handing it the cracked nut. The machine is given an input and its correct output—a clear
+                    example of what to do. Over time, it learns
+                    to take the input and reliably produce the output. Examples include:&nbsp; &nbsp;
+                    <br>
+                    <br>- Looking at an image (input) and deciding if it’s a cat (output).
+                    <br>- Reading someone’s text messages (input) to predict their mood (output).
+                    <br>- Listening to an audio file (input) and writing out a transcript (output).&nbsp;
+                    <br>
+                    <br>
+                </li>
+                <li><b>Unsupervised Learning (Indirect Imitation)</b>: Here, the monkey just sees a pile of nuts and
+                    starts experimenting without being told exactly what to do. It groups similar nuts together or
+                    discovers new patterns on its own. Machines
+                    in this mode figure out relationships in data without specific instructions.&nbsp;
+                    <br>
+                </li>
+            </ol>
+            <p>Okay, that's cool and all, but let's talk about the cream of the pie. <b>Deep Learning</b>.
+                <br>
+            </p>
+            <p align="center"><img class="responsive-img" src="assets/images/blog_imgs/image_1736761056561_0.png"
+                    data-filename="image.png">
+                <br>A neuron
+                <br>
+            </p>
+            <p>Wait what? We're studying biology now? But I only know that <i>mitochondria is the powerhouse of the
+                    cell</i>.
+                <br>
+                <br>Well, don't thing we don't have to. This is just for references. I'll give you some explanation
+                first, and then you'll be able to better understand the neurons in a neural network.
+                <br>
+                <br>The question that Geoffrey Hinton<b> </b>asked during his seminal research in neural networks was
+                whether we <b>could build computer algorithms that behave similarly to neurons in the
+                    brain</b>. The hope was that by mimicking the brain’s structure, we might capture some of its
+                capability.
+                <br>
+                <br>To do this, researchers studied the way that neurons behaved in the brain. One important observation
+                was that <i>a neuron by itself is useless</i>. Instead, you require <b>networks of
+                    neurons to generate any meaningful functionality</b>. A simple analogy is, 2 hands are better than
+                1. In our case, a billion hands are better than 1.
+                <br>
+                <br>This is because neurons <b>function by
+                    receiving and sending signals</b>. So they receive some <b><i>input </i></b>and produce some
+                <b><i>output</i></b> that is then passed to another neuron. You can think of them as a <b>chain of
+                    functions</b>. More specifically, the neuron’s dendrites receive signals and pass along those
+                signals through the axon.
+                <br>
+                <br>The dendrites of one neuron are connected to the axon of another neuron. These connections are
+                called synapses, which is a concept that has been generalized to the field of deep learning.
+                <br>
+            </p>
+            <p align="center"><img class="responsive-img" src="assets/images/blog_imgs/image_1736761056567_1.png"
+                    data-filename="image.png">
+                <br>
+            </p>
+            <p>Take a deep breath and look at this image of a neural network calmly. You might be thinking that there's
+                a lot going on, but I'll break it down for y'all.</p>
+            <p>
+                <br><b>Imagine This Is a Magical Machine</b>
+                <br>
+            </p>
+            <p>This picture shows a simple <b>magical machine</b> (the green circle) that makes decisions based on some
+                information (the yellow circles). The machine works like this:
+            </p>
+            <p>1. You give it some <b><i>inputs</i></b> (the yellow circles), like numbers or facts about
+                something.&nbsp;
+                <br>For example, imagine you want to <b>predict whether you’ll need an umbrella</b>. The inputs could
+                be:
+                <br>
+            </p>
+            <ul>
+                <li>x1: Is it cloudy today? (yes=1, no=0) [because in binary, 0 is usually false, and 1 is true. It is
+                    just a sequence of 1s and 0s]
+                    <br>
+                </li>
+                <li>x2: What’s the temperature? (like 25°C)</li>
+                <li>x3: Is it windy? (yes=1, no=0)
+                    <br>
+                </li>
+            </ul>
+            <p>2. The machine has <b>dials (weights)</b> that adjust how much it cares about each input.
+                <br>In a more intuitive sense, suppose we've a function f(x=3). Then 3 is the weight in this case. Now
+                suppose we've a function f(x=1,y=9), then 1 and 9 are the weights of our neural network. But now we take
+                w1, w2, w3...wn many weights in
+                a function. And a more interesting thing is that we don't have to initialize these weights. Our deep
+                learning model will do so over time. It's that easy!
+                <br>
+            </p>
+            <ul>
+                <li>Maybe the machine decides that cloudy weather (x1) is very important, so it gives it a high weight
+                    (w1). But it thinks wind (x3) isn’t that important, so it gives it a small weight (w3).</li>
+                <li>These weights are like the machine’s preferences, and it learns them over time.</li>
+            </ul>
+            <p>3. The connections (<b>dashed lines</b>) are like wires. Each input gets sent into the machine, but
+                first, it’s multiplied by its weight.
+                <br>Like in a function f(x)=2x, our output for x=2 will be 4. Similarly, we send the input numbers(we
+                can convert everything to numbers. More on this later) which get sent to the machine.
+                <br>
+            </p>
+            <ul>
+                <li>For example, if x1=1 (cloudy) and w1=3, the machine gets the value 3 for this input (1×3).
+                    <br>
+                </li>
+            </ul>
+            <p>4. The machine then <b>adds up all the values</b> it got from the inputs.
+                <br>So, it might calculate something like this: &nbsp;
+                <br>&nbsp; (x1×w1) + (x2×w2) + (x3×w3)&nbsp;
+                <br>This is the machine’s way of <b>summarizing all the information</b> it got.
+                <br>
+                <br>5. The machine thinks, <i>Okay, I have this
+                    total number. Now, should I give a strong answer or not?</i>
+            </p>
+            <p>It uses a simple rule (called an activation function) to decide if the answer should be big (like <i>Yes,
+                    bring an umbrella!</i>) or small (like <i>No, leave it at home!</i>). We'll delve one this this
+                later. But for now, it somehow uses this <i>activation </i><i>function</i> to produce the output we
+                humans can understand.</p>
+            <p>6. Finally, it spits out a result (the red circle).&nbsp;
+                <br>In our example, the result could be:&nbsp;
+            </p>
+            <ul>
+                <li>1: "Yes, it’ll rain; bring an umbrella!"&nbsp; </li>
+                <li>0: "No, it’s sunny; you’re good to go."
+                    <br>
+                </li>
+            </ul>
+            <p>Don't worry about the how. Just understand the what part now.
+                <br>
+                <br>
+                <br><b><span style="font-size: 22px;">Why Is This Cool?</span></b>
+                <br>
+                <br>This tiny machine is like a building block for bigger systems. Alone, it can do simple tasks like
+                deciding whether you need an umbrella. But if you connect lots of these machines together, they can
+                solve <b>much bigger problems</b>, like
+                recognizing faces in photos or predicting stock prices.
+                <br>
+                <br>Oh, and by the way, this is <b>forward
+                    propagation</b> minus just a few things which we'll discuss later. But yeah, that's it. The
+                <i>complex topic. </i>Wasn't very complex was it?
+                <br>
+            </p>
+            <p>For those of you who don’t know what forward propagation is, let me break it down in the simplest way
+                possible. Imagine the neural network as a machine trying to solve a problem, like predicting whether a
+                picture has a dog or not. Forward
+                propagation is the process where the machine takes in the input (the picture), runs it through its
+                internal mechanics (neurons, weights, and math), and spits out a guess (like <i>this is 80% a dog</i>).
+                It’s the machine’s first attempt
+                to understand the input, kind of like someone taking a quick guess without much context.
+                <br>
+                <br>But it doesn’t stop at guessing—it’s not one of those machines that stubbornly sticks to its first
+                answer. After making its prediction, the network compares its guess to the actual answer (in this case,
+                whether the picture really has a
+                dog). This comparison is done through something called a <i><b>loss function</b></i>, which essentially
+                measures how wrong we were. We quantify our loss basically. The loss is like the network’s grade—it
+                tells the network how badly it
+                messed up and how much room there is for improvement.
+                <br>
+                <br>Now comes the learning part. The network doesn’t just shrug off its mistakes; it learns from them.
+                It works backward through all the calculations it made during forward propagation, figuring out which
+                parts of the process contributed the
+                most to the error. Think of it like a detective retracing steps to understand what went wrong. Once it
+                knows this, it updates its internal settings (weights and biases. <b>Biases</b> are the adjustable
+                numbers which acts like an offset.
+                We're mainly concerned with weights though) slightly to do better next time. Over thousands of tries, it
+                slowly gets better at predicting until it becomes pretty darn good at recognizing dogs—or solving
+                whatever problem it’s been tasked
+                with.
+                <br>
+                <br>If you didn't get the grasp, it's somewhat similar to how you learn something, then revise
+                internally, and if you were wrong, then we fix our incorrect understanding. The only difference is that
+                the computer does it
+                <b>REALLY</b> slowly. I'll expand on it later.
+            </p>
+            <p>As we are already done with prediction(our output above), let's see how we can compare.
+                <br>
+                <br>
+            </p>
+            <p><span style="font-size: 22px;"><b>Loss Functions: How Neural Networks Know They're Making
+                        Mistakes</b></span>
+                <br>
+                <br>Imagine teaching a kid to recognize dogs. When they point at a cat and say <i>dog!</i>, you correct
+                them. Loss functions are exactly this — they tell the neural network how wrong it is. More specifically,
+                they can quantify the error, this
+                makes us easier to work with neural function. I mean, you will teach they kid by saying that it's a cat,
+                but you can't tell the computer that. It simply doesn't know what's cat and dog. But one thing it knows
+                pretty well are numbers. And
+                loss functions helps us with precisely that.
+                <br>Let's break this down in simple terms.
+                <br>
+                <br><b>What's a Loss Function, Really?</b>
+                <br>
+                <br>Think of a loss function as an <i>inverse
+                </i>report card for your neural network:
+            </p>
+            <ul>
+                <li>Score of 0=Perfect! The network got everything right</li>
+                <li>Higher scores=More mistakes</li>
+                <li>The network's goal is to get the lowest score possible
+                    <br>
+                </li>
+            </ul>
+            <p>
+                <br><b>Real-World Examples to Understand Different Loss Functions</b>
+                <br>
+                <br>1. <b>Teaching Price
+                    Prediction</b>
+                <br>Imagine guessing house prices:
+            </p>
+            <ul>
+                <li>Network says: $200,000</li>
+                <li>Actual price: $250,000</li>
+                <li>How wrong? ($250,000 - $200,000)²=2.5 billion
+                    <br>
+                </li>
+            </ul>
+            <p><b>We square the difference because:</b>
+                <br>
+            </p>
+            <ul>
+                <li>Being off by $50,000 is worse than being off by $25,000 twice</li>
+                <li>Big mistakes get punished more than small ones</li>
+                <li>Just like how being wrong by $100,000 on a house price is worse than being wrong by $1 on 100
+                    different predictions</li>
+                <li>Makes negative values positive.</li>
+            </ul>
+            <p>And guess what? This teaching function is so effective, we even name it <b>Mean Squared Error</b>. Mean
+                because we take out the average of all the prediction loss.</p>2. <b>The Spam Detector</b>
+            <br>
+            <p>
+                <br>Imagine teaching an AI to detect spam. The network gives answers between 0 (not spam) and 1 (spam).
+                This number is called the <b>predicted probability</b>.
+            </p>
+            <p>We then use the <b>loss function</b> to measure how wrong the prediction was. The <b>smaller the loss,
+                    the better the prediction</b>. A small loss means the AI was confident and correct, while a big loss
+                means it was confident but got it wrong.
+                The function most commonly used here is <b>binary cross-entropy </b>loss, and it’s perfect for binary
+                classification tasks like spam detection.</p>
+            <p>Here’s the loss formula for a single prediction:
+                <br>
+            <div class="formula">
+                <span class="note-math"><span class="katex"><span class="katex-mathml"><math>
+                                <semantics>
+                                    <mrow>
+                                        <mtext>Loss</mtext>
+                                        <mo>=</mo>
+                                        <mo>—</mo>
+                                        <mrow>
+                                            <mo fence="true">(</mo>
+                                            <mi>y</mi>
+                                            <mo>⋅</mo>
+                                            <mi>log</mi>
+                                            <mo>⁡</mo>
+                                            <mo>(</mo>
+                                            <mi>p</mi>
+                                            <mo>)</mo>
+                                            <mo>+</mo>
+                                            <mo>(</mo>
+                                            <mn>1</mn>
+                                            <mo>—</mo>
+                                            <mi>y</mi>
+                                            <mo>)</mo>
+                                            <mo>⋅</mo>
+                                            <mi>log</mi>
+                                            <mo>⁡</mo>
+                                            <mo>(</mo>
+                                            <mn>1</mn>
+                                            <mo>—</mo>
+                                            <mi>p</mi>
+                                            <mo>)</mo>
+                                            <mo fence="true">)</mo>
+                                        </mrow>
+                                    </mrow>
+                                    <annotation encoding="application/x-tex">\text{Loss}=- \left( y \cdot \log(p) + (1
+                                        - y) \cdot \log(1 - p) \right)</annotation>
+                                </semantics>
+                            </math></span><span class="katex-html" aria-hidden="true"><span class="strut"
+                                style="height: 0.75em;"></span><span class="strut bottom"
+                                style="height: 1em; vertical-align: -0.25em;"></span><span class="base"><span
+                                    class="mord text"><span class="mord">Loss</span></span><span class="mord rule"
+                                    style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span
+                                    class="mord rule" style="margin-right: 0.277778em;"></span>
+                                <span class="mord">—</span><span class="mord rule"
+                                    style="margin-right: 0.166667em;"></span><span class="minner"><span
+                                        class="mopen delimcenter" style="top: 0em;">(</span><span
+                                        style="margin-right: 0.03588em;" class="mord mathit">y</span><span
+                                        class="mord rule" style="margin-right: 0.222222em;"></span><span
+                                        class="mbin">⋅</span>
+                                    <span class="mord rule" style="margin-right: 0.222222em;"></span><span
+                                        class="mop">lo<span style="margin-right: 0.01389em;">g</span></span><span
+                                        class="mopen">(</span><span class="mord mathit">p</span><span
+                                        class="mclose">)</span><span class="mord rule"
+                                        style="margin-right: 0.222222em;"></span>
+                                    <span class="mbin">+</span><span class="mord rule"
+                                        style="margin-right: 0.222222em;"></span><span class="mopen">(</span><span
+                                        class="mord">1</span><span class="mord rule"
+                                        style="margin-right: 0.222222em;"></span><span class="mbin">—</span><span
+                                        class="mord rule" style="margin-right: 0.222222em;"></span><span
+                                        style="margin-right: 0.03588em;" class="mord mathit">y</span><span
+                                        class="mclose">)</span><span class="mord rule"
+                                        style="margin-right: 0.222222em;"></span><span class="mbin">⋅</span>
+                                    <span class="mord rule" style="margin-right: 0.222222em;"></span><span
+                                        class="mop">lo<span style="margin-right: 0.01389em;">g</span></span><span
+                                        class="mopen">(</span><span class="mord">1</span><span class="mord rule"
+                                        style="margin-right: 0.222222em;"></span><span class="mbin">—</span>
+                                    <span class="mord rule" style="margin-right: 0.222222em;"></span><span
+                                        class="mord mathit">p</span><span class="mclose">)</span><span
+                                        class="mclose delimcenter" style="top: 0em;">)<br></span></span>
+                            </span>
+                        </span>
+                    </span>
+                </span>
+            </div>
+            <br>Let’s break it down:
+            </p>
+            <ol>
+                <li>The minus sign <b>-</b> ensures the loss is always positive.</li>
+                <li>y: This is the reality (1 for spam, 0 for not spam).
+                    <br>This means y acts as a <strong>switch</strong>:
+                    <br>
+                    <br>
+                    <p>
+                        If y=1, the first part of the formula (log(p)) is used. (y is 1)
+                        <br>
+                        If y=0, the second part of the formula (log(1-p)) is used. (1-y is 1)
+                    </p>
+                    <b>In simple terms</b>: <span class="katex"><span class="katex-mathml"><math
+                                xmlns="http://www.w3.org/1998/Math/MathML">
+                                <semantics>
+                                    <mrow>
+                                        <mi>y</mi>
+                                    </mrow>
+                                </semantics>
+                            </math></span><span class="katex-html" aria-hidden="true"><span class="base"><span
+                                    class="strut"></span><span class="mord mathnormal">y</span></span>
+                        </span>
+                    </span>
+                    ensures we only care about the relevant part of the prediction (spam vs. not spam).
+                </li>
+                <li>
+                    <p>p is the <strong>network’s prediction</strong>, a probability between 0 and 1:
+                        <br><br>
+                        p=0.9: The network is 90% confident it’s spam.
+                        <br>p=0.1: The network is 90% confident it’s not spam. (1-0.1)
+                    </p>
+                </li>
+                <li>
+                    <p></p>
+                    <ul></ul>
+                    <p></p>
+                    <p><span class="note-math"><span class="katex"><span class="katex-mathml"><math>
+                                        <semantics>
+                                            <mrow>
+                                                <mi>log</mi>
+                                                <mo>⁡</mo>
+                                                <mo>(</mo>
+                                                <mi>p</mi>
+                                                <mo>)</mo>
+                                            </mrow>
+                                            <annotation encoding="application/x-tex">\log(p)</annotation>
+                                        </semantics>
+                                    </math></span><span class="katex-html" aria-hidden="true"><span class="strut"
+                                        style="height: 0.75em;"></span><span class="strut bottom"
+                                        style="height: 1em; vertical-align: -0.25em;"></span><span class="base"><span
+                                            class="mop"></span></span>
+                                </span>
+                            </span>
+                        </span>Before taking about <span class="note-math"><span class="katex"><span class="katex-html"
+                                    aria-hidden="true"><span class="base"><span class="mop">lo<span
+                                                style="margin-right: 0.01389em;">g</span></span><span
+                                            class="mopen">(</span><span class="mord mathit">p</span><span
+                                            class="mclose">)</span></span>
+                                </span>
+                            </span><b><span class="note-latex" style="display: none;"></span></b></span>, let's talk
+                        about logs. I say this because as a person who hated mathematics, I never understood log. If
+                        math ever felt like a secret code, logs are just a way of asking, <b><i>How many times do I need
+                                to multiply something to reach a
+                                certain number?</i> </b>And really, it's just this. For example,&nbsp;<span
+                            class="note-math"><span class="katex"><span class="katex-mathml"><math>
+                                        <semantics>
+                                            <mrow>
+                                                <msub>
+                                                    <mi>log</mi>
+                                                    <mo>⁡</mo>
+                                                    <mrow>
+                                                        <mn>1</mn>
+                                                        <mn>0</mn>
+                                                    </mrow>
+                                                </msub>
+                                                <mo>(</mo>
+                                                <mn>1</mn>
+                                                <mn>0</mn>
+                                                <mn>0</mn>
+                                                <mo>)</mo>
+                                                <mo>=</mo>
+                                                <mn>2</mn>
+                                            </mrow>
+                                            <annotation encoding="application/x-tex">\log_{10}(100)=2</annotation>
+                                        </semantics>
+                                    </math></span><span class="katex-html" aria-hidden="true"><span class="strut"
+                                        style="height: 0.75em;"></span><span class="strut bottom"
+                                        style="height: 1em; vertical-align: -0.25em;"></span><span class="base"><span
+                                            class="mop"><span class="mop">lo<span
+                                                    style="margin-right: 0.01389em;">g</span></span><span
+                                                class="msupsub"><span class="vlist-t vlist-t2"><span
+                                                        class="vlist-r"><span class="vlist"
+                                                            style="height: 0.206968em;"><span class=""
+                                                                style="top: -2.45586em; margin-right: 0.05em;"><span
+                                                                    class="pstrut" style="height: 2.7em;"></span><span
+                                                                    class="sizing reset-size6 size3 mtight"><span
+                                                                        class="mord mtight"><span
+                                                                            class="mord mtight">1</span><span
+                                                                            class="mord mtight">0</span></span>
+                                                                </span>
+                                                            </span>
+                                                        </span><span class="vlist-s"></span></span><span
+                                                        class="vlist-r"><span class="vlist"
+                                                            style="height: 0.24414em;"></span></span>
+                                                </span>
+                                            </span>
+                                        </span><span class="mopen">(</span><span class="mord">1</span><span
+                                            class="mord">0</span><span class="mord">0</span><span
+                                            class="mclose">)</span><span class="mord rule"
+                                            style="margin-right: 0.277778em;"></span><span class="mrel">=</span>
+                                        <span class="mord rule" style="margin-right: 0.277778em;"></span><span
+                                            class="mord">2</span></span>
+                                </span>
+                            </span><span class="note-latex" style="display: none;"></span></span> because
+                        10<sup>2</sup>=100. Anyway, the property of logarithms we're interested in that how they behave
+                        with numbers between 0 and 1.
+                        <br>The log of a small number (like 0.01) is a large negative value (e.g., <span
+                            class="note-math"><span class="katex"><span class="katex-mathml"><math>
+                                        <semantics>
+                                            <mrow>
+                                                <mi>log</mi>
+                                                <mo>⁡</mo>
+                                                <mo>(</mo>
+                                                <mn>0</mn>
+                                                <mi mathvariant="normal">.</mi>
+                                                <mn>0</mn>
+                                                <mn>1</mn>
+                                                <mo>)</mo>
+                                                <mo>=</mo>
+                                                <mo>—</mo>
+                                                <mn>2</mn>
+                                            </mrow>
+                                            <annotation encoding="application/x-tex">\log(0.01)=-2</annotation>
+                                        </semantics>
+                                    </math></span><span class="katex-html" aria-hidden="true"><span class="strut"
+                                        style="height: 0.75em;"></span><span class="strut bottom"
+                                        style="height: 1em; vertical-align: -0.25em;"></span><span class="base"><span
+                                            class="mop">lo<span style="margin-right: 0.01389em;">g</span></span><span
+                                            class="mopen">(</span><span class="mord">0</span><span
+                                            class="mord">.</span><span class="mord">0</span><span class="mord">1</span>
+                                        <span class="mclose">)</span><span class="mord rule"
+                                            style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span
+                                            class="mord rule" style="margin-right: 0.277778em;"></span><span
+                                            class="mord">—</span><span class="mord">2</span></span>
+                                </span>
+                            </span><span class="note-latex" style="display: none;"></span></span>), while the log of a
+                        number closer to 1 (like 0.9) is a small negative value (<span class="note-math"><span
+                                class="katex"><span class="katex-mathml"><math>
+                                        <semantics>
+                                            <mrow>
+                                                <mi>log</mi>
+                                                <mo>⁡</mo>
+                                                <mo>(</mo>
+                                                <mn>0</mn>
+                                                <mi mathvariant="normal">.</mi>
+                                                <mn>9</mn>
+                                                <mo>)</mo>
+                                                <mo>≈</mo>
+                                                <mo>—</mo>
+                                                <mn>0</mn>
+                                                <mi mathvariant="normal">.</mi>
+                                                <mn>1</mn>
+                                            </mrow>
+                                            <annotation encoding="application/x-tex">\log(0.9) \approx -0.1</annotation>
+                                        </semantics>
+                                    </math></span><span class="katex-html" aria-hidden="true"><span class="strut"
+                                        style="height: 0.75em;"></span><span class="strut bottom"
+                                        style="height: 1em; vertical-align: -0.25em;"></span><span class="base"><span
+                                            class="mop">lo<span style="margin-right: 0.01389em;">g</span></span><span
+                                            class="mopen">(</span><span class="mord">0</span><span
+                                            class="mord">.</span><span class="mord">9</span><span
+                                            class="mclose">)</span>
+                                        <span class="mord rule" style="margin-right: 0.277778em;"></span><span
+                                            class="mrel">≈</span><span class="mord rule"
+                                            style="margin-right: 0.277778em;"></span><span class="mord">—</span><span
+                                            class="mord">0</span><span class="mord">.</span><span
+                                            class="mord">1</span></span>
+                                </span>
+                            </span>
+                        </span>).
+                        <br>
+                        <br>This means that the further away a predicted probability is from 1 (the correct answer), the
+                        more harshly the log function penalizes it. The steep drop-off for small numbers captures the
+                        intuition that being confidently
+                        wrong is much worse than being uncertain or correct. That's why logarithms naturally
+                        <i>punish</i> overconfidence in the wrong direction.
+                        <br>
+                        <br>Logarithms punish overconfidence when the prediction is wrong.
+                        <br>The closer&nbsp;<span class="note-math"><span class="katex"><span
+                                    class="katex-mathml"><math>
+                                        <semantics>
+                                            <mrow>
+                                                <mi>p</mi>
+                                            </mrow>
+                                            <annotation encoding="application/x-tex">p</annotation>
+                                        </semantics>
+                                    </math></span><span class="katex-html" aria-hidden="true"><span class="strut"
+                                        style="height: 0.43056em;"></span><span class="strut bottom"
+                                        style="height: 0.625em; vertical-align: -0.19444em;"></span><span
+                                        class="base"><span class="mord mathit">p</span></span>
+                                </span>
+                            </span><span class="note-latex" style="display: none;"></span></span> is to 1 (for spam) or
+                        1 -&nbsp;
+                        <span class="note-math"><span class="katex"><span class="katex-html" aria-hidden="true"><span
+                                        class="base"><span class="mord mathit">p</span></span>
+                                </span>
+                            </span>
+                        </span> is to 1 (for not spam), the smaller the log value. This reflects high confidence. &nbsp;
+                        <br>The closer&nbsp;<span class="note-math"><span class="katex"><span class="katex-html"
+                                    aria-hidden="true"><span class="base"><span class="mord mathit">p</span></span>
+                                </span>
+                            </span>
+                        </span> is to 0 (for spam) or 1 -&nbsp;<span class="note-math"><span class="katex"><span
+                                    class="katex-html" aria-hidden="true"><span class="base"><span
+                                            class="mord mathit">p</span></span>
+                                </span>
+                            </span>
+                        </span> is to 0 (for not spam), the larger the log value. This reflects bad predictions.&nbsp;
+                        <br>
+                    </p>
+                </li>
+            </ol>
+            <br>In essence, this formula is a mathematical way of telling the network: &nbsp;
+            <br><i>Don’t just
+                guess right—be sure about it. But if you’re wrong and confident, the punishment will be severe!</i>
+            <p></p>
+            <p>Let's take a look at some examples.
+            </p>
+            <p><b>Email: "HOT SINGLES NEAR YOU!!!"</b>
+                <br>Reality: Spam (1.0)
+                <br>Network's prediction: 0.9 (90% sure it's spam)
+            <div class="formula">
+                <span class="note-math"><span class="katex"><span class="katex-mathml"><math>
+                                <semantics>
+                                    <mrow>
+                                        <mtext>Loss</mtext>
+                                        <mo>=</mo>
+                                        <mo>—</mo>
+                                        <mrow>
+                                            <mo fence="true">(</mo>
+                                            <mn>1</mn>
+                                            <mo>⋅</mo>
+                                            <mi>log</mi>
+                                            <mo>⁡</mo>
+                                            <mo>(</mo>
+                                            <mn>0</mn>
+                                            <mi mathvariant="normal">.</mi>
+                                            <mn>9</mn>
+                                            <mo>)</mo>
+                                            <mo>+</mo>
+                                            <mo>(</mo>
+                                            <mn>1</mn>
+                                            <mo>—</mo>
+                                            <mn>1</mn>
+                                            <mo>)</mo>
+                                            <mo>⋅</mo>
+                                            <mi>log</mi>
+                                            <mo>⁡</mo>
+                                            <mo>(</mo>
+                                            <mn>1</mn>
+                                            <mo>—</mo>
+                                            <mn>0</mn>
+                                            <mi mathvariant="normal">.</mi>
+                                            <mn>9</mn>
+                                            <mo>)</mo>
+                                            <mo fence="true">)</mo>
+                                        </mrow>
+                                        <mo>=</mo>
+                                        <mo>—</mo>
+                                        <mi>log</mi>
+                                        <mo>⁡</mo>
+                                        <mo>(</mo>
+                                        <mn>0</mn>
+                                        <mi mathvariant="normal">.</mi>
+                                        <mn>9</mn>
+                                        <mo>)</mo>
+                                        <mo>=</mo>
+                                        <mn>0</mn>
+                                        <mi mathvariant="normal">.</mi>
+                                        <mn>1</mn>
+                                        <mn>0</mn>
+                                        <mn>5</mn>
+                                    </mrow>
+                                </semantics>
+                            </math></span><span class="katex-html" aria-hidden="true"><span class="strut"
+                                style="height: 0.75em;"></span><span class="strut bottom"
+                                style="height: 1em; vertical-align: -0.25em;"></span><span class="base"><span
+                                    class="mord text"><span class="mord">Loss</span></span><span class="mord rule"
+                                    style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span
+                                    class="mord rule" style="margin-right: 0.277778em;"></span>
+                                <span class="mord">—</span><span class="mord rule"
+                                    style="margin-right: 0.166667em;"></span><span class="minner"><span
+                                        class="mopen delimcenter" style="top: 0em;">(</span><span
+                                        class="mord">1</span><span class="mord rule"
+                                        style="margin-right: 0.222222em;"></span><span class="mbin">⋅</span><span
+                                        class="mord rule" style="margin-right: 0.222222em;"></span>
+                                    <span class="mop">lo<span style="margin-right: 0.01389em;">g</span></span><span
+                                        class="mopen">(</span><span class="mord">0</span><span
+                                        class="mord">.</span><span class="mord">9</span><span
+                                        class="mclose">)</span><span class="mord rule"
+                                        style="margin-right: 0.222222em;"></span>
+                                    <span class="mbin">+</span><span class="mord rule"
+                                        style="margin-right: 0.222222em;"></span><span class="mopen">(</span><span
+                                        class="mord">1</span><span class="mord rule"
+                                        style="margin-right: 0.222222em;"></span><span class="mbin">—</span><span
+                                        class="mord rule" style="margin-right: 0.222222em;"></span><span
+                                        class="mord">1</span><span class="mclose">)</span><span class="mord rule"
+                                        style="margin-right: 0.222222em;"></span><span class="mbin">⋅</span><span
+                                        class="mord rule" style="margin-right: 0.222222em;"></span>
+                                    <span class="mop">lo<span style="margin-right: 0.01389em;">g</span></span><span
+                                        class="mopen">(</span><span class="mord">1</span><span class="mord rule"
+                                        style="margin-right: 0.222222em;"></span><span class="mbin">—</span><span
+                                        class="mord rule" style="margin-right: 0.222222em;"></span><span
+                                        class="mord">0</span><span class="mord">.</span><span class="mord">9</span><span
+                                        class="mclose">)</span><span class="mclose delimcenter"
+                                        style="top: 0em;">)</span></span>
+                                <span class="mord rule" style="margin-right: 0.277778em;"></span><span
+                                    class="mrel">=</span><span class="mord rule"
+                                    style="margin-right: 0.277778em;"></span><span class="mord">—</span><span
+                                    class="mord rule" style="margin-right: 0.166667em;"></span><span class="mop">lo<span
+                                        style="margin-right: 0.01389em;">g</span></span><span
+                                    class="mopen">(</span><span class="mord">0</span><span class="mord">.</span><span
+                                    class="mord">9</span><span class="mclose">)</span><span class="mord rule"
+                                    style="margin-right: 0.277778em;"></span>
+                                <span class="mrel">=</span><span class="mord rule"
+                                    style="margin-right: 0.277778em;"></span><span class="mord">0</span><span
+                                    class="mord">.</span><span class="mord">1</span><span class="mord">0</span><span
+                                    class="mord">5</span></span>
+                        </span>
+                    </span>
+                </span>
+            </div>
+            <br>Small loss because the network was confident and correct!
+            <br>
+            <br><b>Email: "Meeting at 3pm tomorrow."</b>
+            <br>Reality: Not Spam (0)
+            <br>Network's prediction: 0.9 (90% sure it's spam)
+            <br>Loss=-0.0×log(0.1)=2.303
+            <br>Big loss because the network was very confident but wrong!
+            <br>
+            <br>
+            </p>
+            <p>The log function has a specific role here. It grows rapidly as the probability gets closer to 0. This
+                means:
+            </p>
+            <ul>
+                <li>When correct and confident (e.g., predicts 0.9 for spam when it is spam): <b>Small</b> loss.</li>
+                <li>When correct but uncertain (e.g., predicts 0.6 for spam when it is spam): <b>Medium</b> loss</li>
+                <li>When wrong and confident (e.g., predicts 0.9 for spam when it’s not): <b>HUGE </b>loss</li>
+                <li>Forces the network to be <b>both accurate AND confident</b></li>
+            </ul>
+            <p>3. <b>The Animal Classifier</b>
+            </p>
+            <p>Till now, we were trying to predict <i>binary</i> outputs, i.e., yes/no, cat/dog outputs. But imagine
+                you’re training an AI to classify animals as dog, cat, or bird. To help it learn, we need a way to
+                measure how well it’s doing—this is where
+                <b>categorical cross-entropy loss</b> comes in.
+            </p>
+            <p>Categorical Cross-Entropy is just a fancy name for measuring how far off a prediction is when the output
+                involves multiple categories. </p>
+            <p>Let's understand the formula first:</p>
+            <p>
+            <div class="formula">
+                <span class="note-math"><span class="katex"><span class="katex-html" aria-hidden="true"><span
+                                class="base"><span class="mord text"><span class="mord">Loss</span></span><span
+                                    class="mord rule" style="margin-right: 0.277778em;"></span><span
+                                    class="mrel">=</span><span class="mord rule"
+                                    style="margin-right: 0.277778em;"></span>
+                                <span class="mord">—</span><span class="mord rule"
+                                    style="margin-right: 0.166667em;"></span><span class="mop"><span
+                                        class="mop op-symbol small-op"
+                                        style="position: relative; top: -0.000005em;">∑</span><span
+                                        class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span
+                                                    class="vlist" style="height: 0.167792em;"><span class=""
+                                                        style="top: -2.40029em; margin-left: 0em; margin-right: 0.05em;"><span
+                                                            class="pstrut" style="height: 2.7em;"></span><span
+                                                            class="sizing reset-size6 size3 mtight"><span
+                                                                class="mord mtight"><span class="mord text mtight"><span
+                                                                        class="mord mtight">categories</span></span>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </span><span class="vlist-s"></span></span><span class="vlist-r"><span
+                                                    class="vlist" style="height: 0.435818em;"></span></span>
+                                        </span>
+                                    </span>
+                                </span><span class="mopen">(</span><span class="mord text"><span
+                                        class="mord">True&nbsp;label</span></span><span class="mord rule"
+                                    style="margin-right: 0.222222em;"></span><span class="mbin">×</span><span
+                                    class="mord rule" style="margin-right: 0.222222em;"></span><span class="mop">lo<span
+                                        style="margin-right: 0.01389em;">g</span></span><span
+                                    class="mopen">(</span><span class="mord text"><span
+                                        class="mord">Prediction</span></span><span class="mclose">)</span><span
+                                    class="mclose">)</span></span>
+                        </span>
+                    </span>
+                </span>
+            </div>
+
+            <br>Let’s break this down step by step.
+            <br>
+            </p>
+            <ol>
+                <li><strong>True label</strong>: This is the correct answer, like <i>cat</i> or <i>dog</i> in a picture
+                    classification task. </li>
+                <li><b>Prediction</b>: This is the probability the model gives for each possible answer. For example,
+                    the model might say there's a 70% chance it's a <i>cat</i> and a 30% chance it's a <i>dog</i>.</li>
+                <li><b>Log function</b>: This function punishes the model more when it's really wrong. If the model is
+                    very confident and wrong, it gets a bigger punishment. Pretty similar to binary cross-entropy</li>
+                <li><span class="note-math"><span class="katex"><span class="katex-html" aria-hidden="true"><span
+                                    class="base"><span class="mop"><span class="mop op-symbol small-op"
+                                            style="position: relative; top: -0.000005em;">∑</span></span>
+                                </span>
+                            </span>
+                        </span>
+                    </span><span class="note-math"><span class="katex"><span class="katex-html" aria-hidden="true"><span
+                                    class="base"><span class="mop"><span class="mop op-symbol small-op"
+                                            style="position: relative; top: -0.000005em;"></span><span
+                                            class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span
+                                                        class="vlist" style="height: 0.167792em;"><span class=""
+                                                            style="top: -2.40029em; margin-left: 0em; margin-right: 0.05em;"><span
+                                                                class="pstrut" style="height: 2.7em;"></span><span
+                                                                class="sizing reset-size6 size3 mtight"><span
+                                                                    class="mord mtight"><span
+                                                                        class="mord text mtight"><span
+                                                                            class="mord mtight">categories</span></span>
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                    </span><span class="vlist-s"><br></span></span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </span>
+                        </span>
+                    </span>:&nbsp;This is just adding up the punishment for each possible category (like cat, dog, bird,
+                    etc.).
+                    <br>
+                </li>
+            </ol>
+
+            <p>In multi-class classification, the loss function computes the error for each category (where the true
+                label is 1 for the correct category and 0 for others) and adds them up. Essentially, it penalizes the
+                model based on how incorrect its predictions
+                are for each category.</p>
+            <p>Let's see some examples:
+                <br>
+            </p>
+            <ol>
+                <li><b>Clear Dog Photo<br></b>The network predicts:
+                    <br>
+                    <br>Dog: 0.7 (70% sure)
+                    <br>Cat: 0.2 (20% sure)
+                    <br>Bird: 0.1 (10% sure)
+                    <br>
+                    <br>The reality is: <b>It’s a dog!</b> [1, 0, 0] [Yes, No, No]
+                    <br>
+                    <br>We calculate the loss using the formula for categorical cross-entropy:
+
+                    <div class="formula">
+                        <span class="note-math"><span class="katex"><span class="katex-mathml"><math>
+                                        <semantics>
+                                            <mrow>
+                                                <mtext>Loss</mtext>
+                                                <mo>=</mo>
+                                                <mo>—</mo>
+                                                <msub>
+                                                    <mo>∑</mo>
+                                                    <mtext>categories</mtext>
+                                                </msub>
+                                                <mo>(</mo>
+                                                <mtext>True&nbsp;label</mtext>
+                                                <mo>×</mo>
+                                                <mi>log</mi>
+                                                <mo>⁡</mo>
+                                                <mo>(</mo>
+                                                <mtext>Prediction</mtext>
+                                                <mo>)</mo>
+                                                <mo>)</mo>
+                                            </mrow>
+                                            <annotation encoding="application/x-tex">
+                                                \text{Loss}=-\sum_{\text{categories}}
+                                                (\text{True label} \times \log(\text{Prediction}))</annotation>
+                                        </semantics>
+                                    </math></span><span class="katex-html" aria-hidden="true"><span class="strut"
+                                        style="height: 0.75em;"></span><span class="strut bottom"
+                                        style="height: 1.18582em; vertical-align: -0.435818em;"></span><span
+                                        class="base"><span class="mord text"><span
+                                                class="mord"><br>Loss</span></span><span class="mord rule"
+                                            style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span
+                                            class="mord rule" style="margin-right: 0.277778em;"></span><span
+                                            class="mord">—</span><span class="mord rule"
+                                            style="margin-right: 0.166667em;"></span>
+                                        <span class="mop"><span class="mop op-symbol small-op"
+                                                style="position: relative; top: -0.000005em;">∑</span><span
+                                                class="msupsub"><span class="vlist-t vlist-t2"><span
+                                                        class="vlist-r"><span class="vlist"
+                                                            style="height: 0.167792em;"><span class=""
+                                                                style="top: -2.40029em; margin-left: 0em; margin-right: 0.05em;"><span
+                                                                    class="pstrut" style="height: 2.7em;"></span><span
+                                                                    class="sizing reset-size6 size3 mtight"><span
+                                                                        class="mord mtight"><span
+                                                                            class="mord text mtight"><span
+                                                                                class="mord mtight">categories</span></span>
+                                                                    </span>
+                                                                </span>
+                                                            </span>
+                                                        </span><span class="vlist-s"></span></span><span
+                                                        class="vlist-r"><span class="vlist"
+                                                            style="height: 0.435818em;"></span></span>
+                                                </span>
+                                            </span>
+                                        </span><span class="mopen">(</span><span class="mord text"><span
+                                                class="mord">True&nbsp;label</span></span><span class="mord rule"
+                                            style="margin-right: 0.222222em;"></span><span class="mbin">×</span><span
+                                            class="mord rule" style="margin-right: 0.222222em;"></span><span
+                                            class="mop">lo<span style="margin-right: 0.01389em;">g</span></span>
+                                        <span class="mopen">(</span><span class="mord text"><span
+                                                class="mord">Prediction</span></span><span class="mclose">)</span><span
+                                            class="mclose">)</span></span>
+                                </span>
+                            </span><span class="note-latex" style="display: none;"></span></span>
+                    </div>
+                    <br>For this case:
+                    <div class="formula">
+                        <span class="note-math"><span class="katex"><span class="katex-mathml"><math>
+                                        <semantics>
+                                            <mrow>
+                                                <mtext>Loss</mtext>
+                                                <mo>=</mo>
+                                                <mo>—</mo>
+                                                <mo>[</mo>
+                                                <mn>1</mn>
+                                                <mo>⋅</mo>
+                                                <mi>log</mi>
+                                                <mo>⁡</mo>
+                                                <mo>(</mo>
+                                                <mn>0</mn>
+                                                <mi mathvariant="normal">.</mi>
+                                                <mn>7</mn>
+                                                <mo>)</mo>
+                                                <mo>+</mo>
+                                                <mn>0</mn>
+                                                <mo>⋅</mo>
+                                                <mi>log</mi>
+                                                <mo>⁡</mo>
+                                                <mo>(</mo>
+                                                <mn>0</mn>
+                                                <mi mathvariant="normal">.</mi>
+                                                <mn>2</mn>
+                                                <mo>)</mo>
+                                                <mo>+</mo>
+                                                <mn>0</mn>
+                                                <mo>⋅</mo>
+                                                <mi>log</mi>
+                                                <mo>⁡</mo>
+                                                <mo>(</mo>
+                                                <mn>0</mn>
+                                                <mi mathvariant="normal">.</mi>
+                                                <mn>1</mn>
+                                                <mo>)</mo>
+                                                <mo>]</mo>
+                                                <mo>=</mo>
+                                                <mo>—</mo>
+                                                <mi>log</mi>
+                                                <mo>⁡</mo>
+                                                <mo>(</mo>
+                                                <mn>0</mn>
+                                                <mi mathvariant="normal">.</mi>
+                                                <mn>7</mn>
+                                                <mo>)</mo>
+                                                <mo>=</mo>
+                                                <mn>0</mn>
+                                                <mi mathvariant="normal">.</mi>
+                                                <mn>3</mn>
+                                                <mn>5</mn>
+                                                <mn>7</mn>
+                                            </mrow>
+                                            <annotation encoding="application/x-tex">\text{Loss}=-[1 \cdot \log(0.7) + 0
+                                                \cdot \log(0.2) + 0 \cdot \log(0.1)]=-\log(0.7)=0.357</annotation>
+                                        </semantics>
+                                    </math></span><span class="katex-html" aria-hidden="true"><span class="strut"
+                                        style="height: 0.75em;"></span><span class="strut bottom"
+                                        style="height: 1em; vertical-align: -0.25em;"></span><span class="base"><span
+                                            class="mord text"><span class="mord">Loss</span></span><span
+                                            class="mord rule" style="margin-right: 0.277778em;"></span><span
+                                            class="mrel">=</span><span class="mord rule"
+                                            style="margin-right: 0.277778em;"></span>
+                                        <span class="mord">—</span><span class="mopen">[</span><span
+                                            class="mord">1</span><span class="mord rule"
+                                            style="margin-right: 0.222222em;"></span><span class="mbin">⋅</span><span
+                                            class="mord rule" style="margin-right: 0.222222em;"></span>
+                                        <span class="mop">lo<span style="margin-right: 0.01389em;">g</span></span><span
+                                            class="mopen">(</span><span class="mord">0</span><span
+                                            class="mord">.</span><span class="mord">7</span><span
+                                            class="mclose">)</span><span class="mord rule"
+                                            style="margin-right: 0.222222em;"></span>
+                                        <span class="mbin">+</span><span class="mord rule"
+                                            style="margin-right: 0.222222em;"></span><span class="mord">0</span><span
+                                            class="mord rule" style="margin-right: 0.222222em;"></span><span
+                                            class="mbin">⋅</span><span class="mord rule"
+                                            style="margin-right: 0.222222em;"></span><span class="mop">lo<span
+                                                style="margin-right: 0.01389em;">g</span></span><span
+                                            class="mopen">(</span><span class="mord">0</span><span
+                                            class="mord">.</span><span class="mord">2</span>
+                                        <span class="mclose">)</span><span class="mord rule"
+                                            style="margin-right: 0.222222em;"></span><span class="mbin">+</span><span
+                                            class="mord rule" style="margin-right: 0.222222em;"></span><span
+                                            class="mord">0</span><span class="mord rule"
+                                            style="margin-right: 0.222222em;"></span><span class="mbin">⋅</span><span
+                                            class="mord rule" style="margin-right: 0.222222em;"></span><span
+                                            class="mop">lo<span style="margin-right: 0.01389em;">g</span></span>
+                                        <span class="mopen">(</span><span class="mord">0</span><span
+                                            class="mord">.</span><span class="mord">1</span><span
+                                            class="mclose">)</span><span class="mclose">]</span><span class="mord rule"
+                                            style="margin-right: 0.277778em;"></span>
+                                        <span class="mrel">=</span><span class="mord rule"
+                                            style="margin-right: 0.277778em;"></span><span class="mord">—</span><span
+                                            class="mord rule" style="margin-right: 0.166667em;"></span><span
+                                            class="mop">lo<span style="margin-right: 0.01389em;">g</span></span><span
+                                            class="mopen">(</span><span class="mord">0</span><span
+                                            class="mord">.</span><span class="mord">7</span><span
+                                            class="mclose">)</span><span class="mord rule"
+                                            style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span
+                                            class="mord rule" style="margin-right: 0.277778em;"></span><span
+                                            class="mord">0</span><span class="mord">.</span><span
+                                            class="mord">3</span><span class="mord">5</span><span
+                                            class="mord">7</span></span>
+                                </span>
+                            </span><span class="note-latex" style="display: none;"></span></span>
+                    </div>
+                    <br>
+                    <br>Here, the loss is
+                    <b>small</b> because the network was fairly confident about the right answer.
+                </li>
+                <li>Clear Bird Photo, but Network is Confused
+                    <br>
+                    <br>The network predicts:
+                    <br>
+                    <br>Dog: 0.4 (40% sure)
+                    <br>Cat: 0.3 (30% sure)
+                    <br>Bird: 0.3 (30% sure)
+                    <br>
+                    <br>Reality: <b>It’s a bird!</b> [0, 0, 1]
+                    <br>
+                    <br>Again, we calculate the loss:
+                    <br>
+                    <br>
+                    <div class="formula">
+                        <span class="note-math"><span class="katex"><span class="katex-mathml"><math>
+                                        <semantics>
+                                            <mrow>
+                                                <mtext>Loss</mtext>
+                                                <mo>=</mo>
+                                                <mo>—</mo>
+                                                <mo>[</mo>
+                                                <mn>0</mn>
+                                                <mo>⋅</mo>
+                                                <mi>log</mi>
+                                                <mo>⁡</mo>
+                                                <mo>(</mo>
+                                                <mn>0</mn>
+                                                <mi mathvariant="normal">.</mi>
+                                                <mn>4</mn>
+                                                <mo>)</mo>
+                                                <mo>+</mo>
+                                                <mn>0</mn>
+                                                <mo>⋅</mo>
+                                                <mi>log</mi>
+                                                <mo>⁡</mo>
+                                                <mo>(</mo>
+                                                <mn>0</mn>
+                                                <mi mathvariant="normal">.</mi>
+                                                <mn>3</mn>
+                                                <mo>)</mo>
+                                                <mo>+</mo>
+                                                <mn>1</mn>
+                                                <mo>⋅</mo>
+                                                <mi>log</mi>
+                                                <mo>⁡</mo>
+                                                <mo>(</mo>
+                                                <mn>0</mn>
+                                                <mi mathvariant="normal">.</mi>
+                                                <mn>3</mn>
+                                                <mo>)</mo>
+                                                <mo>]</mo>
+                                                <mo>=</mo>
+                                                <mo>—</mo>
+                                                <mi>log</mi>
+                                                <mo>⁡</mo>
+                                                <mo>(</mo>
+                                                <mn>0</mn>
+                                                <mi mathvariant="normal">.</mi>
+                                                <mn>3</mn>
+                                                <mo>)</mo>
+                                                <mo>=</mo>
+                                                <mn>1</mn>
+                                                <mi mathvariant="normal">.</mi>
+                                                <mn>2</mn>
+                                                <mn>0</mn>
+                                                <mn>4</mn>
+                                            </mrow>
+                                            <annotation encoding="application/x-tex">\text{Loss}=-[0 \cdot \log(0.4) + 0
+                                                \cdot \log(0.3) + 1 \cdot \log(0.3)]=-\log(0.3)=1.204</annotation>
+                                        </semantics>
+                                    </math></span><span class="katex-html" aria-hidden="true"><span class="strut"
+                                        style="height: 0.75em;"></span><span class="strut bottom"
+                                        style="height: 1em; vertical-align: -0.25em;"></span><span class="base"><span
+                                            class="mord text"><span class="mord">Loss</span></span><span class="mord rule"
+                                            style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span
+                                            class="mord rule" style="margin-right: 0.277778em;"></span>
+                                        <span class="mord">—</span><span class="mopen">[</span><span
+                                            class="mord">0</span><span class="mord rule"
+                                            style="margin-right: 0.222222em;"></span><span class="mbin">⋅</span><span
+                                            class="mord rule" style="margin-right: 0.222222em;"></span><span
+                                            class="mop">lo<span style="margin-right: 0.01389em;">g</span></span>
+                                        <span class="mopen">(</span><span class="mord">0</span><span
+                                            class="mord">.</span><span class="mord">4</span><span
+                                            class="mclose">)</span><span class="mord rule"
+                                            style="margin-right: 0.222222em;"></span><span class="mbin">+</span><span
+                                            class="mord rule" style="margin-right: 0.222222em;"></span><span
+                                            class="mord">0</span><span class="mord rule"
+                                            style="margin-right: 0.222222em;"></span><span class="mbin">⋅</span><span
+                                            class="mord rule" style="margin-right: 0.222222em;"></span>
+                                        <span class="mop">lo<span style="margin-right: 0.01389em;">g</span></span><span
+                                            class="mopen">(</span><span class="mord">0</span><span
+                                            class="mord">.</span><span class="mord">3</span><span
+                                            class="mclose">)</span><span class="mord rule"
+                                            style="margin-right: 0.222222em;"></span>
+                                        <span class="mbin">+</span><span class="mord rule"
+                                            style="margin-right: 0.222222em;"></span><span class="mord">1</span><span
+                                            class="mord rule" style="margin-right: 0.222222em;"></span><span
+                                            class="mbin">⋅</span><span class="mord rule"
+                                            style="margin-right: 0.222222em;"></span>
+                                        <span class="mop">lo<span style="margin-right: 0.01389em;">g</span></span><span
+                                            class="mopen">(</span><span class="mord">0</span><span
+                                            class="mord">.</span><span class="mord">3</span><span
+                                            class="mclose">)</span><span class="mclose">]</span>
+                                        <span class="mord rule" style="margin-right: 0.277778em;"></span><span
+                                            class="mrel">=</span><span class="mord rule"
+                                            style="margin-right: 0.277778em;"></span><span class="mord">—</span><span
+                                            class="mord rule" style="margin-right: 0.166667em;"></span><span
+                                            class="mop">lo<span style="margin-right: 0.01389em;">g</span></span><span
+                                            class="mopen">(</span><span class="mord">0</span><span
+                                            class="mord">.</span><span class="mord">3</span><span
+                                            class="mclose">)</span><span class="mord rule"
+                                            style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span
+                                            class="mord rule" style="margin-right: 0.277778em;"></span><span
+                                            class="mord">1</span><span class="mord">.</span><span class="mord">2</span>
+                                        <span class="mord">0</span><span class="mord">4</span></span>
+                                </span>
+                            </span><span class="note-latex" style="display: none;"></span></span>
+                    </div>
+                    <br>Here, the loss is <b>higher</b> because the network wasn’t confident in the correct answer. It
+                    spread its probabilities across categories instead of focusing on <i>bird</i>.
+                </li>
+            </ol>
+            <p>
+                In summary:
+            </p>
+            <p>1. <b>Binary Cross-Entropy</b> is perfect for yes/no decisions:
+                <br>
+            </p>
+            <ul>
+                <li>Spam detection (yes/no)</li>
+                <li>Fraud detection (yes/no)</li>
+                <li>Medical test results (yes/no)</li>
+                <li>User will click/not click (yes/no)</li>
+            </ul>
+            <p>
+                <br>2. <b>Categorical Cross-Entropy</b> is great for multiple choices:
+            </p>
+            <ul>
+                <li>Animal species (dog, bird, cat, etc.)&nbsp; </li>
+                <li>Object recognition (chair, table, glass, etc.)</li>
+                <li>Language detection (Hindi, English, Japanese, etc.)</li>
+                <li>Emotion recognition (happy, angry, sad, etc.)</li>
+            </ul>
+            <p>3. <b>Mean Squared Error (MSE)</b> are the perfect loss function for <b>Predicting Numbers</b>:
+                <br>
+            </p>
+            <ul>
+                <li>Price Predictions
+                    <br>House prices ($200,000, $350,000, etc.)
+                    <br>Stock prices: ($50.25, $51.30, etc.)
+                    <br>Product prices: ($9.99, $24.99, etc.)
+                    <br>
+                    <br><b>Big pricing mistakes should cost more than
+                        small ones</b>. Being off by $100,000 on a house price is much worse than being off by $1,000!
+                </li>
+            </ul>
+            <p>
+                <br>Loss functions are your network's teacher - they point out mistakes and guide improvement. <i>Choose
+                    the right one for your task, and you're
+                    halfway to success!</i>
+                <br>
+            </p>
+            <p>
+                <hr>
+                <b><span><span
+                            style="font-size: 24px; font-family: Comic Sans MS">CONGRATULATIONS!!!</span><br></span></b>
+            </p>
+            <p><span style="font-family: Comic Sans MS;">You have just completed Day 7. Now do
+                    re-read</span><b><span style="font-family: Comic Sans MS;"> </span></b><span
+                    style="font-family: Comic Sans MS;">the whole thing again. Until you can understand
+                    every concept. Take a pen and paper; and make notes. Revise. And remember, nothing is tough. You
+                    just need to have the hunger for knowledge.</span></p>
+        </div>
+    </main>
+
+    <nav aria-label="Page navigation" class="mt-4">
+        <ul class="pagination justify-content-center">
+          <li class="page-item">
+            <a class="page-link" href="day6" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item"><a class="page-link" href="day6">6</a></li>
+        </ul>
+      </nav>
+
+    <hr>
+
+    <div class="mx-5 my-4">
+        <p>If you found this content helpful and would like to support, feel free to contribute. Your support isn’t just a donation—it’s a step toward building something bigger, together.</p>
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#scannerModal">
+          UPI (for Indians)
+        </button>
+      <a href="https://paypal.me/regenerationdetox?country.x=IN&locale.x=en_GB" class="btn btn-primary me-2" target="_blank">Donate via PayPal</a>
+    </div>
+    <div 
+        id="scannerModal" 
+        class="modal fade" 
+        tabindex="-1" 
+        aria-labelledby="scannerModalLabel" 
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="scannerModalLabel">My Scanner</h5>
+              <button 
+                type="button" 
+                class="btn-close" 
+                data-bs-dismiss="modal" 
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body d-flex justify-content-center align-items-center">
+              <img 
+                src="assets/images/scanner.png" 
+                alt="Scanner" 
+                class="img-fluid rounded"
+              />
+            </div>
+            <div class="modal-footer">
+              <button 
+                type="button" 
+                class="btn btn-secondary" 
+                data-bs-dismiss="modal">
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+    <footer class="footer">
+        &copy; 2025 Stable Diffusion Blog
+    </footer>
+    
+    
+</body>
+<script src="assets/js/jquery-3.7.0.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/navigate.js"></script>
+<script src="assets/js/donation.js"></script>
+
+</html>
