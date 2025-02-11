@@ -2,6 +2,10 @@
 
 !.gitignore
 
+!python_code/
+!python_code/*
+!python_code/*/**
+
 !docs/
 !docs/assets/
 !docs/assets/**
@@ -14,5 +18,6 @@
 !docs/day5.html
 !docs/day6.html
 !docs/day7.html
+!docs/day8.html
 !LICENSE
 !README.md

@@ -1,0 +1,1780 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 8</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/katex.min.css">
+    <link rel="stylesheet" href="assets/css/prism.css">
+    <link rel="stylesheet" href="assets/css/custom.css">
+    <style>
+        .responsive-img {
+            width: 40%;
+        }
+        @media (max-width: 768px) {
+            .responsive-img {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>  
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">Home</a>
+            <a class="navbar-brand" href="https://github.com/yashbagri0/sd" class="btn btn-primary me-2" target="_blank">Github</a>
+            <ul class="navbar-nav ms-auto"></ul>
+        </div>
+    </nav>
+
+        <header class="blog-header">
+        <div class="container">
+            <h1 class="blog-title">Day 8: Unveiling Artificial Neural Networks (ANNs) (Part 2)</h1>
+            By Yash | February 11, 2025
+        </div>
+    </header>
+
+    <main class="container my-5" style="max-width: 1200px;">
+        <div class="blog-content">
+            <b><span style="font-size: 24px;">
+                    A Little Speech Before We Begin</span></b>
+            <br> <br>
+            Alright, welcome back. We’re on Day 8, and now we’re stepping into the core of modern AI—Artificial Neural Networks.  
+            <br><br>
+            If you’ve ever wondered how AI <i>thinks</i>, this is it. These networks, inspired by the human brain, power everything from image generation to game-playing bots. But here’s the thing—most people just accept them as black boxes. We won’t. We’ll break them down, understand their mechanics, and *really* see why they work.  
+            <br><br>
+            Some parts might feel abstract. Some might challenge the way you look at data. That’s fine. If it were easy, everyone would be doing it. The key is to <i>not just learn, but internalize</i>. Because once this clicks, everything in deep learning will make way more sense.  
+            <br><br>
+            So let’s dig in—neurons, activations, weights, and all.
+            <hr>
+
+            <span style="font-size: 24px;"><b>How Neural Networks Actually
+                Learn: A Simple Guide to Gradient Descent</b></span>
+        <br>
+        <br>Remember how our neural network:
+        <br>1. Makes predictions (forward propagation)
+        <br>2. Measures mistakes (loss function)
+        <br>
+        <br>But how does it actually <i>learn</i> from these mistakes? Enter gradient descent!
+        <br>
+        <br>Think of gradient descent like
+        <i>baking cookies</i>. You’ve got a recipe, but your first batch of cookies isn’t quite right. They're
+        either too soft or too crunchy. So, you want to adjust your recipe slightly to get the perfect cookie.
+        <br>
+        <br><b>How it works?</b>
+        <br>
+        <p></p>
+        <ol>
+            <li>Starting point (Random Guess): You start with a random recipe. Maybe you guessed the baking time and
+                temperature, but the cookies aren't perfect yet</li>
+            <li>Bake the cookies (Make a prediction): You bake a batch of cookies with your initial recipe. When you
+                taste them, you realize they’re not great (too soft, too crunchy, or not sweet enough). This is like
+                the model making a prediction and
+                seeing how wrong it is based on the loss function.</li>
+            <li>Taste and Adjust (Find the gradient): Now, you analyze your cookies. You decide what went
+                wrong—maybe the baking time was too short, or the temperature too high. This analysis is like
+                calculating the <i>gradient</i> or the <i>direction of change</i> needed to fix things.</li>
+            <li>Tweak the recipe (Update weights): Based on what you learned, you adjust your recipe. You lower the
+                temperature or bake a little longer. This is the same as updating the model’s parameters (weights)
+                to improve the prediction.</li>
+            <li>Repeat: You bake another batch with the adjusted recipe, taste it again, and see if it’s better. If
+                not, you adjust further and repeat the process. Each time, you make small adjustments to improve
+                your recipe until you get the perfect
+                cookie. This is the model learning through gradient descent, improving its predictions step by step.
+            </li>
+        </ol>
+        <p>So, just like you refine a recipe through trial and error to get the perfect cookie, the model uses
+            gradient descent to gradually adjust and improve its predictions! Let's write our first code to achieve
+            this.
+            <br>
+            <br>
+        </p>
+        <p></p>
+        <pre><code class="language-python">baking_time=0.5  # Start with a guess for baking time (the weight)
+oven_temp=0.5    # This is fixed (input) (this can be a variable as well, but let's imagine that you got a vision and now know the correct time)
+perfect_cookie_score=0.8  # Our goal is to get this perfect score
+adjustment=0.001  # Tiny changes we make to baking time each time
+
+# Iteratively adjust baking time
+for iteration in range(1101):
+    # Bake a batch of cookies
+    cookie_quality=oven_temp * baking_time  # Prediction: how good are the cookies? (input * weight, as be discussed above, i.e., front propagation)
+    error=(cookie_quality - perfect_cookie_score) ** 2  # How far off are we? (MSE)
+
+    # Print current status
+    print(f"Error: {error} | Cookie Quality: {cookie_quality}")
+
+    # Test increasing baking time
+    try_up_quality=oven_temp * (baking_time + adjustment)  # Try baking a bit longer
+    up_error=(perfect_cookie_score - try_up_quality) ** 2  # Error for baking longer
+
+    # Test decreasing baking time
+    try_down_quality=oven_temp * (baking_time - adjustment)  # Try baking a bit shorter
+    down_error=(perfect_cookie_score - try_down_quality) ** 2  # Error for baking shorter
+
+    # Decide whether to bake longer or shorter based on smaller error
+    if down_error &lt; up_error:  # If shorter baking time gives better cookies
+        baking_time=baking_time - adjustment
+    elif down_error &gt; up_error:  # If longer baking time gives better cookies
+        baking_time=baking_time + adjustment</code>
+</pre>I strongly suggest you type this code to get an understanding. In case you want to check the output, here's it;
+        <br>
+        <br>
+        <pre>Error: 0.30250000000000005 | Cookie Quality: 0.25
+Error: 0.3019502500000001 | Cookie Quality: 0.2505
+Error: 0.30140100000000003 | Cookie Quality: 0.251
+Error: 0.30085225 | Cookie Quality: 0.2515<br>...........
+...........
+...........
+Error: 2.2500000000980924e-06 | Cookie Quality: 0.7984999999999673
+Error: 1.000000000065505e-06 | Cookie Quality: 0.7989999999999673
+Error: 2.5000000003280753e-07 | Cookie Quality: 0.7994999999999672
+Error: 1.0799505792475652e-27 | Cookie Quality: 0.7999999999999672</pre>NOW THAT'S COOL!!! What makes this cool is that
+        the program is like a little scientist experimenting to improve. Each iteration is a mini
+        <i>trial-and-error</i> where it tweaks the baking time (weight) and sees if it gets closer to the goal. Over
+        time, the changes become smaller as the error gets closer to zero, showing the power of gradual learning.
+        <br>
+        <br>But there might be some questions about the code, which I'll explain now.
+        <br>
+        <p></p>
+        <p>
+            <br><b><span style="font-size: 22px;">Why Adjustments Matter?</span></b>
+            <br>The key to this process is the <i>adjustments</i>. Each time we test whether going up or down
+            improves the prediction, we only tweak the weight by a small amount (0.001). This keeps the process
+            stable and prevents wild swings that could
+            make things worse. Think of it as carefully fine-tuning your recipe rather than making drastic changes
+            that could ruin the cookies entirely.
+            <br>
+            <br>The size of the adjustment, called the <b><i>step
+                    amount</i></b>, controls how fast or slow the model learns:
+            <br>
+        </p>
+        <ul>
+            <li>If the step is too large, you might overshoot the goal (e.g., burn the cookies).</li>
+            <li>If it’s too small, it takes longer to reach the goal (e.g., 1101 iterations!).</li>
+        </ul>
+        <p>You should try tweaking the step amount and you'll get a very nice intuition about this whole ordeal. And
+            please, you should. You can't learn without doing it yourself. And remember, coding when you understand
+            is fun. Moving on,
+            <br>
+            <br>
+            <br><b><span style="font-size: 18px;">But why 1101
+                    Iterations?</span></b>
+            <br>
+            <br>The reason we run the loop for 1101 iterations is because this number just gave the best output.
+            Trail and error basically. Early on, the error decreases quickly because the
+            model is far from the goal. But as
+            it gets closer to perfection, the adjustments become so small that the error barely changes. By 1101
+            iterations, the weight adjustments are no longer making a meaningful difference.
+            <br>
+            <br>In real life, <i>we rarely wait for exact
+                perfection</i>. Instead, we stop when the error is <i>good enough</i> or when the improvement is too
+            small to matter(0.01 doesn't mean much depending on the context). This is why we end up with an
+            <i>approximation</i> rather than an exact result—because in practical applications, tiny differences are
+            usually acceptable.
+            <br>
+        </p>
+        <p>
+            <br><b><span style="font-size: 18px;">But the Original Code is Inefficient.</span></b>
+            <br>
+            <br>The first code is cool but inefficient because:
+            <br>
+        </p>
+        <ol>
+            <li><b>If-Else to Find the Direction</b>: The program has to check whether going up or down improves the
+                result by testing both directions. This is wasteful because it doubles the work for each iteration.
+            </li>
+            <li><b>Small Adjustments</b>: While small steps are necessary for stability, they also make the process
+                slower. With a better approach, we can calculate the exact direction and amount of adjustment in one
+                go instead of guessing and checking.</li>
+        </ol>
+        <p>
+            <br>This inefficiency becomes more noticeable when dealing with models that have millions of parameters.
+            Imagine running those checks for every single parameter—it would take forever!
+            <br>
+        </p>
+        <p>Let's work with a better approach.
+            <br>
+            <br>
+        </p>
+        <pre><code class="language-python">weight=0.5           # Initial guess for the weight (starting point/baking time)
+input=0.5            # Fixed input (oven temperature)
+goal_pred=0.8        # Desired prediction (perfect cookies score)
+
+for iteration in range(20):  # Loop for 20 iterations
+    pred=input * weight    # Calculate prediction based on the current weight (forward propagation)
+    error=(pred - goal_pred) ** 2  # Calculate how wrong the prediction is (MSE)
+    direction_and_amount=(pred - goal_pred) * input  # Gradient. It tells us <b>how far off we are</b> and <b>in which direction to move</b>
+    weight=weight - direction_and_amount  # Update the weight based on gradient
+    print("Error:" + str(error) + " Prediction:" + str(pred))</code></pre>
+        <br>Output:
+        <br>
+        <pre>Error:0.30250000000000005 Prediction:0.25
+Error:0.17015625000000004 Prediction:0.3875
+Error:0.095712890625 Prediction:0.49062500000000003
+Error:0.05383850097656251 Prediction:0.56796875
+...........
+...........
+...........
+Error:3.038685878049206e-05 Prediction:0.7944875723333098
+Error:1.7092608064027242e-05 Prediction:0.7958656792499823
+Error:9.614592036015323e-06 Prediction:0.7968992594374867
+Error:5.408208020258491e-06 Prediction:0.7976744445781151</pre>That look only 20 iterations(low computation resources),
+        so generate a pretty close approximation. Remember, it's not always about the working. It's also about how
+        efficient you
+        are.
+        <br>
+        <br>But I know you've some questions. Let's address them.
+        <br>
+        <br>
+        <pre><code class="language-python">direction_and_amount=(pred - goal_pred) * input</code></pre>This line is
+        all about figuring out <b>how to
+            adjust the weight</b>. It combines two key things:
+        <br>
+        <p></p>
+        <ol>
+            <li><b>Direction</b>: <i>Should we increase or decrease the weight?</i>
+                <br>- If pred (current prediction) is <b>high</b> compared to goal_pred, the difference
+                (pred - goal_pred) will be
+                <b>positive</b>. This means we need to <b>decrease the weight</b> to bring the prediction
+                <b>down</b>.
+                <br>- If pred is too <b>low</b> compared to goal_pred, the difference will be
+                <b>negative</b>. This means we need to <b>increase the weight</b> to bring the prediction
+                <b>up</b>.
+                <br>
+                <br>So, the sign of (pred - goal_pred) tells us the
+                <i><b>direction</b></i> to move the weight.<b><br></b>
+            </li>
+            <li><b>Amount</b>: <i>How much should we change the weight?&nbsp; </i>
+                <br>The amount of change depends on how big the difference is (pred - goal_pred) and the input
+                value. If the <b>input is larger, a
+                    small change in the weight will have a bigger effect on the prediction</b>. So we <b>scale the
+                    adjustment by multiplying with input</b>.
+                <br>
+            </li>
+        </ol>
+        <p>
+            <br>
+        </p>
+        <pre><code class="language-python">weight = weight - direction_and_amount</code></pre>This line updates the
+        weight using the
+        <b>gradient</b>(i.e., direction_and_amount). It works like this:
+        <br>
+        <p></p>
+        <ol>
+            <li><b><i>Subtract</i> the Adjustment</b>: The gradient tells us which direction to move and by how
+                much. Subtracting it ensures we’re moving in the correct direction to reduce the error.&nbsp; </li>
+            <li><b>Keep Adjusting</b>: Each iteration, this update makes the prediction a little closer to the goal.
+                As the error gets smaller, the adjustments (the gradient) become smaller too, so we don’t
+                <i>overshoot</i> (try increasing the step amount to something like a 50 and you'll know) the goal.
+            </li>
+        </ol>
+        <p>
+            <br>Let's see an example of how exactly does it work.
+            <br>1. <b>Prediction</b>:
+        <div class="formula">
+            <span class="note-math"><span class="katex"><span class="katex-mathml"><math>
+                            <semantics>
+                                <mrow>
+                                    <mtext>pred</mtext>
+                                    <mo>=</mo>
+                                    <mtext>input</mtext>
+                                    <mo>×</mo>
+                                    <mtext>weight</mtext>
+                                    <mo>=</mo>
+                                    <mn>0</mn>
+                                    <mi mathvariant="normal">.</mi>
+                                    <mn>5</mn>
+                                    <mo>×</mo>
+                                    <mn>0</mn>
+                                    <mi mathvariant="normal">.</mi>
+                                    <mn>5</mn>
+                                    <mo>=</mo>
+                                    <mn>0</mn>
+                                    <mi mathvariant="normal">.</mi>
+                                    <mn>2</mn>
+                                    <mn>5</mn>
+                                </mrow>
+                            </semantics>
+                        </math></span><span class="katex-html" aria-hidden="true"><span class="strut"
+                            style="height: 0.69444em;"></span><span class="strut bottom"
+                            style="height: 0.88888em; vertical-align: -0.19444em;"></span><span class="base"><span
+                                class="mord text"><span class="mord">
+                                    pred</span></span><span class="mord rule"
+                                style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span
+                                class="mord rule" style="margin-right: 0.277778em;"></span><span
+                                class="mord text"><span class="mord">input</span></span>
+                            <span class="mord rule" style="margin-right: 0.222222em;"></span><span
+                                class="mbin">×</span><span class="mord rule"
+                                style="margin-right: 0.222222em;"></span><span class="mord text"><span
+                                    class="mord">weight</span></span><span class="mord rule"
+                                style="margin-right: 0.277778em;"></span><span class="mrel">=</span>
+                            <span class="mord rule" style="margin-right: 0.277778em;"></span><span
+                                class="mord">0</span><span class="mord">.</span><span class="mord">5</span><span
+                                class="mord rule" style="margin-right: 0.222222em;"></span><span
+                                class="mbin">×</span><span class="mord rule"
+                                style="margin-right: 0.222222em;"></span>
+                            <span class="mord">0</span><span class="mord">.</span><span class="mord">5</span><span
+                                class="mord rule" style="margin-right: 0.277778em;"></span><span
+                                class="mrel">=</span><span class="mord rule"
+                                style="margin-right: 0.277778em;"></span><span class="mord">0</span>
+                            <span class="mord">.</span><span class="mord">2</span><span class="mord">5</span></span>
+                    </span>
+                </span>
+            </span>
+        </div>
+        <br>2.
+        <b>Error</b>:
+        <div class="formula">
+            <span class="note-math"><span class="katex"><span class="katex-mathml"><math>
+                            <semantics>
+                                <mrow>
+                                    <mtext>error</mtext>
+                                    <mo>=</mo>
+                                    <mo>(</mo>
+                                    <mtext>pred</mtext>
+                                    <mo>—</mo>
+                                    <mtext>goal_pred</mtext>
+                                    <msup>
+                                        <mo>)</mo>
+                                        <mn>2</mn>
+                                    </msup>
+                                    <mo>=</mo>
+                                    <mo>(</mo>
+                                    <mn>0</mn>
+                                    <mi mathvariant="normal">.</mi>
+                                    <mn>3</mn>
+                                    <mn>8</mn>
+                                    <mn>7</mn>
+                                    <mn>5</mn>
+                                    <mo>—</mo>
+                                    <mn>0</mn>
+                                    <mi mathvariant="normal">.</mi>
+                                    <mn>8</mn>
+                                    <msup>
+                                        <mo>)</mo>
+                                        <mn>2</mn>
+                                    </msup>
+                                    <mo>=</mo>
+                                    <mo>(</mo>
+                                    <mo>—</mo>
+                                    <mn>0</mn>
+                                    <mi mathvariant="normal">.</mi>
+                                    <mn>4</mn>
+                                    <mn>1</mn>
+                                    <mn>2</mn>
+                                    <mn>5</mn>
+                                    <msup>
+                                        <mo>)</mo>
+                                        <mn>2</mn>
+                                    </msup>
+                                    <mo>=</mo>
+                                    <mn>0</mn>
+                                    <mi mathvariant="normal">.</mi>
+                                    <mn>1</mn>
+                                    <mn>7</mn>
+                                    <mn>0</mn>
+                                    <mn>1</mn>
+                                </mrow>
+                            </semantics>
+                        </math></span><span class="katex-html" aria-hidden="true"><span class="strut"
+                            style="height: 0.814108em;"></span><span class="strut bottom"
+                            style="height: 1.12411em; vertical-align: -0.31em;"></span><span class="base"><span
+                                class="mord text"><span class="mord">error</span></span><span class="mord rule"
+                                style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span
+                                class="mord rule" style="margin-right: 0.277778em;"></span>
+                            <span class="mopen">(</span><span class="mord text"><span
+                                    class="mord">pred</span></span><span class="mord rule"
+                                style="margin-right: 0.222222em;"></span><span class="mbin">—</span><span
+                                class="mord rule" style="margin-right: 0.222222em;"></span><span
+                                class="mord text"><span class="mord">goal_pred</span></span>
+                            <span class="mclose"><span class="mclose">)</span><span class="msupsub"><span
+                                        class="vlist-t"><span class="vlist-r"><span class="vlist"
+                                                style="height: 0.814108em;"><span class=""
+                                                    style="top: -3.063em; margin-right: 0.05em;"><span
+                                                        class="pstrut" style="height: 2.7em;"></span><span
+                                                        class="sizing reset-size6 size3 mtight"><span
+                                                            class="mord mtight">2</span></span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </span><span class="mord rule" style="margin-right: 0.277778em;"></span><span
+                                class="mrel">=</span><span class="mord rule"
+                                style="margin-right: 0.277778em;"></span><span class="mopen">(</span><span
+                                class="mord">0</span>
+                            <span class="mord">.</span><span class="mord">3</span><span class="mord">8</span><span
+                                class="mord">7</span><span class="mord">5</span><span class="mord rule"
+                                style="margin-right: 0.222222em;"></span><span class="mbin">—</span>
+                            <span class="mord rule" style="margin-right: 0.222222em;"></span><span
+                                class="mord">0</span><span class="mord">.</span><span class="mord">8</span><span
+                                class="mclose"><span class="mclose">)</span><span class="msupsub"><span
+                                        class="vlist-t"><span class="vlist-r"><span class="vlist"
+                                                style="height: 0.814108em;"><span class=""
+                                                    style="top: -3.063em; margin-right: 0.05em;"><span
+                                                        class="pstrut" style="height: 2.7em;"></span><span
+                                                        class="sizing reset-size6 size3 mtight"><span
+                                                            class="mord mtight">2</span></span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </span><span class="mord rule" style="margin-right: 0.277778em;"></span><span
+                                class="mrel">=</span><span class="mord rule"
+                                style="margin-right: 0.277778em;"></span><span class="mopen">(</span><span
+                                class="mord">—</span>
+                            <span class="mord">0</span><span class="mord">.</span><span class="mord">4</span><span
+                                class="mord">1</span><span class="mord">2</span><span class="mord">5</span><span
+                                class="mclose"><span class="mclose">)</span><span class="msupsub"><span
+                                        class="vlist-t"><span class="vlist-r"><span class="vlist"
+                                                style="height: 0.814108em;"><span class=""
+                                                    style="top: -3.063em; margin-right: 0.05em;"><span
+                                                        class="pstrut" style="height: 2.7em;"></span><span
+                                                        class="sizing reset-size6 size3 mtight"><span
+                                                            class="mord mtight">2</span></span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </span><span class="mord rule" style="margin-right: 0.277778em;"></span><span
+                                class="mrel">=</span><span class="mord rule"
+                                style="margin-right: 0.277778em;"></span><span class="mord">0</span><span
+                                class="mord">.</span>
+                            <span class="mord">1</span><span class="mord">7</span><span class="mord">0</span><span
+                                class="mord">1</span></span>
+                    </span>
+                </span>
+            </span>
+        </div>
+        <br>3.
+        <b>Direction and Amount</b>:
+        <div class="formula">
+            <span class="note-math"><span class="katex"><span class="katex-mathml"><math>
+                            <semantics>
+                                <mrow>
+                                    <mtext>direction_and_amount</mtext>
+                                    <mo>=</mo>
+                                    <mo>(</mo>
+                                    <mtext>pred</mtext>
+                                    <mo>—</mo>
+                                    <mtext>goal_pred</mtext>
+                                    <mo>)</mo>
+                                    <mo>×</mo>
+                                    <mtext>input</mtext>
+                                    <mo>=</mo>
+                                    <mo>(</mo>
+                                    <mn>0</mn>
+                                    <mi mathvariant="normal">.</mi>
+                                    <mn>2</mn>
+                                    <mn>5</mn>
+                                    <mo>—</mo>
+                                    <mn>0</mn>
+                                    <mi mathvariant="normal">.</mi>
+                                    <mn>8</mn>
+                                    <mo>)</mo>
+                                    <mo>×</mo>
+                                    <mn>0</mn>
+                                    <mi mathvariant="normal">.</mi>
+                                    <mn>5</mn>
+                                    <mo>=</mo>
+                                    <mo>—</mo>
+                                    <mn>0</mn>
+                                    <mi mathvariant="normal">.</mi>
+                                    <mn>5</mn>
+                                    <mn>5</mn>
+                                    <mo>×</mo>
+                                    <mn>0</mn>
+                                    <mi mathvariant="normal">.</mi>
+                                    <mn>5</mn>
+                                    <mo>=</mo>
+                                    <mo>—</mo>
+                                    <mn>0</mn>
+                                    <mi mathvariant="normal">.</mi>
+                                    <mn>2</mn>
+                                    <mn>7</mn>
+                                    <mn>5</mn>
+                                </mrow>
+                            </semantics>
+                        </math></span><span class="katex-html" aria-hidden="true"><span class="strut"
+                            style="height: 0.75em;"></span><span class="strut bottom"
+                            style="height: 1.06em; vertical-align: -0.31em;"></span><span class="base"><span
+                                class="mord text"><span class="mord">direction_and_amount</span></span><span
+                                class="mord rule" style="margin-right: 0.277778em;"></span><span
+                                class="mrel">=</span><span class="mord rule"
+                                style="margin-right: 0.277778em;"></span>
+                            <span class="mopen">(</span><span class="mord text"><span
+                                    class="mord">pred</span></span><span class="mord rule"
+                                style="margin-right: 0.222222em;"></span><span class="mbin">—</span><span
+                                class="mord rule" style="margin-right: 0.222222em;"></span>
+                            <span class="mord text"><span class="mord">goal_pred</span></span><span
+                                class="mclose">)</span><span class="mord rule"
+                                style="margin-right: 0.222222em;"></span><span class="mbin">×</span><span
+                                class="mord rule" style="margin-right: 0.222222em;"></span>
+                            <span class="mord text"><span class="mord">input</span></span><span class="mord rule"
+                                style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span
+                                class="mord rule" style="margin-right: 0.277778em;"></span>
+                            <span class="mopen">(</span><span class="mord">0</span><span class="mord">.</span><span
+                                class="mord">2</span><span class="mord">5</span><span class="mord rule"
+                                style="margin-right: 0.222222em;"></span>
+                            <span class="mbin">—</span><span class="mord rule"
+                                style="margin-right: 0.222222em;"></span><span class="mord">0</span><span
+                                class="mord">.</span><span class="mord">8</span><span class="mclose">)</span>
+                            <span class="mord rule" style="margin-right: 0.222222em;"></span><span
+                                class="mbin">×</span><span class="mord rule"
+                                style="margin-right: 0.222222em;"></span><span class="mord">0</span><span
+                                class="mord">.</span><span class="mord">5</span>
+                            <span class="mord rule" style="margin-right: 0.277778em;"></span><span
+                                class="mrel">=</span><span class="mord rule"
+                                style="margin-right: 0.277778em;"></span><span class="mord">—</span><span
+                                class="mord">0</span><span class="mord">.</span>
+                            <span class="mord">5</span><span class="mord">5</span><span class="mord rule"
+                                style="margin-right: 0.222222em;"></span><span class="mbin">×</span><span
+                                class="mord rule" style="margin-right: 0.222222em;"></span>
+                            <span class="mord">0</span><span class="mord">.</span><span class="mord">5</span><span
+                                class="mord rule" style="margin-right: 0.277778em;"></span><span
+                                class="mrel">=</span><span class="mord rule"
+                                style="margin-right: 0.277778em;"></span><span class="mord">—</span><span
+                                class="mord">0</span><span class="mord">.</span><span class="mord">2</span><span
+                                class="mord">7</span><span class="mord">5</span>
+                        </span>
+                    </span>
+                </span>
+            </span>
+        </div>
+        <br>
+        The <b>negative sign</b> tells us to increase the weight
+        (since the prediction is too low).&nbsp;
+        <br>The <b>magnitude (0.275)</b> tells us how much to adjust
+        the weight.
+        <br>4. <b>Weight Update</b>:
+        <div class="formula">
+            <span class="note-math"><span class="katex"><span class="katex-mathml"><math>
+                            <semantics>
+                                <mrow>
+                                    <mtext>weight</mtext>
+                                    <mo>=</mo>
+                                    <mtext>weight</mtext>
+                                    <mo>—</mo>
+                                    <mtext>direction_and_amount</mtext>
+                                    <mo>=</mo>
+                                    <mn>0</mn>
+                                    <mi mathvariant="normal">.</mi>
+                                    <mn>5</mn>
+                                    <mo>—</mo>
+                                    <mo>(</mo>
+                                    <mo>—</mo>
+                                    <mn>0</mn>
+                                    <mi mathvariant="normal">.</mi>
+                                    <mn>2</mn>
+                                    <mn>7</mn>
+                                    <mn>5</mn>
+                                    <mo>)</mo>
+                                    <mo>=</mo>
+                                    <mn>0</mn>
+                                    <mi mathvariant="normal">.</mi>
+                                    <mn>5</mn>
+                                    <mo>+</mo>
+                                    <mn>0</mn>
+                                    <mi mathvariant="normal">.</mi>
+                                    <mn>2</mn>
+                                    <mn>7</mn>
+                                    <mn>5</mn>
+                                    <mo>=</mo>
+                                    <mn>0</mn>
+                                    <mi mathvariant="normal">.</mi>
+                                    <mn>7</mn>
+                                    <mn>7</mn>
+                                    <mn>5</mn>
+                                </mrow>
+                            </semantics>
+                        </math></span><span class="katex-html" aria-hidden="true"><span class="strut"
+                            style="height: 0.75em;"></span><span class="strut bottom"
+                            style="height: 1.06em; vertical-align: -0.31em;"></span><span class="base"><span
+                                class="mord text"><span class="mord">weight</span></span><span class="mord rule"
+                                style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span
+                                class="mord rule" style="margin-right: 0.277778em;"></span>
+                            <span class="mord text"><span class="mord">weight</span></span><span class="mord rule"
+                                style="margin-right: 0.222222em;"></span><span class="mbin">—</span><span
+                                class="mord rule" style="margin-right: 0.222222em;"></span><span
+                                class="mord text"><span class="mord">direction_and_amount</span></span><span
+                                class="mord rule" style="margin-right: 0.277778em;"></span>
+                            <span class="mrel">=</span><span class="mord rule"
+                                style="margin-right: 0.277778em;"></span><span class="mord">0</span><span
+                                class="mord">.</span><span class="mord">5</span>
+                            <span class="mord rule" style="margin-right: 0.222222em;"></span><span
+                                class="mbin">—</span><span class="mord rule"
+                                style="margin-right: 0.222222em;"></span><span class="mopen">(</span><span
+                                class="mord">—</span>
+                            <span class="mord">0</span><span class="mord">.</span><span class="mord">2</span><span
+                                class="mord">7</span><span class="mord">5</span><span class="mclose">)</span>
+                            <span class="mord rule" style="margin-right: 0.277778em;"></span><span
+                                class="mrel">=</span><span class="mord rule"
+                                style="margin-right: 0.277778em;"></span><span class="mord">0</span><span
+                                class="mord">.</span>
+                            <span class="mord">5</span><span class="mord rule"
+                                style="margin-right: 0.222222em;"></span><span class="mbin">+</span><span
+                                class="mord rule" style="margin-right: 0.222222em;"></span>
+                            <span class="mord">0</span><span class="mord">.</span><span class="mord">2</span><span
+                                class="mord">7</span><span class="mord">5</span><span class="mord rule"
+                                style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span
+                                class="mord rule" style="margin-right: 0.277778em;"></span>
+                            <span class="mord">0</span><span class="mord">.</span><span class="mord">7</span><span
+                                class="mord">7</span><span class="mord">5<br></span></span>
+                    </span>
+                </span>
+            </span>
+        </div>
+        <br>Okay, but you might say, this is all cool and all, but can you make a visualization? The answer is
+        Yes!
+        <br>
+        <br>
+        <p align="center"><img class="responsive-img"
+                src="assets/images/blog_imgs/image_1736864403150_0.gif" data-filename="gradient_descent.gif">
+            <br>
+        </p>
+        </p>
+        <p></p>See? This might also clear one of your doubts. We use the term <b>direction</b> because of exactly
+        this reason. If we're predicting less than our goal, we add, and do the inverse if our prediction is higher.
+        Like,
+        <br>
+        <br>
+        <p align="center">
+            <img class="responsive-img" src="assets/images/blog_imgs/image_1736865164061_0.gif"
+                data-filename="gradient_descent.gif">
+        </p>
+        One more interesting thing to note. You can give it whatever input, and it'll find you an optimal
+        choice. That's the beauty of <b>Gradient Descent</b>.
+        <br>
+        <br>And that's how out model learns. Give it enough time, and it'll even learn how to steal our jobs,
+        <i>Gasp</i>.
+        <br>
+        <br>Jokes aside, I want to tell you something important. What you just learnt; i.e., this process of
+        learning by going backwards, this is what they call <b>back propagation</b>. And now you know it. If you
+        need some time to digest this information,
+        take it and maybe give it a re read or two.
+        <br>
+        <br>Okay, I lied. I actually hid something from you. For the question above, I didn't use step_amount, aka.,
+        learning rate, which is pretty self explanatory in my opinion. The rate at which our model learns. Low means
+        it will learn pretty slowly
+        and will require higher iterations to run. High? It
+        <i><b>overshoots</b></i>, and you never receive your optimal value.
+        <br>
+        <br>
+        <p align="center"><img class="responsive-img"
+                src="assets/images/blog_imgs/image_1736871804539_0.png" data-filename="image.png" class="">
+            <br>
+        </p>
+        <p>Well, you can imagine the third case happening if you set the LR(learning rate) too high. To give you an
+            intuition,
+            <br>
+            <br>
+        </p>
+        <pre><code class="language-python">weight -= grad * learning_rate</code></pre>
+        <p></p>
+        <ol>
+            <li>Goal=0.5</li>
+            <li>Input=50
+                <br>
+            </li>
+            <li>Initial weight: weight=0.5.</li>
+            <li>Learning rate: learning_rate=100 (too high).</li>
+        </ol>
+        <p>1.
+            <b>Initial Prediction</b>: <span class="note-math"><span class="katex"><span class="katex-mathml"><math>
+                            <semantics>
+                                <mrow>
+                                    <mtext>pred</mtext>
+                                    <mo>=</mo>
+                                    <mn>5</mn>
+                                    <mn>0</mn>
+                                    <mo>×</mo>
+                                    <mn>0</mn>
+                                    <mi mathvariant="normal">.</mi>
+                                    <mn>5</mn>
+                                    <mo>=</mo>
+                                    <mn>2</mn>
+                                    <mn>5</mn>
+                                </mrow>
+                                <annotation encoding="application/x-tex"> \text{pred}=50 \times 0.5=25
+                                </annotation>
+                            </semantics>
+                        </math></span><span class="katex-html" aria-hidden="true"><span class="strut"
+                            style="height: 0.69444em;"></span><span class="strut bottom"
+                            style="height: 0.88888em; vertical-align: -0.19444em;"></span><span class="base"><span
+                                class="mord text"><span class="mord">pred</span></span><span class="mord rule"
+                                style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span
+                                class="mord rule" style="margin-right: 0.277778em;"></span>
+                            <span class="mord">5</span><span class="mord">0</span><span class="mord rule"
+                                style="margin-right: 0.222222em;"></span><span class="mbin">×</span><span
+                                class="mord rule" style="margin-right: 0.222222em;"></span><span
+                                class="mord">0</span><span class="mord">.</span>
+                            <span class="mord">5</span><span class="mord rule"
+                                style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span
+                                class="mord rule" style="margin-right: 0.277778em;"></span><span
+                                class="mord">2</span><span class="mord">5</span></span>
+                    </span>
+                </span><span class="note-latex" style="display: none;"></span></span>
+            <br>2. <b>Loss (MSE)</b>: <span class="note-math"><span class="katex"><span class="katex-mathml"><math>
+                            <semantics>
+                                <mrow>
+                                    <mi>L</mi>
+                                    <mo>=</mo>
+                                    <mo>(</mo>
+                                    <mn>2</mn>
+                                    <mn>5</mn>
+                                    <mo>—</mo>
+                                    <mn>0</mn>
+                                    <mi mathvariant="normal">.</mi>
+                                    <mn>5</mn>
+                                    <msup>
+                                        <mo>)</mo>
+                                        <mn>2</mn>
+                                    </msup>
+                                    <mo>=</mo>
+                                    <mo>(</mo>
+                                    <mn>2</mn>
+                                    <mn>4</mn>
+                                    <mi mathvariant="normal">.</mi>
+                                    <mn>5</mn>
+                                    <msup>
+                                        <mo>)</mo>
+                                        <mn>2</mn>
+                                    </msup>
+                                    <mo>=</mo>
+                                    <mn>6</mn>
+                                    <mn>0</mn>
+                                    <mn>0</mn>
+                                    <mi mathvariant="normal">.</mi>
+                                    <mn>2</mn>
+                                    <mn>5</mn>
+                                </mrow>
+                                <annotation encoding="application/x-tex">L=(25 - 0.5)^2=(24.5)^2=600.25
+                                </annotation>
+                            </semantics>
+                        </math></span><span class="katex-html" aria-hidden="true"><span class="strut"
+                            style="height: 0.814108em;"></span><span class="strut bottom"
+                            style="height: 1.06411em; vertical-align: -0.25em;"></span><span class="base"><span
+                                class="mord mathit">L</span><span class="mord rule"
+                                style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span
+                                class="mord rule" style="margin-right: 0.277778em;"></span><span
+                                class="mopen">(</span>
+                            <span class="mord">2</span><span class="mord">5</span><span class="mord rule"
+                                style="margin-right: 0.222222em;"></span><span class="mbin">—</span><span
+                                class="mord rule" style="margin-right: 0.222222em;"></span><span
+                                class="mord">0</span><span class="mord">.</span>
+                            <span class="mord">5</span><span class="mclose"><span class="mclose">)</span><span
+                                    class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist"
+                                                style="height: 0.814108em;"><span class=""
+                                                    style="top: -3.063em; margin-right: 0.05em;"><span
+                                                        class="pstrut" style="height: 2.7em;"></span><span
+                                                        class="sizing reset-size6 size3 mtight"><span
+                                                            class="mord mtight">2</span></span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </span><span class="mord rule" style="margin-right: 0.277778em;"></span><span
+                                class="mrel">=</span><span class="mord rule"
+                                style="margin-right: 0.277778em;"></span><span class="mopen">(</span><span
+                                class="mord">2</span><span class="mord">4</span>
+                            <span class="mord">.</span><span class="mord">5</span><span class="mclose"><span
+                                    class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span
+                                            class="vlist-r"><span class="vlist" style="height: 0.814108em;"><span
+                                                    class="" style="top: -3.063em; margin-right: 0.05em;"><span
+                                                        class="pstrut" style="height: 2.7em;"></span><span
+                                                        class="sizing reset-size6 size3 mtight"><span
+                                                            class="mord mtight">2</span></span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </span><span class="mord rule" style="margin-right: 0.277778em;"></span><span
+                                class="mrel">=</span><span class="mord rule"
+                                style="margin-right: 0.277778em;"></span><span class="mord">6</span><span
+                                class="mord">0</span>
+                            <span class="mord">0</span><span class="mord">.</span><span class="mord">2</span><span
+                                class="mord">5</span></span>
+                    </span>
+                </span><span class="note-latex" style="display: none;"></span></span>
+            <br>3. <b>Gradient</b>: <span class="note-math"><span class="katex"><span class="katex-mathml"><math>
+                            <semantics>
+                                <mrow>
+                                    <mtext>grad</mtext>
+                                    <mo>=</mo>
+                                    <mn>2</mn>
+                                    <mo>×</mo>
+                                    <mo>(</mo>
+                                    <mn>2</mn>
+                                    <mn>5</mn>
+                                    <mo>—</mo>
+                                    <mn>0</mn>
+                                    <mi mathvariant="normal">.</mi>
+                                    <mn>5</mn>
+                                    <mo>)</mo>
+                                    <mo>×</mo>
+                                    <mn>5</mn>
+                                    <mn>0</mn>
+                                    <mo>=</mo>
+                                    <mn>2</mn>
+                                    <mo>×</mo>
+                                    <mn>2</mn>
+                                    <mn>4</mn>
+                                    <mi mathvariant="normal">.</mi>
+                                    <mn>5</mn>
+                                    <mo>×</mo>
+                                    <mn>5</mn>
+                                    <mn>0</mn>
+                                    <mo>=</mo>
+                                    <mn>2</mn>
+                                    <mn>4</mn>
+                                    <mn>5</mn>
+                                    <mn>0</mn>
+                                </mrow>
+                                <annotation encoding="application/x-tex"> \text{grad}=2 \times (25 - 0.5) \times
+                                    50=2 \times 24.5 \times 50=2450</annotation>
+                            </semantics>
+                        </math></span><span class="katex-html" aria-hidden="true"><span class="strut"
+                            style="height: 0.75em;"></span><span class="strut bottom"
+                            style="height: 1em; vertical-align: -0.25em;"></span><span class="base"><span
+                                class="mord text"><span class="mord">grad</span></span><span class="mord rule"
+                                style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span
+                                class="mord rule" style="margin-right: 0.277778em;"></span>
+                            <span class="mord">2</span><span class="mord rule"
+                                style="margin-right: 0.222222em;"></span><span class="mbin">×</span><span
+                                class="mord rule" style="margin-right: 0.222222em;"></span><span
+                                class="mopen">(</span><span class="mord">2</span>
+                            <span class="mord">5</span><span class="mord rule"
+                                style="margin-right: 0.222222em;"></span><span class="mbin">—</span><span
+                                class="mord rule" style="margin-right: 0.222222em;"></span><span
+                                class="mord">0</span><span class="mord">.</span>
+                            <span class="mord">5</span><span class="mclose">)</span><span class="mord rule"
+                                style="margin-right: 0.222222em;"></span><span class="mbin">×</span><span
+                                class="mord rule" style="margin-right: 0.222222em;"></span><span
+                                class="mord">5</span>
+                            <span class="mord">0</span><span class="mord rule"
+                                style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span
+                                class="mord rule" style="margin-right: 0.277778em;"></span><span
+                                class="mord">2</span><span class="mord rule"
+                                style="margin-right: 0.222222em;"></span><span class="mbin">×</span><span
+                                class="mord rule" style="margin-right: 0.222222em;"></span><span
+                                class="mord">2</span><span class="mord">4</span><span class="mord">.</span>
+                            <span class="mord">5</span><span class="mord rule"
+                                style="margin-right: 0.222222em;"></span><span class="mbin">×</span><span
+                                class="mord rule" style="margin-right: 0.222222em;"></span><span
+                                class="mord">5</span>
+                            <span class="mord">0</span><span class="mord rule"
+                                style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span
+                                class="mord rule" style="margin-right: 0.277778em;"></span><span
+                                class="mord">2</span>
+                            <span class="mord">4</span><span class="mord">5</span><span class="mord">0</span></span>
+                    </span>
+                </span><span class="note-latex" style="display: none;"></span></span>
+            <br>4. <b>Weight Update (with learning rate=100)</b>:
+            <div class="formula">
+                <span class="note-math"><span class="katex"><span class="katex-mathml"><math>
+                                <semantics>
+                                    <mrow>
+                                        <mtext>new&nbsp;weight</mtext>
+                                        <mo>=</mo>
+                                        <mtext>old&nbsp;weight</mtext>
+                                        <mo>—</mo>
+                                        <mtext>grad</mtext>
+                                        <mo>×</mo>
+                                        <mtext>LR</mtext>
+                                        <mo>=</mo>
+                                        <mn>0</mn>
+                                        <mi mathvariant="normal">.</mi>
+                                        <mn>5</mn>
+                                        <mo>—</mo>
+                                        <mn>2</mn>
+                                        <mn>4</mn>
+                                        <mn>5</mn>
+                                        <mn>0</mn>
+                                        <mo>×</mo>
+                                        <mn>1</mn>
+                                        <mn>0</mn>
+                                        <mn>0</mn>
+                                        <mo>=</mo>
+                                        <mn>0</mn>
+                                        <mi mathvariant="normal">.</mi>
+                                        <mn>5</mn>
+                                        <mo>—</mo>
+                                        <mn>2</mn>
+                                        <mn>4</mn>
+                                        <mn>5</mn>
+                                        <mn>0</mn>
+                                        <mn>0</mn>
+                                        <mn>0</mn>
+                                    </mrow>
+                                    <annotation encoding="application/x-tex">\text{new weight}=\text{old weight} -
+                                        \text{grad} \times \text{LR}=0.5 - 2450 \times 100=0.5 - 245000</annotation>
+                                </semantics>
+                            </math></span><span class="katex-html" aria-hidden="true"><span class="strut"
+                                style="height: 0.69444em;"></span><span class="strut bottom"
+                                style="height: 0.88888em; vertical-align: -0.19444em;"></span><span class="base"><span
+                                    class="mord text"><span class="mord">new&nbsp;weight</span></span><span
+                                    class="mord rule" style="margin-right: 0.277778em;"></span><span
+                                    class="mrel">=</span><span class="mord rule"
+                                    style="margin-right: 0.277778em;"></span>
+                                <span class="mord text"><span class="mord">old&nbsp;weight</span></span><span
+                                    class="mord rule" style="margin-right: 0.222222em;"></span><span
+                                    class="mbin">—</span><span class="mord rule"
+                                    style="margin-right: 0.222222em;"></span>
+                                <span class="mord text"><span class="mord">grad</span></span><span class="mord rule"
+                                    style="margin-right: 0.222222em;"></span><span class="mbin">×</span><span
+                                    class="mord rule" style="margin-right: 0.222222em;"></span>
+                                <span class="mord text"><span class="mord">LR</span></span><span class="mord rule"
+                                    style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span
+                                    class="mord rule" style="margin-right: 0.277778em;"></span>
+                                <span class="mord">0</span><span class="mord">.</span><span class="mord">5</span><span
+                                    class="mord rule" style="margin-right: 0.222222em;"></span><span
+                                    class="mbin">—</span><span class="mord rule"
+                                    style="margin-right: 0.222222em;"></span><span class="mord">2</span><span
+                                    class="mord">4</span><span class="mord">5</span><span class="mord">0</span><span
+                                    class="mord rule" style="margin-right: 0.222222em;"></span><span
+                                    class="mbin">×</span><span class="mord rule"
+                                    style="margin-right: 0.222222em;"></span><span class="mord">1</span><span
+                                    class="mord">0</span>
+                                <span class="mord">0</span><span class="mord rule"
+                                    style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span
+                                    class="mord rule" style="margin-right: 0.277778em;"></span>
+                                <span class="mord">0</span><span class="mord">.</span><span class="mord">5</span><span
+                                    class="mord rule" style="margin-right: 0.222222em;"></span><span
+                                    class="mbin">—</span><span class="mord rule"
+                                    style="margin-right: 0.222222em;"></span><span class="mord">2</span><span
+                                    class="mord">4</span><span class="mord">5</span><span class="mord">0</span><span
+                                    class="mord">0</span>
+                                <span class="mord">0=- 244999.5
+                                </span>
+                            </span>
+                        </span>
+                    </span>
+                </span>
+            </div>
+            <br><b>This results in a massive
+                update to the weight.</b>
+            <br>
+            <br>Okay, now you know. Let me tell you something some of you might be wondering.
+            <br>
+            <br><b><span style="font-size: 22px;"><br>What exactly is gradient?</b></span>
+            <br>
+            <br>I'll talk about calculus, but you better not run away. Believe me, you can do so. It's easy.
+            Incredibly easy. And you don't need to know calculus. Even I didn't
+            when I first learnt this.
+            <br>
+            <br>Okay, you all already know what's the role of gradient. It gives us <b>the direction and the step
+                size</b>.
+            <br>
+            <br>Think about a function like f(x)=x² + 2. At any point x, the gradient tells us something very
+            simple: <i>if you increase x by a tiny bit, will f(x) get
+                bigger or smaller, and by how much?</i>
+            <br>
+            <br>That's really all a <b>derivative</b> is - it measures exactly how much the function will change
+            when you make a tiny change to x.
+            <br>
+            <br>When people first learn gradient descent, they often ask: <i>Okay, I get that I'm following the
+                gradient downward...
+                but why does this actually work? Why don't I get stuck somewhere random?</i>
+            <br>
+            <br>Imagine you're at some point x. The gradient tells you two crucial things:
+            <br>1. Which direction will make your function smaller
+            <br>2. Exactly how much smaller it will get (if you take a tiny step)
+            <br>
+            <br>When we say
+            <i>take a tiny step in the opposite direction of the gradient</i>(as we minus the terms), we're using
+            this information.
+            <br>
+            <br>This is cool because you are mathematically guaranteed to decrease the function's value. This isn't
+            just a helpful trick - it's a mathematical certainty that
+            comes from the properties of derivatives.
+            <br>This explains why gradient descent works: each time we compute a gradient and take a step, we're
+            using this mathematical guarantee of improvement. The only
+            catch is ensuring our step size (learning rate) is small enough.
+            <br>
+            <br>And yeah, that's it. I only wanted to give you an intuition. If you're interested, maybe you can
+            find a good tutorial, or in the end, I will give some referneces
+            I used, but I can't possibly remember every source.
+            <br>
+            <br>And one more thing, in here, we were just trying to find 1 weight value, but in reality, we can find
+            as many weights as we like.
+            <br>
+            <br>Let's learn via an example.
+            <br>
+            <br>Imagine you're standing at a street corner in a foreign country. As you approach the intersection,
+            you notice the streetlight system is different from what
+            you're used to. How do you know when it's safe to cross the street?
+        </p>
+        <p>At first, it's unclear. You don't know how to interpret the different light combinations. Which signals
+            mean <i>go</i>? Which mean <i>stop</i>? To solve this, you decide to observe the light patterns and see
+            if you can identify any correlation
+            between the lights and whether people around you choose to walk or stop.
+            <br>
+            <br>Somehow similar to how our model learns. But this time it's different, with multiple inputs.
+            <br>
+            <br>But our model doesn't undersatnd sign language, so we instead give it a matrix.
+        </p>
+        <div align="center"><img class="responsive-img" src="assets/images/blog_imgs/image_1736877272108_0.png"
+                data-filename="image.png">
+            <br>
+        </div>
+        <p>
+            <br>So 1 for every signal, and 0 for every dead signal.
+            <br>
+            <br>For those of you who don't know matrix (not the movie), it's just some numbers arranged neatly in a
+            box. And computers are great at calculating with matrices.
+            <br>
+            <br>And just as a reminder, the streetlight patterns can be represented by anything, even decimals like
+            0.1 0.4 0.5, provided they're of varying intensity etc. It just helps capture more information
+            <br>
+            <br>Okay, let's write some code.
+            <br>
+            <br>
+        </p>
+        <pre><code class="language-python">import numpy as np
+weights=np.array([0.5, 0.48, -0.7]) #For every input, we've a different weight
+lr=0.1
+streetlights=np.array([ [ 1, 0, 1 ],
+                    [ 0, 1, 1 ],
+                    [ 0, 0, 1 ],
+                    [ 1, 1, 1 ],
+                    [ 0, 1, 1 ],
+                    [ 1, 0, 1 ] ]) #1 is on, 0 is off
+                    
+walk_vs_stop=np.array([ 0, 1, 0, 1, 1, 0 ]) #actual results. corresponds with the streetlights. eg: 0 means stopped, so people stopped at 1,0,1
+
+for iteration in range(40):
+    error_for_all_lights=0
+    for row_index in range(len(walk_vs_stop)): # Loop through all the rows of the streetlights (each row is one data point)
+        input=streetlights[row_index] #Get the input features (streetlight pattern) for this data point. eg, streetlight[0] gives 1,0,1
+        goal_prediction=walk_vs_stop[row_index] # Get the goal prediction (whether people walk or stop) for this data point. walk_vs_stop[0] is 0
+        prediction=input.dot(weights) #matrix multiplication for forward propagation(earlier we were just multiplying) (1,3) x (1,1)=(1,1) sizeof matrix
+        error=(goal_prediction - prediction) ** 2 #MSE
+        error_for_all_lights += error
+        direction_and_amount=(prediction - goal_prediction) * input #we get our error (1,1) - (1,1)=(1,1) x (1,3)=(1,3) size
+        weights -= (lr * direction_and_amount) #calc weights 1 x (1,3)=(1,3)
+        
+        print(f"Prediction: {prediction}")
+        print(f"Error: {error_for_all_lights} \n")
+print(weights)</code></pre>
+        <br>Output:
+        <br>
+        <pre>Prediction: 0.17552<br>Error: 2.6561231104 <br><br>Prediction: 0.26700416768<br>Error: 0.9628701776715985 
+...........
+...........
+...........
+Prediction: -0.0028012842268006904<br>Error: 0.0006143435674831474 <br><br>Prediction: -0.0026256193329783125<br>Error: 0.00053373677328488 <br><br>[ 0.01389228  1.0138147  -0.01599277]
+</pre>
+        <br>As you can see, our error became quite low, which is nice. If any of you got confused with the size, I
+        highly recommend learning basic matrix multiplication. It'll help you a ton.
+        <br>
+        <br>Okay, so long, we only got the weights, but let's do something fun. Let's actually predict.
+        <br>
+        <br>
+        <pre><code class="language-python">import numpy as np
+
+weights=np.array([0.01389228, 1.0138147, -0.01599277])
+
+new_streetlights=np.array([
+[1, 0, 1], #should be 0
+[0, 0, 1], #should be 0
+[1, 1, 1], #should be 1
+])
+
+for new_input in new_streetlights:
+    prediction=new_input.dot(weights)  # Calculate the dot product of new input and weights
+
+    # If the prediction is closer to 1, we consider it as "walk", else "stop"
+    if prediction &gt;= 0.5:
+        print("Prediction: Walk (1)")
+    else:
+        print("Prediction: Stop (0)")
+
+    print(f"Prediction Value: {prediction}\n")</code></pre>
+
+        <p>Output:
+            <br>
+        </p>
+        <pre>Prediction: Stop (0)
+Prediction Value: -0.00210049
+
+Prediction: Stop (0)
+Prediction Value: -0.01599277
+
+Prediction: Walk (1)
+Prediction Value: 1.01171421</pre>
+        <p>I'd say it's smarter than me. <i>Ahem</i>. Also, if you're wondering why we looped 2 times, it's because
+            we had multiple inputs. You'll see more sophisticated techniques moving on forward. Moving on,
+            <br><b><span style="font-size: 20px;"><br>We Got Lucky with Our Dataset, but Complexity Rises
+                    with Larger Data</span></b>
+            <br>
+            <br>In our toy problem, we got lucky because the dataset was small and simple. Our neural network could
+            easily learn the patterns. However, in real-world scenarios, we often deal with much more complex data.
+            Instead of clear patterns like
+            the streetlights, we might need the network to detect much subtler correlations. This is where more
+            advanced neural structures come into play, like <i>additional hidden layers</i>(the node like things.
+            More of them=more weights),
+            <i>activation functions</i>, and <i>non-linearities</i>.
+            <br>
+            <br>Esentially we'd need something like;
+        </p>
+        <p align="center"><img class="responsive-img" src="assets/images/blog_imgs/image_1736877272110_1.png"
+                data-filename="image.png">
+            <br>
+        </p>
+        <p>
+            <br>Don't get intimidated. It's pretty simple. Just think of layer 1 as our input layer. What I mean to
+            say is, layer 0 is our <b>true input</b>. And they go to layer 1, while the weights learn some basic
+            features of the input. Then some things
+            happen, and instead of predicting, we act as if the weights * input from layer 0, is actually the new
+            input, which will pass through the weights_1_2. The idea is that if we add more layers, the model can
+            better understand our input. I'll
+            talk about it when we're discussing CNNs.
+            <br>
+            <br>But there's a catch. If you tried to train our three-layer network as is, you'd run into a problem.
+            Here's why: for any two consecutive weighted sums of the input, there exists a single weighted sum that
+            behaves exactly the same way. Okay,
+            I know you didn't undersand this, but in simpler terms - anything our three-layer network can do, a
+            two-layer network can also do. So what's the point of the middle layer?
+            <br>
+        </p>
+        <p><b><span style="font-size: 20px;"><br>Why the Middle Layer Doesn't Work Yet?</span></b>
+            <br>
+            <br>Imagine the middle layer of our network as people trying to give advice. Right now, these people are
+            just repeating bits of what they hear from others (the input layer). They’re not adding any new ideas or
+            making any decisions of their
+            own.
+            <br>
+            <br>For example, if the left input says <b>0.3</b>, the middle layer might just repeat, <i>Okay, I’ll
+                also say 0.3</i>, or maybe, <i>I’ll say 50% of that, so 0.15</i>. The problem is that the middle
+            layer is just echoing the inputs—it’s not
+            creating anything original or useful. It’s stuck being a mix of the same signals coming from the inputs.
+            <br>
+            <br>This means that our network isn’t really learning anything new by adding the middle layer. It’s just
+            making the same guesses that a simpler network could have made.
+            <br>
+        </p>
+        <p>
+            <br><b><span style="font-size: 20px;">How to Fix the Middle Layer?</span><br></b>
+            <br>What we need is for the middle layer to think for itself. Instead of blindly following the inputs
+            all the time, it should be able to decide:
+            <br>
+        </p>
+        <ul>
+            <li>When to listen to an input.</li>
+            <li>When to ignore an input.
+                <br>
+            </li>
+        </ul>
+        <p>This would let the middle layer make smarter decisions and come up with better patterns. For example, it
+            might decide:
+            <br>
+        </p>
+        <ul>
+            <li><i>I’ll pay attention to the left input, but only if the right input isn’t active</i>.</li>
+            <li><i>I’ll stay quiet if the signal is confusing or irrelevan</i>t.</li>
+        </ul>
+        <p>
+            <br><b><span style="font-size: 20px;">The Secret: Turning Off Nodes</span></b>
+            <br>
+            <br>To let the middle layer decide when to listen and when to stay quiet, we use a simple rule:
+            <br>
+            <br><b>If the node’s value
+                would be negative, turn it off (set it to zero).</b>
+            <br>
+            <br>Think of it like this: if someone says something negative or unhelpful, you ignore them (turn them
+            off). This way, the middle layer isn’t stuck always listening to everything—it can pick and choose when
+            to pay attention.
+            <br>
+        </p>
+        <p>This turning-on-and-off process is called <b>nonlinearity</b>, and the specific rule we use (turning off
+            negative values) is called <b>ReLU </b>(Rectified Linear Unit). It’s a super simple tweak—just setting
+            negatives to zero—but it changes
+            everything.
+            <br>
+            <br>Without ReLU, the network is like a bunch of gears that can only spin in straight lines. With ReLU,
+            the network becomes flexible and can adapt to much more complex data.
+            <br>
+            <br>Let's write a code with our newfound learnings.
+            <br>
+        </p>
+        <pre><code class="language-python">import numpy as np  # Importing NumPy for mathematical operations
+np.random.seed(1)  # Setting a random seed for reproducibility, you can ignore if you want
+
+# Define the ReLU activation function: outputs the value if it's positive, otherwise outputs 0
+def relu(x):
+    return (x &gt; 0) * x  # If x &gt; 0, keep it; otherwise, make it 0. We won't entertain any negativity. (max(0, x))
+
+# Define the derivative of ReLU: 1 if output &gt; 0, else 0
+def relu2deriv(output):
+    return output &gt; 0 # 1 if &gt; 0, else 0
+
+streetlights=np.array([[1, 0, 1],
+                     [0, 1, 1],
+                     [0, 0, 1],
+                     [1, 1, 1]])
+
+walk_vs_stop=np.array([[1], [1], [0], [0]])
+
+lr=0.2
+
+# Size of the hidden layer (number of neurons in the middle layer)
+hidden_size=4
+
+# Initializing weights randomly between -1 and 1
+# weights_0_1: connects input layer to hidden layer
+weights_0_1=2 * np.random.random((3, hidden_size)) - 1
+# weights_1_2: connects hidden layer to output layer
+weights_1_2=2 * np.random.random((hidden_size, 1)) - 1
+
+for iteration in range(60):
+    layer_2_error=0  # Tracks the total error in this iteration
+
+    for i in range(len(streetlights)):
+        layer_0=streetlights[i:i+1]  # Input layer: one row of data (1x3 matrix)
+        layer_1=relu(np.dot(layer_0, weights_0_1))  # Hidden layer: apply weights and ReLU activation
+        layer_2=np.dot(layer_1, weights_1_2)  # Output layer: apply weights to hidden layer
+
+        # Calculate error for the current example
+        layer_2_error += np.sum((layer_2 - walk_vs_stop[i:i+1]) ** 2)
+
+        # Calculate how much to adjust the output layer weights
+        layer_2_direction_and_rate=(layer_2 - walk_vs_stop[i:i+1])  # Difference between prediction and actual value
+
+        # Calculate how much to adjust the hidden layer weights
+        layer_1_direction_and_rate=layer_2_direction_and_rate.dot(weights_1_2.T) * relu2deriv(layer_1)
+        # Pass error backward through the weights and use ReLU derivative to decide how much to change
+
+        # Update weights: adjust by the error scaled by learning rate
+        weights_1_2 -= lr * layer_1.T.dot(layer_2_direction_and_rate)  # Update weights from hidden to output layer
+        weights_0_1 -= lr * layer_0.T.dot(layer_1_direction_and_rate)  # Update weights from input to hidden layer
+
+    # Every 10 iterations, print the total error
+    if iteration % 10 == 9:
+        print(f"Error: {layer_2_error}")
+</code></pre>Output:
+        <pre>Error: 0.6342311598444467
+Error: 0.3583840767631751
+Error: 0.08301831133032973
+Error: 0.006467054957103672
+Error: 0.0003292669000750735
+Error: 1.5055622665134864e-05</pre>
+        <br>You can make predictions if you want. I'll skip that for now.
+        <br>
+        <p></p>
+        <p>Time to address some questions you guys might have.
+            <br>
+            <br>Let's break this down very simply:
+            <br>
+            <br><b><span style="font-size: 18px;">What is relu2deriv(output)?</span></b>
+            <br>The relu2deriv(output) function is the <i>derivative </i>(or slope) of the ReLU function. This
+            returns True (which is treated as 1) if output is greater than 0, and False (which is treated as 0)
+            otherwise.
+            <br>
+            <br>Before you get scared by reading the word derivative, I'll quickly explain the simple math behind
+            it.
+        </p>
+        <p><b>The ReLU function is: &nbsp;</b>
+            
+            <div class="formula">
+                <span class="note-math"><span class="katex"><span
+                            class="katex-mathml"><math>
+                                <semantics>
+                                    <mrow><b>
+                                            <mtext>ReLU</mtext>
+                                            <mo>(</mo>
+                                            <mi>x</mi>
+                                            <mo>)</mo>
+                                            <mo>=</mo>
+                                        </b>
+                                        <mrow><b>
+                                                <mo fence="true">{</mo>
+                                            </b>
+                                            <mtable><b>
+                                                    <mtr>
+                                                        <mtd>
+                                                            <mstyle scriptlevel="0" displaystyle="false">
+                                                                <mrow>
+                                                                    <mi>x</mi>
+                                                                </mrow>
+                                                            </mstyle>
+                                                        </mtd>
+                                                        <mtd>
+                                                            <mstyle scriptlevel="0" displaystyle="false">
+                                                                <mrow>
+                                                                    <mtext>if&nbsp;</mtext>
+                                                                    <mi>x</mi>
+                                                                    <mo>&gt;</mo>
+                                                                    <mn>0</mn>
+                                                                </mrow>
+                                                            </mstyle>
+                                                        </mtd>
+                                                    </mtr>
+                                                </b>
+                                                <mtr><b>
+                                                        <mtd>
+                                                            <mstyle scriptlevel="0" displaystyle="false">
+                                                                <mrow>
+                                                                    <mn>0</mn>
+                                                                </mrow>
+                                                            </mstyle>
+                                                        </mtd>
+                                                    </b>
+                                                    <mtd>
+                                                        <mstyle scriptlevel="0" displaystyle="false">
+                                                            <mrow><b>
+                                                                    <mtext>if&nbsp;</mtext>
+                                                                    <mi>x</mi>
+                                                                </b>
+                                                                <mo>≤</mo>
+                                                                <mn>0</mn>
+                                                            </mrow>
+                                                        </mstyle>
+                                                    </mtd>
+                                                </mtr>
+                                            </mtable>
+                                        </mrow>
+                                    </mrow>
+                                    <annotation encoding="application/x-tex">\text{ReLU}(x)=\begin{cases} x &amp;
+                                        \text{if } x &gt; 0 \ 0 &amp; \text{if } x \leq 0 \end{cases}</annotation>
+                                </semantics>
+                            </math></span><span class="katex-html" aria-hidden="true"><span class="strut"
+                                style="height: 1.75em;"></span><span class="strut bottom"
+                                style="height: 3.00003em; vertical-align: -1.25003em;"></span><span class="base"><span
+                                    class="mord text"><span class="mord">ReLU</span></span><span
+                                    class="mopen">(</span><span class="mord mathit">x</span><span
+                                    class="mclose">)</span><span class="mord rule"
+                                    style="margin-right: 0.277778em;"></span>
+                                <span class="mrel">=</span><span class="mord rule"
+                                    style="margin-right: 0.277778em;"></span><span class="minner"><span
+                                        class="mopen delimcenter" style="top: 0em;"><span
+                                            class="delimsizing size4">{</span></span><span class="mord"><span
+                                            class="mtable"><span class="col-align-l"><span
+                                                    class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist"
+                                                            style="height: 1.69em;"><span class=""
+                                                                style="top: -3.69em;"><span class="pstrut"
+                                                                    style="height: 3.008em;"></span><span
+                                                                    class="mord"><span
+                                                                        class="mord mathit">x</span></span>
+                                                            </span><span class="" style="top: -2.25em;"><span
+                                                                    class="pstrut" style="height: 3.008em;"></span><span
+                                                                    class="mord"><span class="mord">0</span></span>
+                                                            </span>
+                                                        </span><span class="vlist-s"></span></span><span
+                                                        class="vlist-r"><span class="vlist"
+                                                            style="height: 1.19em;"></span></span>
+                                                </span>
+                                            </span><span class="arraycolsep" style="width: 1em;"></span><span
+                                                class="col-align-l"><span class="vlist-t vlist-t2"><span
+                                                        class="vlist-r"><span class="vlist"
+                                                            style="height: 1.69em;"><span class=""
+                                                                style="top: -3.69em;"><span class="pstrut"
+                                                                    style="height: 3.008em;"></span><span
+                                                                    class="mord"><span class="mord text"><span
+                                                                            class="mord">if&nbsp;</span></span><span
+                                                                        class="mord mathit">x</span><span
+                                                                        class="mord rule"
+                                                                        style="margin-right: 0.277778em;"></span><span
+                                                                        class="mrel">&gt;</span><span class="mord rule"
+                                                                        style="margin-right: 0.277778em;"></span><span
+                                                                        class="mord">0</span></span>
+                                                            </span><span class="" style="top: -2.25em;"><span
+                                                                    class="pstrut" style="height: 3.008em;"></span><span
+                                                                    class="mord"><span class="mord text"><span
+                                                                            class="mord">if&nbsp;</span></span><span
+                                                                        class="mord mathit">x</span><span
+                                                                        class="mord rule"
+                                                                        style="margin-right: 0.277778em;"></span><span
+                                                                        class="mrel">≤</span><span class="mord rule"
+                                                                        style="margin-right: 0.277778em;"></span><span
+                                                                        class="mord">0</span></span>
+                                                            </span>
+                                                        </span><span class="vlist-s"></span></span><span
+                                                        class="vlist-r"><span class="vlist"
+                                                            style="height: 1.19em;"></span></span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </span><span class="mclose nulldelimiter"></span></span>
+                            </span>
+                        </span>
+                    </span><span class="note-latex" style="display: none;"></span></span>
+            </div>
+            <br>The <i>derivative</i> (or slope) of ReLU is:
+            <br>
+        </p>
+        <ul>
+            <li>1 when <span class="note-math"><span class="katex"><span class="katex-html" aria-hidden="true"><span
+                                class="base"><span class="mord mathit">x</span><span class="mord rule"
+                                    style="margin-right: 0.277778em;"></span><span class="mrel">&gt;</span><span
+                                    class="mord rule" style="margin-right: 0.277778em;"></span><span
+                                    class="mord">0</span></span>
+                        </span>
+                    </span>
+                </span>. (slope 1)
+                <br>
+            </li>
+            <li>0 when&nbsp; <span class="note-math"><span class="katex"><span class="katex-mathml"><math>
+                                <semantics>
+                                    <mrow>
+                                        <mi>x</mi>
+                                        <mo>≤</mo>
+                                        <mn>0</mn>
+                                    </mrow>
+                                    <annotation encoding="application/x-tex">x \leq 0 </annotation>
+                                </semantics>
+                            </math></span><span class="katex-html" aria-hidden="true"><span class="strut"
+                                style="height: 0.64444em;"></span><span class="strut bottom"
+                                style="height: 0.78041em; vertical-align: -0.13597em;"></span><span
+                                class="base"><span class="mord mathit">x</span><span class="mord rule"
+                                    style="margin-right: 0.277778em;"></span>
+                                <span class="mrel">≤</span><span class="mord rule"
+                                    style="margin-right: 0.277778em;"></span><span class="mord">0</span></span>
+                        </span>
+                    </span><span class="note-latex" style="display: none;"></span></span>. (slope 0)
+                <br>
+            </li>
+        </ul>
+        <p>Remember what I told about calculus? It measures how much y changes, depending on how much x changed.
+            <br>
+            <br>Similarly, when we say the slope is <strong>1</strong>, it means when x increases by 1, y also increases by 1. That's it. In schools, you might have read it as, derivative of x dx is 1.
+            <br>And, if the slope is <strong>0</strong>, it means no matter how much x changes, y stays the same. Again, as we say, derivative
+            <br>
+            <br>Mathematically:
+            <br>
+            <div class="formula">
+                <span class="note-math"><span class="katex"><span class="katex-mathml"><math>
+                                <semantics>
+                                    <mrow>
+                                        <msup>
+                                            <mtext>ReLU</mtext>
+                                            <mo mathvariant="normal">′</mo>
+                                        </msup>
+                                        <mo>(</mo>
+                                        <mi>x</mi>
+                                        <mo>)</mo>
+                                        <mo>=</mo>
+                                        <mrow>
+                                            <mo fence="true">{</mo>
+                                            <mtable>
+                                                <mtr>
+                                                    <mtd>
+                                                        <mstyle scriptlevel="0" displaystyle="false">
+                                                            <mrow>
+                                                                <mn>1</mn>
+                                                            </mrow>
+                                                        </mstyle>
+                                                    </mtd>
+                                                    <mtd>
+                                                        <mstyle scriptlevel="0" displaystyle="false">
+                                                            <mrow>
+                                                                <mtext>if&nbsp;</mtext>
+                                                                <mi>x</mi>
+                                                                <mo>&gt;</mo>
+                                                                <mn>0</mn>
+                                                            </mrow>
+                                                        </mstyle>
+                                                    </mtd>
+                                                </mtr>
+                                                <mtr>
+                                                    <mtd>
+                                                        <mstyle scriptlevel="0" displaystyle="false">
+                                                            <mrow>
+                                                                <mn>0</mn>
+                                                            </mrow>
+                                                        </mstyle>
+                                                    </mtd>
+                                                    <mtd>
+                                                        <mstyle scriptlevel="0" displaystyle="false">
+                                                            <mrow>
+                                                                <mtext>if&nbsp;</mtext>
+                                                                <mi>x</mi>
+                                                                <mo>≤</mo>
+                                                                <mn>0</mn>
+                                                            </mrow>
+                                                        </mstyle>
+                                                    </mtd>
+                                                </mtr>
+                                            </mtable>
+                                        </mrow>
+                                    </mrow>
+                                    <annotation encoding="application/x-tex">\text{ReLU}'(x)=\begin{cases} 1 &amp;
+                                        \text{if } x &gt; 0 \ 0 &amp; \text{if } x \leq 0 \end{cases} </annotation>
+                                </semantics>
+                            </math></span><span class="katex-html" aria-hidden="true"><span class="strut"
+                                style="height: 1.75em;"></span><span class="strut bottom"
+                                style="height: 3.00003em; vertical-align: -1.25003em;"></span><span class="base"><span
+                                    class="mord"><span class="mord text"><span class="mord">ReLU</span></span><span
+                                        class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist"
+                                                    style="height: 0.825122em;"><span class=""
+                                                        style="top: -3.13623em; margin-right: 0.05em;"><span
+                                                            class="pstrut" style="height: 2.7em;"></span><span
+                                                            class="sizing reset-size6 size3 mtight"><span
+                                                                class="mord mtight"><span
+                                                                    class="mord mtight">′</span></span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span><span class="mopen">(</span><span class="mord mathit">x</span><span
+                                    class="mclose">)</span><span class="mord rule"
+                                    style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span
+                                    class="mord rule" style="margin-right: 0.277778em;"></span>
+                                <span class="minner"><span class="mopen delimcenter" style="top: 0em;"><span
+                                            class="delimsizing size4">{</span></span><span class="mord"><span
+                                            class="mtable"><span class="col-align-l"><span
+                                                    class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist"
+                                                            style="height: 1.69em;"><span class=""
+                                                                style="top: -3.69em;"><span class="pstrut"
+                                                                    style="height: 3.008em;"></span><span
+                                                                    class="mord"><span class="mord">1</span></span>
+                                                            </span><span class="" style="top: -2.25em;"><span
+                                                                    class="pstrut" style="height: 3.008em;"></span><span
+                                                                    class="mord"><span class="mord">0</span></span>
+                                                            </span>
+                                                        </span><span class="vlist-s"></span></span><span
+                                                        class="vlist-r"><span class="vlist"
+                                                            style="height: 1.19em;"></span></span>
+                                                </span>
+                                            </span><span class="arraycolsep" style="width: 1em;"></span><span
+                                                class="col-align-l"><span class="vlist-t vlist-t2"><span
+                                                        class="vlist-r"><span class="vlist"
+                                                            style="height: 1.69em;"><span class=""
+                                                                style="top: -3.69em;"><span class="pstrut"
+                                                                    style="height: 3.008em;"></span><span
+                                                                    class="mord"><span class="mord text"><span
+                                                                            class="mord">if&nbsp;</span></span><span
+                                                                        class="mord mathit">x</span><span
+                                                                        class="mord rule"
+                                                                        style="margin-right: 0.277778em;"></span><span
+                                                                        class="mrel">&gt;</span><span class="mord rule"
+                                                                        style="margin-right: 0.277778em;"></span><span
+                                                                        class="mord">0</span></span>
+                                                            </span><span class="" style="top: -2.25em;"><span
+                                                                    class="pstrut" style="height: 3.008em;"></span><span
+                                                                    class="mord"><span class="mord text"><span
+                                                                            class="mord">if&nbsp;</span></span><span
+                                                                        class="mord mathit">x</span><span
+                                                                        class="mord rule"
+                                                                        style="margin-right: 0.277778em;"></span><span
+                                                                        class="mrel">≤</span><span class="mord rule"
+                                                                        style="margin-right: 0.277778em;"></span><span
+                                                                        class="mord">0</span></span>
+                                                            </span>
+                                                        </span><span class="vlist-s"></span></span><span
+                                                        class="vlist-r"><span class="vlist"
+                                                            style="height: 1.19em;"></span></span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </span><span class="mclose nulldelimiter"></span></span>
+                            </span>
+                        </span>
+                    </span><span class="note-latex" style="display: none;"></span></span>
+            </div>
+            <br>This is exactly what relu2deriv(output) does. It checks if the output (the result of applying ReLU)
+            is greater than 0 and returns 1 or 0.
+            <br>
+            <br>
+            <br><b><span style="font-size: 18px;">Okay, but why do we need this?</span></b>
+            <br>
+            <br>When training a neural network, during back propagation;
+            <br>
+            <br>For ReLU:
+            <br>
+        </p>
+        <ul>
+            <li>If the output is <i>greater than 0</i>, the slope is <b>1</b> (so it allows weight
+                adjustments).&nbsp; </li>
+            <li>If the output is <i>less than or equal to 0</i>, the slope is <b>0</b> (meaning the <b>neuron is
+                    inactive and no weight adjustment is made for that input</b>).</li>
+        </ul>
+        <p>This combination ensures the network learns effectively while being computationally efficient.
+            <br>
+            <br>And just as I promised, I told you about activation functions. And ReLU is the public favourite. Any
+            other, I'll teach as they come.
+            <br>
+            <br>Okay, now we have finished talking about <b>predict, compare, and
+                learn</b>.
+            <br>
+            <br>One more thing I never talked about, and that is the <b>types of Gradient
+                Descent</b>.
+            <br>
+            <br>Let's start,
+            <br>
+            <br>Gradient Descent has three popular flavors: <b>Batch,
+                Stochastic, and Mini-Batch</b>. They all aim to adjust the model's parameters to reduce error, but
+            they differ in <i>how much data</i> they use for each update. &nbsp;
+            <br>
+            <br>1. <b>Batch Gradient
+                Descent</b>
+        </p>
+        <ul>
+            <li><b>What it does</b>: Takes <i>all</i> the data, calculates the gradient (slope), and updates the
+                model’s parameters once per iteration.&nbsp;
+                <br>
+                <br>Imagine you’re a chef making a soup. You taste the <i>entire pot</i> of soup, figure out what’s
+                missing (too salty? too bland?), and adjust the seasoning.
+            </li>
+            <li><b>Pros</b>:
+                <br>Smooth and stable updates because you’re using all the data.
+                <br>Works great when the dataset is small and fits in memory.
+            </li>
+            <li><b>Cons</b>:&nbsp;
+                <br>Slow if the dataset is huge—imagine tasting a soup that’s the size of a swimming pool! The same
+                way, can't handle if your RAM/GPU is 16 GB worth, and you need to use 1 TB worth of data.
+                <br>
+            </li>
+        </ul>
+        <p>
+            <br>2. <b>Stochastic Gradient Descent (SGD)</b>
+            <br>
+        </p>
+        <ul>
+            <li><b>What it does</b>: Instead of looking at <i>all</i> the data, it picks <b>one random data
+                    point</b> at a time, calculates the gradient, and updates the model immediately.&nbsp;
+                <br>
+                <br>You’re still the chef, but now you taste a <i>single spoonful</i> of soup. Based on that, you
+                decide how to adjust the seasoning, even though it might not represent the entire pot (the salt may
+                only be at the top and not reached the
+                bottom, etc.).
+                <br>Up until now, we were working with SGDs.&nbsp;
+            </li>
+            <li>Pros:
+                <br>Much faster because it updates after just one data point (less math, in Batch GD, we needed to
+                work with millions of data points).&nbsp;
+                <br>Useful for huge datasets where you can’t use all the data at once.
+            </li>
+            <li>Cons:
+                <br>Noisy updates because one data point might not reflect the overall trend. Jus because there's
+                salt at the top, doesn't mean there's salt at the bottom.
+                <br>Can take longer to converge because there can always be an anamoly (like how in normal
+                distribution, there are some extremes).
+                <br>
+            </li>
+        </ul>
+        <p>3. <b>Mini-Batch Gradient Descent</b>
+            <br>
+        </p>
+        <ul>
+            <li>What it does: A hybrid of the two above. Instead of using all the data or just one data point, it
+                uses <b>small chunks (batches)</b> of data at a time.&nbsp;
+                <br>
+                <br>You’re now tasting <i>a small
+                    bowl</i> of soup from the pot. It’s a more balanced way to decide the seasoning—it’s not as slow
+                as tasting the whole pot, but it’s less random than just one spoonful.
+            </li>
+            <li><b>Pros</b>:
+                <br>Faster than Batch GD and more stable than SGD.&nbsp;
+                <br>Works well for training large models with large datasets.&nbsp;
+            </li>
+            <li><b>Cons</b>:&nbsp;
+                <br>You need to choose the batch size carefully—too small, and it gets noisy like SGD; too big, and
+                it slows down like Batch GD. &nbsp;
+                <br>
+            </li>
+        </ul>
+        <br>That's it for ANNs.
+        <hr>
+        <b><span style="font-size: 20px; font-family: Comic Sans MS;">CONGRATULATIONS!!!</span></b>
+        <br>
+        <br>
+        <p><span style="font-family: Comic Sans MS;">And there you have it, folks—our journey through the brainy
+                labyrinth of artificial neural networks (ANNs). From weighted connections to activation functions,
+                we've peeked under the hood of how machines try to mimic the learning process of our very own
+                brains.<br><br>Remember, building and understanding ANNs isn’t about getting lost in fancy
+                algorithms or mind-boggling equations. It’s about breaking down the magic into simple, logical
+                steps—like how adjusting weights can make a machine <i>learn</i>. Sure, at first, it feels like a
+                lot (and it is), but with every iteration, just like the network itself, <b>you learn
+                    too</b>.<br><br>So pat yourself on the back—you’ve just connected some neurons of your own! The
+                best part? This is just the beginning of what you can create and discover. Go out there, and learn
+                more. I just taught you the very basics, there's a lot more to learn!<br><br>Now do
+                re-read</span><b><span style="font-family: Comic Sans MS;"> </span></b><span
+                style="font-family: Comic Sans MS;">the
+                whole thing again. Until you can understand every concept. Take a pen
+                and paper; and make notes. Revise. And remember, nothing is tough. You
+                just need to have the hunger for knowledge.</span></p>
+
+            <p>
+
+    </main>
+
+    <nav aria-label="Page navigation" class="mt-4">
+        <ul class="pagination justify-content-center">
+          <li class="page-item">
+            <a class="page-link" href="day7" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item"><a class="page-link" href="day7">7</a></li>
+        </ul>
+      </nav>
+
+    <hr>
+
+    <div class="mx-5 my-4">
+        <p>If you found this content helpful and would like to support, feel free to contribute. Your support isn’t just a donation—it’s a step toward building something bigger, together.</p>
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#scannerModal">
+          UPI (for Indians)
+        </button>
+      <a href="https://paypal.me/regenerationdetox?country.x=IN&locale.x=en_GB" class="btn btn-primary me-2" target="_blank">Donate via PayPal</a>
+    </div>
+    <div 
+        id="scannerModal" 
+        class="modal fade" 
+        tabindex="-1" 
+        aria-labelledby="scannerModalLabel" 
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="scannerModalLabel">My Scanner</h5>
+              <button 
+                type="button" 
+                class="btn-close" 
+                data-bs-dismiss="modal" 
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body d-flex justify-content-center align-items-center">
+              <img 
+                src="assets/images/scanner.png" 
+                alt="Scanner" 
+                class="img-fluid rounded"
+              />
+            </div>
+            <div class="modal-footer">
+              <button 
+                type="button" 
+                class="btn btn-secondary" 
+                data-bs-dismiss="modal">
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+    <footer class="footer">
+        &copy; 2025 Stable Diffusion Blog
+    </footer>
+    
+    
+</body>
+<script src="assets/js/jquery-3.7.0.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/prism.js"></script>
+<script src="assets/js/navigate.js"></script>
+<script src="assets/js/donation.js"></script>
+
+</html>
