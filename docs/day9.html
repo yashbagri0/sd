@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 9</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/katex.min.css">
+    <link rel="stylesheet" href="assets/css/prism.css">
+    <link rel="stylesheet" href="assets/css/custom.css">
+    <style>
+        .responsive-img {
+            width: 40%;
+        }
+        @media (max-width: 768px) {
+            .responsive-img {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>  
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">Home</a>
+            <a class="navbar-brand" href="https://github.com/yashbagri0/sd" class="btn btn-primary me-2" target="_blank">Github</a>
+            <ul class="navbar-nav ms-auto"></ul>
+        </div>
+    </nav>
+
+        <header class="blog-header">
+        <div class="container">
+            <h1 class="blog-title">Day 9: Cracking Convolutional Neural Networks (CNNs)</h1>
+            By Yash | February 13, 2025
+        </div>
+    </header>
+
+    <main class="container my-5" style="max-width: 1200px;">
+        <div class="blog-content">
+            <b><span style="font-size: 24px;">A Little Speech Before We Begin<br></span></b>
+            <p>
+                <br>Alright, team, you survived ANNs. Give yourself a moment to breathe—seriously, inhale, exhale. Don’t
+                sweat it—you’re more than ready. Every line of code you’ve written, every concept you’ve grasped, has
+                been building up to this moment.
+                You’ve already shown you can handle the tough stuff, and now we’re diving deeper into some truly
+                exciting territory.
+            </p>
+            <p>Today, we venture into Convolutional Neural Networks, or CNNs. Sounds fancy, right? But don’t let the
+                name scare you. CNNs are just like ANNs, but with a bit of extra flair for images and spatial data.CNNs
+                are the specialized tool for spotting
+                patterns in pictures, like finding a face in a crowd or identifying your dog in a sea of Labradors.</p>
+            <p>So, take a deep breath. Today’s about embracing the challenge. It’s about pushing yourself beyond what
+                you know and unlocking even more powerful tools in your AI toolkit. Just like any skill, it’s all about
+                persistence, practice, and a little
+                bit of patience.</p>
+            <p>Remember, none of this is about perfection—it’s about progress. You might not get it all in one go, and
+                that’s okay. The magic happens when you keep pushing through, even when things feel tough. By the end of
+                today, you’ll have a clearer understanding
+                of one of the coolest aspects of AI. And trust me, you’ll feel pretty awesome once it clicks.</p>
+            <p>Let’s keep building. Let’s keep learning. The finish line’s just ahead, and I know you’ve got what it
+                takes to get there. Ready to take on CNNs? Let’s do this!</p>
+            <hr>
+            <p>Alright, so we’ve learned about Artificial Neural Networks (ANNs). Now we’re throwing Convolutional
+                Neural Networks (CNNs) into the mix. But why? Can’t ANNs handle images just as well as CNNs?
+                <br>
+                <br><b><span style="font-size: 18px;">Yes, ANNs Can Do What CNNs Do<br></span></b>Here’s the thing: ANNs
+                can work with images. Technically, they can do everything CNNs do. But here’s the kicker—they’re not
+                built for it. Using ANNs for images
+                is like trying to cut a tree with a butter knife. Sure, you can do it, but it’s slow, messy, and just
+                plain inefficient. CNNs, on the other hand, are like chainsaws—designed for the job and far more
+                efficient.
+            </p>
+            <p>But let's first understand,
+                <br>
+                <br><b><span style="font-size: 20px;">What’s an Image?</span></b>
+                <br>Let’s pause and understand what an image really is.
+                <br>
+                <br><b><span style="font-size: 18px;">Grayscale Images: The Simplest Case</span></b>
+                <br>A grayscale image is essentially a 2D grid of pixels, where each pixel represents a single intensity
+                value:
+                <br>
+                <br><b><span style="font-size: 18px;">Each pixel is represented by a number between 0 and 255</span></b>
+            </p>
+            <ul>
+                <li>0 represents black</li>
+                <li>255 represents white</li>
+            </ul>
+            <p>Values in between represent <i>different shades of gray.</i>
+                <br>
+                <br>For example, a 28x28 grayscale image (like those in MNIST, the dataset name we'll be using) is
+                represented as a matrix:
+                <br>
+                <br>
+            </p>
+            <pre># Example of how a 28x28 grayscale image is stored
+    image = [
+        [0, 12, 45, ..., 128],
+        [23, 56, 78, ..., 156],
+        ...
+        [34, 67, 89, ..., 192]
+    ]  # 28 rows × 28 columns<br><br></pre>When we load such an image into our neural network, we're essentially
+            feeding it 784 numbers (28 × 28 = 784), each representing the brightness of one pixel.
+            <br>
+            <br>
+            <br><b><span style="font-size: 22px;">RGB Images: Adding Color</span></b>
+            <br>
+            <br>Color images are more complex (not really) because they use three channels: Red, Green, and Blue (RGB):
+            <br>
+            <ul>
+                <li>Each pixel has three values instead of one</li>
+                <li>Each value still ranges from 0 to 25.</li>
+                <li>The combination of these values creates different colors
+                    <br>[255, 0, 0] is <b>pure red</b>
+                    <br>[0, 255, 0] is <b>pure green</b>
+                    <br>[0, 0, 255] is <b>pure blue</b>
+                    <br>[255, 255, 255] <b>is white</b>
+                    <br>[0, 0, 0] <b>is black</b>
+                    <br>
+                </li>
+            </ul>
+            <pre># Example of how a small RGB image might be represented
+    rgb_image = [
+        # Red channel
+        [[255, 0, 0],    # Red pixel
+         [128, 0, 0],    # Darker red pixel
+         ...],
+        # Next row
+        [[255, 128, 0],  # Orange pixel
+         [0, 255, 0],    # Green pixel
+         ...],
+        # And so on...
+    ]</pre>For a 224x224 RGB image:
+            <br><b><br>Each channel is 224×224 pixels<br>Total dimensions are 224×224×3<br>Total number of values:
+                150,528 (224 × 224 × 3)</b>
+            <br>
+            <br>Play with it <a href="https://www.google.com/search?q=color+picker" target="_blank">here</a>.
+            <p>
+                <br><b><span style="font-size: 20px;">Proving ANNs Work on Images (But Why They Don’t Scale)</span></b>
+                <br>
+                <br>Let’s take the&nbsp;Modified National Institute of Standards and Technology (MNIST) dataset as an
+                example. It consists of digits that high school students and employees of the US Census Bureau handwrote
+                some years ago. The interesting
+                bit is that these handwritten digits are black-and-white (grayscale) images of people’s handwriting.
+                Accompanying each digit image is the actual number they were writing (0–9). For the last few decades,
+                people have been using this dataset
+                to train neural networks to read human handwriting, and today, you’re going to do the same. It is in a
+                28x28 format, which means 784 pixels per image.
+                <br>
+            </p>
+            <p align="center"><img class="responsive-img" src="assets/images/blog_imgs/image_1736928813261_0.png"
+                    data-filename="image.png">
+            </p>
+            <p>
+                Each MNIST image has 784 pixels arranged in a 28 × 28 grid. Now, to feed this image into an Artificial
+                Neural Network (ANN), we flatten it into a <b>single row of 784 values</b>. Imagine unrolling the image
+                into one long list—simple, right?
+                &nbsp;</p>
+            <br>
+            <p align="center"><img class="responsive-img" src="assets/images/blog_imgs/image_1736928813264_1.png"
+                    data-filename="image.png">
+            </p>
+            <p>
+                Since MNIST is about recognizing digits, we have <b>10 possible labels</b> (0 to 9). Our goal is to make
+                the ANN predict <b>10 probabilities</b>, one for each digit. For example, if the network sees the image
+                of a <b>2</b>, it should output
+                something like [0.01, 0.02, 0.95, 0.01, ...], where the highest probability (0.95) corresponds to the
+                digit <b>2</b>.
+                <br>
+                <br>To achieve this, we design a neural network with:&nbsp;
+            </p>
+            <ul>
+                <li><b>784 input nodes</b>, one for each pixel in the image.&nbsp; </li>
+                <li><b>10 output nodes</b>, one for each possible digit (0 to 9). &nbsp;
+                    <br>
+                </li>
+            </ul>
+            <p>In between, we can have hidden layers to learn complex patterns, but the key idea is that the input size
+                reflects the number of pixels, and the output size matches the number of digit labels. &nbsp;
+                <br>
+            </p>
+            <p>
+                <br><b><span style="font-size: 22px;">How Do We Flatten the Images?</span></b><span
+                    style="font-size: 18px;">&nbsp; </span>
+                <br>
+                <br>Images are 2D grids, but neural networks expect a 1D list of values. So, we <i><b>flatten</b></i>
+                the grid:
+                <br>
+            </p>
+            <ol>
+                <li>Take the first row of the 28 × 28 grid,&nbsp; </li>
+                <li>Place it in a list,&nbsp; </li>
+                <li>Add the second row, the third row, and so on, until all rows are concatenated into a single vector
+                    of <b>784 numbers</b>.
+                    <br>
+                </li>
+            </ol>
+            <p>
+            </p>
+            <pre><code class="language-python">import sys, numpy as np
+    from keras.datasets import mnist #pip install keras
+    
+    # Load the MNIST dataset (handwritten digits)
+    (x_train, y_train), (x_test, y_test) = mnist.load_data() #we break the dataset in 2 sets, train(the one we train), and test(we test how well our model has learnt)
+    
+    # Preprocess the training images: take the first 1000 images, flatten them (28x28 -&gt; 784) and normalize pixel values to range [0, 1] by dividing by 255
+    images, labels = (x_train[0:1000].reshape(1000, 28*28) / 255, y_train[0:1000])
+    
+    # Initialize a matrix of zeros for one-hot encoding the labels
+    one_hot_labels = np.zeros((len(labels), 10)) # [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    
+    # Convert labels (0-9) into one-hot encoded format
+    for i, l in enumerate(labels):
+        one_hot_labels[i][l] = 1 
+    labels = one_hot_labels  # Replace labels with one-hot encoded labels, so label 3 -&gt; [0, 0, 0, 1, 0, 0, 0, 0, 0, 0]
+    
+    # Preprocess test images: flatten them and normalize pixel values
+    test_images = x_test.reshape(len(x_test), 28*28) / 255 #normalize the pixels to be between 0-1. 
+    
+    # One-hot encode test labels
+    test_labels = np.zeros((len(y_test), 10))
+    for i, l in enumerate(y_test):
+        test_labels[i][l] = 1 #same for test
+    
+    # Set a random seed for reproducibility
+    np.random.seed(1) #you can skip if you want
+    
+    # Define the ReLU (Rectified Linear Unit) activation function
+    relu = lambda x: (x &gt;= 0) * x  # Returns x if x &gt; 0, else returns 0 (fancy way to write a function)
+    
+    # Derivative of ReLU: 1 if x &gt; 0, else 0
+    relu2deriv = lambda x: x &gt;= 0
+    
+    # Set hyperparameters
+    lr = 0.005          # Learning rate
+    iterations = 350       # Number of training iterations
+    hidden_size = 40       # Number of nodes in the hidden layer (layer 1)
+    pixels_per_image = 784 # Number of input nodes (28x28 pixels)
+    num_labels = 10        # Number of output nodes (one per digit 0-9)
+    
+    # Initialize weights for input-to-hidden and hidden-to-output layers
+    weights_0_1 = 0.2 * np.random.random((pixels_per_image, hidden_size)) - 0.1 #random weights layer 0
+    weights_1_2 = 0.2 * np.random.random((hidden_size, num_labels)) - 0.1 #random weights for layer 1
+    
+    # Begin training loop, we'll follow SDG
+    for j in range(iterations):
+        error, correct_cnt = (0.0, 0)  # Initialize total error and correct predictions
+    
+        # Loop through each training example
+        for i in range(len(images)):
+            # Forward pass
+            layer_0 = images[i:i+1]                 # Input layer (single image)
+            layer_1 = relu(np.dot(layer_0, weights_0_1))  # Hidden layer (apply ReLU)
+            layer_2 = np.dot(layer_1, weights_1_2)        # Output layer
+    
+            # Calculate total error (squared difference between prediction and true label)
+            error += np.sum((labels[i:i+1] - layer_2) ** 2) #MSE
+    
+            # Check if the network's prediction matches the true label
+            correct_cnt += int(np.argmax(layer_2) == np.argmax(labels[i:i+1]))
+    
+            # Backpropagation: Calculate direction_and_amount (errors at each layer)
+            layer_2_direction_and_amount = (labels[i:i+1] - layer_2)               # Error at output layer
+            layer_1_direction_and_amount = layer_2_direction_and_amount.dot(weights_1_2.T) * relu2deriv(layer_1)  # Error at hidden layer
+    
+            # Update weights using gradients and learning rate
+            weights_1_2 += lr* layer_1.T.dot(layer_2_direction_and_amount)  # Update hidden-to-output weights (we transpose so we can multiply the matrix)
+            weights_0_1 += lr * layer_0.T.dot(layer_1_direction_and_amount)  # Update input-to-hidden weights
+    
+        # Print training progress (iteration number, average error, and accuracy)
+        sys.stdout.write("\r" +
+            " I:" + str(j) +
+            " Error:" + str(error / float(len(images)))[0:5] +
+            " Correct:" + str(correct_cnt / float(len(images))))
+    </code></pre>
+            Output:
+            <br>
+            <pre>I:349 Error:0.108 Correct:1.0</pre>
+            Seems pretty good, ain't it? I guess, after all, we don't need CNNs— wait let me show you something. Let's
+            predict.
+            <br>
+            <pre><code class="language-python">if (j % 10 == 0 or j == iterations - 1):  # Run the test evaluation every 10 iterations or at the final iteration
+        error, correct_cnt = (0.0, 0)  # Reset test error and correct count for this evaluation
+        for i in range(len(test_images)):  # Loop through all test examples
+            layer_0 = test_images[i:i + 1]  # Input layer: a single test image (shape: 1 × 784)
+            layer_1 = relu(np.dot(layer_0, weights_0_1))  # Hidden layer: apply ReLU activation
+            layer_2 = np.dot(layer_1, weights_1_2)  # Output layer: calculate predictions
+    
+            # Compute error (squared difference between true label and predicted output)
+            error += np.sum((test_labels[i:i + 1] - layer_2) ** 2)
+    
+            # Check if the predicted label matches the true label
+            correct_cnt += int(np.argmax(layer_2) == np.argmax(test_labels[i:i + 1]))
+    
+        # Print the test error and accuracy
+        sys.stdout.write(" Test-Err:" + str(error / float(len(test_images)))[0:5] + \
+                         " Test-Acc:" + str(correct_cnt / float(len(test_images))))
+        print()  # Move to the next line for readability
+    </code></pre>
+            Output:
+            <br>
+            <pre>Test-Err:0.653 Test-Acc:0.7073</pre>
+            EW! That's pretty horrible! The network’s poor test accuracy (70.7%) compared to its perfect training
+            accuracy (100%) highlights a critical issue: <b>overfitting</b>. Overfitting occurs when a model memorizes
+            the training data instead of learning
+            general patterns. Like how y'all cram instead of learning before an exam. And how you get stumbled when you
+            see unseen questions. Same way, it struggles with unseen test data. Let’s break down why this happens and
+            why we don’t typically use
+            ANNs for image datasets.
+            <br>
+            <p>But that's not all. It has other problems!
+                <br>
+                <br><b><span style="font-size: 18px;">The Problem with ANNs for Images</span></b>&nbsp;
+                <br>
+                <br>1. <b>Inefficiency</b>: Every pixel in an image is treated as an independent input in an ANN, which
+                forces the network to manually learn relationships between all 784 pixels for something like MNIST.
+                That’s manageable for small grayscale
+                images, but as soon as we scale to larger images—say, a 1080x1920 HD image—it becomes a computational
+                nightmare.
+                <br>Now, throw in RGB channels (3 layers of color information), and let’s say we use 500 neurons in just
+                one hidden layer. The number of weights the network has to train skyrockets to <b>1080 x 1920 x 3 x 500
+                    = 3,110,400,000</b> (that’s 3.1
+                billion!). And that’s with just <i>one</i> hidden layer. If we add more layers, the number of weights
+                grows exponentially. Training such a network becomes nearly impossible. It’s like trying to fit an
+                elephant into a shoebox.
+                <br>
+                <br>2. <b>Overfitting</b>: It happens when a neural network learns not only the patterns in the training
+                data but also the noise and specific details that don’t generalize to new, unseen data. Essentially, the
+                model becomes too specialized
+                to the training dataset, and it starts to "memorize" rather than truly learn.
+                <br>
+                <br>In our case, look at the test accuracy we achieved earlier—<b>70.7%</b>—which was a huge drop from
+                the perfect accuracy on the training set. This is a classic sign of overfitting. The model learned the
+                details of the training data so well
+                that it couldn't adapt to new, unseen examples from the test set.
+                <br>
+                <br>To put it simply, the model was so good at predicting the training data that it forgot how to handle
+                the <i>real world</i> scenarios it hadn’t seen before. Overfitting happens when the model is too complex
+                for the amount of data it's trained
+                on, and it ends up memorizing the data, making it great for training but poor for generalization.:
+                <br>
+                <br>3. <b>No Spatial Awareness</b>: One of the main limitations of ANNs is that they don’t have a
+                built-in understanding of the spatial relationships within an image. In simpler terms, ANNs treat each
+                pixel as a separate, independent entity.
+                They don’t have any way to recognize that some pixels are close to each other in space and should be
+                related.
+                <br>
+                <br>For example, consider an image of a face. The pixel at the top-left corner could be a part of the
+                background, while the pixel at the bottom-right corner might be part of the eye or mouth. In an ANN,
+                these two pixels are treated as equally
+                important and unrelated, despite the fact that the proximity of certain pixels (like the nose and eyes)
+                carries critical information about the structure of the face. ANNs can't naturally capture this spatial
+                relationship, making it challenging
+                to understand complex images where location matters.
+                <br>
+                <br>This lack of spatial awareness becomes a problem when the images are more complex, as the model
+                struggles to capture key patterns like the distance between facial features or other elements that rely
+                on spatial positioning.
+                <br>
+                <br>So, is this the end? Can't handle images? Well, fortunately some smart guys created the concept
+                CNNs, and we'll study it in the next blog.
+                <br>
+
+            <p>
+                <hr>
+                <b><span><span
+                            style="font-size: 24px; font-family: Comic Sans MS">CONGRATULATIONS!!!</span><br></span></b>
+            </p>
+            <p><span style="font-family: Comic Sans MS;">You have just completed Day 9. Now do
+                    re-read</span><b><span style="font-family: Comic Sans MS;"> </span></b><span
+                    style="font-family: Comic Sans MS;">the whole thing again. Until you can understand
+                    every concept. Take a pen and paper; and make notes. Revise. And remember, nothing is tough. You
+                    just need to have the hunger for knowledge.</span></p>
+        </div>
+
+    </main>
+
+    <nav aria-label="Page navigation" class="mt-4">
+        <ul class="pagination justify-content-center">
+          <li class="page-item">
+            <a class="page-link" href="day8" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item"><a class="page-link" href="day8">8</a></li>
+        </ul>
+      </nav>
+
+    <hr>
+
+    <div class="mx-5 my-4">
+        <p>If you found this content helpful and would like to support, feel free to contribute. Your support isn’t just a donation—it’s a step toward building something bigger, together.</p>
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#scannerModal">
+          UPI (for Indians)
+        </button>
+      <a href="https://paypal.me/regenerationdetox?country.x=IN&locale.x=en_GB" class="btn btn-primary me-2" target="_blank">Donate via PayPal</a>
+    </div>
+    <div 
+        id="scannerModal" 
+        class="modal fade" 
+        tabindex="-1" 
+        aria-labelledby="scannerModalLabel" 
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="scannerModalLabel">My Scanner</h5>
+              <button 
+                type="button" 
+                class="btn-close" 
+                data-bs-dismiss="modal" 
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body d-flex justify-content-center align-items-center">
+              <img 
+                src="assets/images/scanner.png" 
+                alt="Scanner" 
+                class="img-fluid rounded"
+              />
+            </div>
+            <div class="modal-footer">
+              <button 
+                type="button" 
+                class="btn btn-secondary" 
+                data-bs-dismiss="modal">
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+    <footer class="footer">
+        &copy; 2025 Stable Diffusion Blog
+    </footer>
+    
+    
+</body>
+<script src="assets/js/jquery-3.7.0.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/prism.js"></script>
+<script src="assets/js/navigate.js"></script>
+<script src="assets/js/donation.js"></script>
+
+</html>
