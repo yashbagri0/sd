@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 11</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/katex.min.css">
+    <link rel="stylesheet" href="assets/css/prism.css">
+    <link rel="stylesheet" href="assets/css/custom.css">
+
+</head>
+
+<body>  
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">Home</a>
+            <a class="navbar-brand" href="https://github.com/yashbagri0/sd" class="btn btn-primary me-2" target="_blank">Github</a>
+            <ul class="navbar-nav ms-auto"></ul>
+        </div>
+    </nav>
+
+        <header class="blog-header">
+        <div class="container">
+            <h1 class="blog-title">Day 11: Unlocking the Power of VECTORIZATION (Part 1)</h1>
+            By Yash | February 21, 2025
+        </div>
+    </header>
+
+    <main class="container my-5" style="max-width: 1200px;">
+        <div class="blog-content">
+            <b><span style="font-size: 24px;">A Little Speech Before We Begin</span></b>
+            <br>
+            <br>Alright, champions, it’s time to roll up your sleeves and dive into something absolutely essential in
+            the world of Natural Language Processing (NLP): <b>vectorization</b>!.
+            <br>
+            <br>But before we get into the nitty-gritty, let me just say this: Every expert once stood where you are
+            right now—on the edge of something new, ready to push forward. Vectorization is like learning the first
+            building block of a new language.
+            It might take a little time, but once you’ve mastered it, everything else will fall into place.
+            <br>
+            <br>You’ve already shown you can take on tough challenges, and today is no different. This is just another
+            step in your journey—so don’t rush. Embrace the learning process, take your time, and know that with every
+            line of code, every new concept
+            you grasp, you’re getting closer to mastering the art of NLP.
+            <br>
+            <br>And don’t worry, we’re not talking about rocket science here. Once you’ve got the hang of it, you’ll see
+            how this simple process unlocks a whole world of possibilities for AI.
+            <br>
+            <br>So, are you ready? Let’s dive in, keep that curiosity alive, and turn what seems like a small step into
+            a giant leap forward in your AI journey. You’ve got this!
+            <br>
+            <hr>
+            <p><span style="font-size: 24px;"><b>What Does It Mean to Understand Language?</b></span>
+                <br>
+                <br>Understanding language involves predicting and interpreting patterns, relationships, and structures
+                within a text. It's more than just processing individual words—it's about grasping how those words
+                connect, convey meaning, and fit into
+                the broader context. In fact, language understanding extends beyond simple recognition to making sense
+                of the underlying intention and nuances.
+                <br>
+                <br>Humans make a variety of predictions about language: identifying word meanings, recognizing sentence
+                structures, or anticipating what comes next in a conversation. These predictions help us navigate
+                communication and comprehend text. In
+                a similar way, machine learning algorithms make predictions to understand language, albeit through
+                different methods.
+                <br>
+                <br>Until now, we've focused on using neural networks to process image data. However, neural networks
+                are versatile tools that can handle a wide range of datasets. As we venture into new domains, we
+                discover that different data types often
+                require different neural network training strategies, tailored to the unique challenges of the data. One
+                such domain is natural language processing (NLP), a field dedicated to enabling machines to understand
+                and process human language.
+                While NLP has a long history, its recent evolution with deep learning techniques has significantly
+                improved its capabilities.
+                <br>
+                <br>
+                <br><span style="font-size: 22px;"><b>Let's get started— for real this time.<br></b></span>
+                <br>We're going to use a dataset for sentiment analysis (basically, figuring out if a review is happy or
+                sad). Specifically, we’ll be using the IMDB movie reviews dataset, which is a collection of
+                review-and-rating pairs. Here’s an example
+                (not a direct quote from IMDB, just a fun imitation):
+                <br>
+                <br><i>This movie was a disaster! The plot was as dry as toast, the acting was as convincing as a
+                    cardboard cutout, and I even spilled my popcorn all over my shirt.</i>”
+                <br>Rating: 1 star
+                <br>
+                <br>The entire dataset contains around 50,000 of these pairs, where the reviews are typically short,
+                just a few sentences, and the ratings range from 1 to 5 stars. This dataset is often considered a
+                sentiment analysis dataset, as the star
+                ratings reflect the overall sentiment of the review.
+                <br>
+                <br>To train a neural network that can predict ratings based on review text, you first need to figure
+                out how to convert both the input (reviews) and the output (ratings) into matrices. Interestingly, the
+                output is just a number, which simplifies
+                things a bit. To make it easier, we’ll scale the ratings from 1-5 stars to a range between 0 and 1. This
+                will allow us to use <i>binary softmax</i>(1/0), and that’s all we need to do with the output.
+                <br>
+                <br>The input data, however, is more complicated. Initially, it’s just a list of characters, which
+                presents two challenges. First, the <b>input is text, not numbers</b>, and <b>second, the text is
+                    variable in length</b>. Neural networks, in
+                their typical form, require a fixed-size input. So, we’ll need to find a way to handle that.
+                <br>
+                <br>Now, let’s think about what in the input data could correlate with the rating. Individual characters
+                in the raw input likely don’t have any meaningful relationship with the sentiment of the review. So, we
+                need to think about the data in
+                a different way.
+                <br>
+                <br>What about words? Words are a much more likely candidate for capturing sentiment. For example, words
+                like <i>terrible</i> and <i>unconvincing</i> are likely to have a negative correlation with the rating.
+                By negative correlation, I mean
+                that the more frequently these words appear in a review, the lower the rating tends to be.
+                <br>
+                <br>
+                <br><b><span style="font-size: 22px;">Capturing Word Correlation in Input Data: Enter Bag of
+                        Words</span></b>
+                <br>
+                <br>Let’s kick things off by looking at how we can represent a movie review's vocabulary in a way that
+                helps us predict sentiment. Here's where the <b>Bag of Words</b> model comes into play. The idea is
+                simple: given a review, can we predict
+                whether it’s positive or negative based on the <i>number of vocabulary</i> it contains.
+                <br>
+                <br>In simple terms, this means looking at all the words in a review and seeing if they are related to
+                positive or negative feelings. For example, words like <i>great</i> or <i>awesome</i> are usually
+                positive, while words like <i>terrible</i> or <i>boring</i> are negative.
+                <br>
+                <br>But to do this, we need to build an <i>input matrix</i> that represents the <i>vocabulary of a
+                    review</i>. This matrix typically has one row (vector) per review and one column for each word in
+                the vocabulary.
+                <br>
+                <br>To create the vector for a review, you check which words from the review exist in your vocabulary.
+                If a word is present, you place a 1 in the corresponding column; if it’s absent, you put a 0 (like how
+                we did in CNN for truth labels).
+                Easy enough, right? But here’s the catch: if you have 2,000 words in your vocabulary, each vector will
+                need 2,000 dimensions to represent the presence or absence of each word.
+                <br>
+                <br>This process is called <b>one-hot encoding</b>, which is pretty much the default way to handle
+                binary data (where each data point is either present or absent).
+                <br>
+                <br>Let's write some code for you to get familiar with it.
+            </p>
+            <p></p>
+            <pre><code class="language-python">import numpy as np
+                
+onehots = {}
+onehots['cat'] = np.array([1,0,0,0]) #one hot encoding(OHE) [cat, the, dog, sat] -&gt; [1, 0, 0, 0] for presence of a cat
+onehots['the'] = np.array([0,1,0,0])
+onehots['dog'] = np.array([0,0,1,0])
+onehots['sat'] = np.array([0,0,0,1])
+
+sentence = ['the', 'cat', 'sat']
+x = onehots[sentence[0]] + \
+    onehots[sentence[1]] + \
+    onehots[sentence[2]]
+print(f"Sent Encoding: {x}")</code></pre>
+            Output:
+            <br>
+            <pre>Sent Encoding:[1 1 0 1] #[cat, the, _, sat]</pre>
+            It’s a simple way to represent a sentence, and the neat part is, you can just add the vectors for each word
+            to create a vector for the entire sentence. But there’s a little quirk here: what if a word repeats? For
+            example, in the sentence <i>cat cat cat</i>,
+            you could either sum the vector for <i>cat</i> three times, resulting in <b>[3, 0, 0, 0]</b>, or just take
+            the unique <i>cat</i> once, resulting in <b>[1, 0, 0, 0]</b>. (usually, taking the unique word works better)
+            <br>
+            <br>Now that we’ve got our one-hot encoded vectors, we can use them to predict sentiment. For the sentiment
+            dataset, we can build a vector for each word in the review and then use a simple neural network to predict
+            whether the review is positive
+            or negative.
+            <br>
+            <p></p>
+            <pre><code class="language-python">import numpy as np
+import sys
+
+f = open('reviews.txt') #download at https://github.com/iamtrask/Grokking-Deep-Learning/blob/master/reviews.txt
+raw_reviews = f.readlines()
+f.close()
+
+f = open('labels.txt') #download at https://github.com/iamtrask/Grokking-Deep-Learning/blob/master/labels.txt
+raw_labels = f.readlines()
+f.close()
+
+tokens = list(map(lambda x: set(x.split(" ")), raw_reviews)) #makes a list of each line as 
+#[{"This", "cinematic", "masterpiece", "changed", "my", "life,", "now", "I", "can't", "stop", "speaking", "in", "movie", "quotes", "and", "my", "family", "is", "concerned!"}, 
+# {"This", "film", "was", "so", "bad,", "my", "popcorn", "filed", "for", "emotional", "damages"}...]
+
+vocab = set()
+for sent in tokens:
+    for word in sent:
+        if len(word) &gt; 0:
+            vocab.add(word) #add all unqiue words in our vocab set
+
+vocab = list(vocab) #change set to list
+
+
+word2index = {}
+for i, word in enumerate(vocab):
+    word2index[word] = i #make the OHE, eg, {"great": 0, "movie": 1, "this": 2, "was": 3}
+
+
+input_dataset = list()
+for sent in tokens:
+    sent_indices = list()
+    for word in sent:
+        try:
+            sent_indices.append(word2index[word])
+        except:
+            ""
+    input_dataset.append(list(set(sent_indices)))
+# if [{"great", "movie"}, {"this", "movie"}] and {"great": 0, "movie": 1, "this": 2} -&gt; [[0, 1], [1, 2]]
+
+target_dataset = list()
+for label in raw_labels:
+    if label == 'positive\n':
+        target_dataset.append(1)
+    else:
+        target_dataset.append(0)
+# postive, negative -&gt; 1, 0
+
+
+np.random.seed(1)
+
+def sigmoid(x):
+    return 1/(1 + np.exp(-x)) #range between 0 and 1
+
+lr, iterations = (0.01, 2)
+hidden_size = 100
+weights_0_1 = 0.2 * np.random.random((len(vocab), hidden_size)) - 0.1
+weights_1_2 = 0.2 * np.random.random((hidden_size, 1)) - 0.1
+
+correct, total = (0,0)
+for iter in range(iterations):
+    for i in range(len(input_dataset) - 1000):
+        x, y = (input_dataset[i], target_dataset[i])
+        layer_1 = sigmoid(np.sum(weights_0_1[x], axis=0))
+        layer_2 = sigmoid(np.dot(layer_1, weights_1_2))
+
+
+        layer_2_direction_and_amount = layer_2 - y 
+        layer_1_direction_and_amount = layer_2_direction_and_amount.dot(weights_1_2.T)
+
+        weights_0_1[x] -= layer_1_direction_and_amount * lr
+        weights_1_2 -= np.outer(layer_1, layer_2_direction_and_amount) * lr
+
+
+        if np.abs(layer_2_direction_and_amount) &lt; 0.5:
+            correct += 1
+        total += 1
+
+        if(i % 10 == 9):
+            progress = str(i/float(len(input_dataset)))
+            sys.stdout.write('\rIter:'+str(iter)\
+            +' Progress:'+progress[2:4]\
+            +'.'+progress[4:6]\
+            +'% Training Accuracy:'\
+            + str(correct/float(total)) + '%')
+
+    print()
+
+correct, total = (0, 0)
+for i in range(len(input_dataset) - 1000, len(input_dataset)):
+    x = input_dataset[i]
+    y = target_dataset[i]
+    layer_1 = sigmoid(np.sum(weights_0_1[x], axis=0))
+    layer_2 = sigmoid(np.dot(layer_1, weights_1_2))
+    if (np.abs(layer_2 - y) &lt; 0.5):
+        correct += 1
+    total += 1
+print(f"Test Accuracy: {correct / float(total)})</code></pre>
+            <p>Output:
+                <br>
+            </p>
+            <pre>Iter:0 Progress:95.99% Training Accuracy:0.832625%
+Iter:1 Progress:95.99% Training Accuracy:0.8665625%
+Test Accuracy:0.851</pre>
+            Not bad for such a simple technique.
+            <br>
+            <br>But how did our network learn? Well, in simple terms, it grouped together terms positive terms, like<i>
+                fun</i>, <i>exciting</i>, and <i>amazing </i>may be grouped together. Same for negative terms. But
+            guessing is lame. Let's see what our
+            model saw for real.
+            <pre><code class="language-python">from collections import Counter
+import math
+
+def similar(target='beautiful'):
+    target_index = word2index[target]
+    scores = Counter()
+    for word, index in word2index.items():
+        raw_difference = weights_0_1[index] - (weights_0_1[target_index])
+        squared_difference = raw_difference * raw_difference
+        scores[word] = -math.sqrt(sum(squared_difference)) #we're finding the euclidian distance
+    return scores.most_common(10)
+
+
+print(similar('beautiful'))
+
+print(similar('terrible'))</code></pre>Output:
+            <br>
+            <pre>[('beautiful', -0.0),
+('surprisingly', -0.7265363602304584),
+('innocent', -0.7327123274226127),
+('each', -0.7382463035847324),
+('masterpiece', -0.7397174467783048),
+('impressive', -0.7459462424361301),
+('atmosphere', -0.751536158698492),
+('best', -0.76471368370039),
+('vhs', -0.7675129415566067),
+('fantastic', -0.7712392660266657)]
+
+[('terrible', -0.0),
+('boring', -0.7443716823090162),
+('fails', -0.7591850155699351),
+('avoid', -0.7696067502864646),
+('dull', -0.7813793447548628),
+('disappointing', -0.7817835172798704),
+('worse', -0.7880599944405952),
+('disappointment', -0.7927058637090372),
+('laughable', -0.797159201289271),
+('annoying', -0.80971325619107)]</pre>
+            Here, words like <i>atmosphere</i>, <i>fascinating</i>, and <i>vhs</i>(??? what does this mean, I
+            wonder) are ranked highly, indicating they have a similar predictive power when predicting positive or
+            negative reviews, even if their real-world
+            meanings may differ(like what is vhs?).
+            <br>
+            <br>Likewise, querying <i>terrible</i> gives a list of words like <i>boring</i>, <i>fails</i>, and
+            <i>avoid</i>, which are most similar to <i>terrible</i> based on their predictive relationship to negative
+            labels.
+            <br>
+            <br>One crucial insight from this exercise is that meaning in the neural network is not like the meaning you
+            and I understand. For example, the words <i>beautiful</i> and <i>vhs</i> may have very different real-world
+            meanings (one is an adjective,
+            the other a uneligible word), but in the context of predicting sentiment (positive or negative labels), they
+            are treated as similar by the network.
+            <br>
+            <br>This phenomenon occurs because the neural network defines meaning contextually, based on how well a word
+            contributes to predicting the sentiment label, not necessarily based on traditional linguistic or conceptual
+            understanding. This realization
+            is important because it highlights how a neural network’s understanding of words is deeply task-dependent
+            and data-driven.
+            <br>
+            <br>
+            <p>This was good and all, but there's an <i>elephant in the room</i> we need to address. One-Hot Encoding
+                (OHE) is just not enough. While OHE is a simple and effective way of representing categorical data by
+                assigning each category a unique binary
+                vector, it has several limitations that make it inadequate for more complex tasks, especially in natural
+                language processing (NLP).
+                <br>
+            </p>
+            <ul>
+                <li>First and foremost, <b>OHE doesn't capture any relationships</b> between different categories or
+                    words. In the case of words, each word is represented by a binary vector with only one "1" in the
+                    position corresponding to that word, and
+                    all other positions are "0." But this representation does nothing to reflect the meaning of the word
+                    or its relationships with other words. For example, in OHE, the words <i>cat</i> and <i>dog</i> are
+                    completely different, even though
+                    they share kind of a similar meaning. OHE fails to capture that both <i>cat</i> and <i>dog</i> are
+                    animals, which makes it an overly simplistic representation, particularly for tasks where
+                    understanding context and semantic similarity
+                    is crucial.</li>
+                <li>Another issue with OHE is that <b>it leads to high-dimensional vectors</b>. If your dataset includes
+                    a large vocabulary (as is the case in most NLP tasks), the dimensionality of the vectors becomes
+                    huge. The more words you have, the more
+                    sparse the vectors become, with most entries being zero. This <b>sparsity</b> wastes memory and
+                    computational resources, making it difficult to scale to large datasets and complex models.
+                    Additionally, the high-dimensional vectors
+                    make the calculations less efficient, as the model has to process an increasingly large number of
+                    features.</li>
+                <li>Moreover, OHE <b>doesn't generalize well</b> to unseen data. If the model encounters a new word
+                    during inference (i.e., one that wasn't in the training data), OHE won't know how to represent it.
+                    The model can only work with the binary
+                    vector for words it has already seen, making it less flexible in handling new, unseen words. This is
+                    particularly problematic for real-world applications where new words or terms are constantly being
+                    introduced.</li>
+                <li>Finally, OHE <b>ignores the order of words</b> in a sentence. In natural language, the order in
+                    which words appear is crucial for understanding meaning. For example, <i>man adopts dog</i> and
+                    <i>dog adopts man </i>contain the same words,
+                    but their meaning is entirely different. OHE treats both sentences as having the same
+                    representation, which clearly fails to capture the nuance of language.</li>
+            </ul>
+                <br> Too many problems, and what's the solution? We'll see in the next blog :)
+             <p>
+                <hr>
+                <b><span><span
+                            style="font-size: 24px; font-family: Comic Sans MS">CONGRATULATIONS!!!</span><br></span></b>
+            </p>
+            <p><span style="font-family: Comic Sans MS;">You have just completed Day 11. Now do
+                    re-read the whole thing again. Until you can understand
+                    every concept. Take a pen and paper; and make notes. Revise. And remember, nothing is tough. You
+                    just need to have the hunger for knowledge.</span></p>
+        </div>
+
+    </main>
+
+    <nav aria-label="Page navigation" class="mt-4">
+        <ul class="pagination justify-content-center">
+          <li class="page-item">
+            <a class="page-link" href="day9" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item"><a class="page-link" href="day10">10</a></li>
+        </ul>
+      </nav>
+
+    <hr>
+
+    <div class="mx-5 my-4">
+        <p>If you found this content helpful and would like to support, feel free to contribute. Your support isn’t just a donation—it’s a step toward building something bigger, together.</p>
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#scannerModal">
+          UPI (for Indians)
+        </button>
+      <a href="https://paypal.me/regenerationdetox?country.x=IN&locale.x=en_GB" class="btn btn-primary me-2" target="_blank">Donate via PayPal</a>
+    </div>
+    <div 
+        id="scannerModal" 
+        class="modal fade" 
+        tabindex="-1" 
+        aria-labelledby="scannerModalLabel" 
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="scannerModalLabel">My Scanner</h5>
+              <button 
+                type="button" 
+                class="btn-close" 
+                data-bs-dismiss="modal" 
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body d-flex justify-content-center align-items-center">
+              <img 
+                src="assets/images/scanner.png" 
+                alt="Scanner" 
+                class="img-fluid rounded"
+              />
+            </div>
+            <div class="modal-footer">
+              <button 
+                type="button" 
+                class="btn btn-secondary" 
+                data-bs-dismiss="modal">
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+    <footer class="footer">
+        &copy; 2025 Stable Diffusion Blog
+    </footer>
+    
+    
+</body>
+<script src="assets/js/jquery-3.7.0.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/prism.js"></script>
+<script src="assets/js/navigate.js"></script>
+<script src="assets/js/donation.js"></script>
+
+</html>
