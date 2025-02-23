@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 12</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/katex.min.css">
+    <link rel="stylesheet" href="assets/css/prism.css">
+    <link rel="stylesheet" href="assets/css/custom.css">
+
+</head>
+
+<body>  
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">Home</a>
+            <a class="navbar-brand" href="https://github.com/yashbagri0/sd" class="btn btn-primary me-2" target="_blank">Github</a>
+            <ul class="navbar-nav ms-auto"></ul>
+        </div>
+    </nav>
+
+        <header class="blog-header">
+        <div class="container">
+            <h1 class="blog-title">Day 12: Unlocking the Power of VECTORIZATION (Part 2)</h1>
+            By Yash | February 23, 2025
+        </div>
+    </header>
+
+    <main class="container my-5" style="max-width: 1200px;">
+        <div class="blog-content">
+            <b><span style="font-size: 24px;">
+                    A Little Speech Before We Begin</span></b>
+            <br><br>
+            Day 12. We’re back at vectorization, but now, we’re taking it to the next level.
+<br><br>
+Last time, we saw how words turn into numbers. Now, we explore what makes this so powerful—capturing relationships. Ever seen equations like this?
+<br><br>
+<b>
+Elizabeth – she + he = ?
+</b>
+<br><br>
+That’s not magic. That’s vector math in action. Word embeddings don’t just store meanings—they encode relationships, analogies, and context in a way that AI can actually use. Today, we dive into the mechanics behind this. How do embeddings like Word2Vec understand language? How does it capture context beyond simple lookup tables? By the end of this, you’ll see why vectorization isn’t just about conversion—it’s about making AI think in human-like ways.
+<br><br>
+Let’s break it down.
+<br>
+            <hr>
+            <br><span style="font-size: 22px;"><b>The Task of <i>Filling in the Blank</i></b></span>
+            <br>
+            <br>To train the network to learn more nuanced word meanings, you can give it tasks that require a
+            deeper understanding of context. One such task is the classic <i>fill-in-the-blank exercise</i>. For
+            example, consider the sentence:
+            <br>
+            <br><b>Mary had a little lamb whose __________ was white as snow.</b>
+            <br>
+            <br>The neural network would need to predict whether the blank is more likely to be filled with
+            <b><i>fleece</i></b> or <b><i>butt</i></b>. This type of task encourages the network to learn about
+            relationships between words and context, going
+            beyond simple correlations with sentiment labels.
+            <br>
+            <br>When we learn richer meanings for words, it's essential to provide the model with a richer signal to
+            learn from. In this example, we'll modify the neural network slightly to enhance the learning process.
+            <br>
+            <br>The idea is that the context (Mary had a little lamb whose __________ was white as snow) provides
+            hints for the model to figure out the missing word (<i>fleece</i>). This forces the model to pay
+            attention to the meanings and relationships
+            between words in a way that helps it understand word meanings better.
+            <br>
+            <br>By having the network predict the missing word, it’s forced to learn not just the words
+            individually, but how words work together in context. This makes the model’s word representations
+            richer, because it’s no longer just memorizing words,
+            but learning how they interact and fit within sentences.
+            <br>
+            <br>Now, predicting the missing word sounds like a big task. After all, there are probably thousands of
+            words in the vocabulary. So, if we wanted the model to choose from all of those words, it would need to
+            check against every possible word
+            each time — which would be slow and inefficient.
+            <br>
+            <br>Negative sampling is a trick that cuts down on the work the model has to do by <b>ignoring most
+                words</b> during training.
+            <br>
+            <br>Think of it like a teacher asking a student to fill in the blank in a sentence: <b>The cat sat on
+                the ____.</b> But instead of providing all possible words to choose from, the teacher gives the
+            student only a few options, like:
+            <br>
+            </p>
+            <ul>
+                <li>The cat sat on the <b>mat</b> (correct answer)</li>
+                <li>The cat sat on the <b>moon</b> (incorrect)</li>
+                <li>The cat sat on the <b>dog</b> (incorrect)</li>
+            </ul>
+            <p>
+                The student’s task is to figure out the correct answer by looking at the context (<b>The cat sat on
+                    the</b> <b>____</b>). The fewer the options, the quicker the student can figure it out. This makes
+                learning faster and easier.
+                <br>
+            </p>
+            <pre><code class="language-python">import sys, random, math
+from collections import Counter
+import numpy as np
+
+# Setting random seeds for reproducibility
+np.random.seed(1)
+random.seed(1)
+
+# Load movie reviews dataset
+f = open('reviews.txt')
+raw_reviews = f.readlines()
+f.close()
+
+# Tokenize each review (split into words)
+tokens = list(map(lambda x: (x.split(" ")), raw_reviews))
+
+# Count word frequencies.
+wordcnt = Counter()
+for sent in tokens:
+    for word in sent:
+        wordcnt[word] -= 1  # Subtracting 1 to adjust for frequency counting
+
+# Create vocabulary (list of unique words)
+vocab = list(set(map(lambda x: x[0], wordcnt.most_common())))
+
+# Mapping words to indices
+word2index = {}
+for i, word in enumerate(vocab):
+    word2index[word] = i
+
+# Initialize dataset and concatenated list
+concatenated = list()
+input_dataset = list()
+
+# Convert words in sentences to their indices and store
+for sent in tokens:
+    sent_indices = list()
+    for word in sent:
+        try:
+            sent_indices.append(word2index[word])  # Get index of the word from word2index
+            concatenated.append(word2index[word])  # Add to concatenated list
+        except:
+            pass  # Handle any words that are not in the vocabulary
+    input_dataset.append(sent_indices)
+
+# Convert concatenated list to a NumPy array for better performance
+concatenated = np.array(concatenated)
+
+# Shuffle the input dataset for randomness during training
+random.shuffle(input_dataset)
+
+# Hyperparameters: learning rate, number of iterations, hidden layer size, window size, and negative sampling size
+lr, iterations = (0.05, 2)
+hidden_size, window, negative = (50, 2, 5)
+
+# Initialize weights for input to hidden and hidden to output layers
+weights_0_1 = (np.random.rand(len(vocab), hidden_size) - 0.5) * 0.2
+weights_1_2 = np.random.rand(len(vocab), hidden_size) * 0
+
+# Initialize target vector for the negative sampling
+layer_2_target = np.zeros(negative + 1)
+layer_2_target[0] = 1  # Set the first target element to 1 (the positive sample)
+
+
+# Function to find the most similar words to a target word using cosine similarity
+def similar(target='beautiful'):
+    target_index = word2index[target]
+    scores = Counter()
+    for word, index in word2index.items():
+        raw_difference = weights_0_1[index] - (weights_0_1[target_index])
+        squared_difference = raw_difference * raw_difference
+        scores[word] = -math.sqrt(sum(squared_difference))  # Negative for descending order
+    return scores.most_common(10)
+
+
+# Sigmoid activation function for logistic regression
+def sigmoid(x):
+    return 1 / (1 + np.exp(-x))
+
+
+# Training loop
+for rev_i, review in enumerate(input_dataset * iterations):
+    for target_i in range(len(review)):
+        # Randomly sample words for negative sampling
+        target_samples = [review[target_i]] + list(
+            concatenated[(np.random.rand(negative) * len(concatenated)).astype('int').tolist()])
+        #target_samples = [2, 150, 323, 99, 478], where 2 is the index of the target word, and the restare index for
+        # negative(wrong) words
+
+        # Context words around the target word (window size(2) on either side) -&gt; lamb whose __________ was white
+        left_context = review[max(0, target_i - window): target_i]
+        right_context = review[target_i + 1: min(len(review), target_i + window)]
+
+        # Calculate the mean of the context word vectors
+        layer_1 = np.mean(weights_0_1[left_context + right_context], axis=0)
+
+        # Perform the forward pass through the hidden to output layer
+        layer_2 = sigmoid(layer_1.dot(weights_1_2[target_samples].T))
+
+        # Calculate the error (delta is direction_and_amount) for backpropagation
+        layer_2_delta = layer_2 - layer_2_target
+        layer_1_delta = layer_2_delta.dot(weights_1_2[target_samples])
+
+        # Update the weights using gradient descent
+        weights_0_1[left_context + right_context] -= layer_1_delta * lr
+        weights_1_2[target_samples] -= np.outer(layer_2_delta, layer_1) * lr
+
+    # Print progress and check for word similarity every 250 reviews
+    if rev_i % 250 == 0:
+        sys.stdout.write('\rProgress: ' + str(rev_i / float(len(input_dataset) * iterations)) + " " + str(similar('terrible')))
+    sys.stdout.write('\rProgress: ' + str(rev_i / float(len(input_dataset) * iterations)))
+
+# Print the most similar words to 'terrible and beautiful' after training
+print(similar('beautiful'))
+print(similar('terrible'))</code></pre>
+            Output:
+            <pre>[('beautiful', -0.0),
+('lovely', -3.0061228275799907),
+('nightmarish', -3.4404882656627374),
+('cute', -3.4646095969066266),
+('creepy', -3.467797611660389),
+('spooky', -3.4738763868235503),
+('fantastic', -3.5078996785911776),
+('glamorous', -3.58318775208935),
+('classy', -3.647548601869821),
+('fiery', -3.674854901940644)]
+
+[('terrible', -0.0),
+('horrible', -2.8137104318290698),
+('brilliant', -3.357425780714113),
+('pathetic', -3.6619493386989075),
+('phenomenal', -3.7493128239531153),
+('masterful', -3.8559338210247662),
+('marvelous', -3.933546596746448),
+('superb', -3.9842076966781352),
+('bad', -4.040260917638534),
+('horrendous', -4.1640085515097365)]</pre>
+            Yeah sure, we got out output, but we also got similar output using our <b>OHE </b>technique, what's new
+            here?
+            <br>
+            <br>In OHE, words are treated as discrete entities. If the word <i>queen</i> appears in a document
+            (dataset), it’s just counted as one occurrence of the word <i>queen</i> without considering its context.
+            <br>
+            <br>However, things change drastically with <b>word embeddings</b>. Word embeddings, like <b>Cloze
+            </b>(<i>fill in the blank</i> technique), are a more advanced technique that represents words as vectors
+            (points in high-dimensional space). These
+            vectors capture not only the meaning of words but also the <b>relationships</b> between them. This is where
+            things get interesting, especially when we try to solve word analogies.
+            <br>
+            <br>Take the analogy <i><b>queen - woman + man = king</b></i>. At first glance, it might seem like a random
+            math equation, but with word embeddings, it's not just math—it's semantic reasoning.
+            <br>
+            <br>The idea behind this analogy comes from the way word embeddings capture relationships between words.
+            <br>
+            <p></p>
+            <ul>
+                <li>The word <i>queen</i> and <i>king</i> share a similar relationship to <b>woman</b> and <b>man</b>.
+                    Both pairs are gender-based opposites: queen is the female counterpart of <b>king</b>, and
+                    <i>woman</i> is the female counterpart of <b>man</b>.
+                </li>
+                <li>Word embeddings store this relationship mathematically. When you subtract <b>woman</b> from
+                    <i>queen</i>, you are essentially removing the gender aspect (the <b><i>female</i></b> part). This
+                    leaves you with a vector that represents the
+                    <b><i>royal</i></b> aspect of <i>queen</i> without its gendered component.
+                </li>
+                <li>When you add <b>man</b> to this result, you are re-adding the gendered component, which leads you to
+                    the word <b><i>king</i></b>. This is a mathematical operation that Word2Vec performs in the vector
+                    space, and it works because of how
+                    word embeddings encode semantic relationships.</li>
+            </ul>
+            <p>
+                Let's see this in action.
+                <br>
+            </p>
+            <pre><code class="language-python">def analogy(positive=['terrible','good'],negative=['bad']):
+    norms = np.sum(weights_0_1 * weights_0_1, axis=1)
+    norms.resize(norms.shape[0], 1)
+    normed_weights = weights_0_1 * norms
+
+    query_vect = np.zeros(len(weights_0_1[0]))
+    for word in positive:
+        query_vect += normed_weights[word2index[word]]
+    for word in negative:
+        query_vect -= normed_weights[word2index[word]]
+    scores = Counter()
+    for word,index in word2index.items():
+        raw_difference = weights_0_1[index] - query_vect
+        squared_difference = raw_difference * raw_difference
+        scores[word] = -math.sqrt(sum(squared_difference))
+    return scores.most_common(10)[1:]
+
+print(analogy(['terrible','good'],['bad'])) #terrible – bad + good
+
+print(analogy(['elizabeth','he'],['she'])) #elizabeth – she + he</code></pre>
+            <p>
+                <br>Output:
+            </p>
+            <pre>[('superb', -215.01853309673967),
+('terrific', -215.3202706881764),
+('decent', -215.39798453437822),
+('fine', -215.54105602493576),
+('worth', -215.76034881219655),
+('nice', -215.79964263641796),
+('brilliant', -215.84131392147864),
+('terrible', -215.89154286192746),
+('perfect', -215.9691453702794)]
+
+[('christopher', -193.4155957690822),
+('william', -194.1176452982578),
+('david', -194.1259278794555),
+('tom', -194.12663536782452),
+('mr', -194.20776660592094),
+('fred', -194.3553628630219),
+('bruce', -194.3686696832275),
+('john', -194.4210935305724),
+('simon', -194.47105269127468)]
+        </pre>So cool! It feels like we’ve unlocked a new dimension of word meanings—where the relationships between
+            words aren’t just static but math-powered. Think about it: the classic analogy <b><i>king - man + woman =
+                    queen</i></b> is no longer a linguistic
+            riddle; it’s just vector arithmetic. This is the magic of word embeddings—they don’t just memorize words,
+            they capture their essence, their relationships, and the context in which they appear.
+            <br>
+            <br>But here's the catch. To get those elegant, accurate analogies, <b>you need a massive corpus
+                (dataset)</b> for training. The embeddings rely on seeing words in countless diverse contexts to figure
+            out their deeper relationships. Without enough
+            training data, the model’s understanding is limited—like trying to learn French by only skimming a
+            beginner’s textbook.
+            <br>
+            <br>Take this example: &nbsp;
+            <br>
+            <pre><code class="language-python">analogy(['queen', 'he'], ['she'])  # queen - she + he = ?</code></pre>
+            <br>Output:
+            <pre>[('br', -195.16871905194847),
+('fans', -195.17471011109518),
+('rest', -195.23140510074836),
+('him', -195.26921972279237),
+('men', -195.33439182812216),
+('role', -195.3745662431128),
+('kids', -195.52489473433403),
+('us', -195.55048247751958),
+('bottom', -195.69296538810966)]</pre>Clearly, something’s off here. Why? Because we didn’t train the model long enough
+            or provide it with a
+            large enough dataset. Words like <i>queen</i> and <i>she</i> didn’t get enough contextual exposure for the
+            model to fully grasp their nuances.
+            This leads to weird, noisy outputs that lack the elegance we expect from a well-trained model.
+            <br>
+            <br>So while word embeddings and analogy-solving are incredibly powerful, they’re not magic—they need a
+            massive, high-quality dataset to unlock their full potential. When trained on enough data, they can do
+            remarkable things.
+            <br>
+            <hr>
+            <p></p><b><span><span
+                        style="font-size: 20px; font-family: Comic Sans MS;">CONGRATULATIONS!!!</span><br></span></b>
+            <p></p><span style="font-family: Comic Sans MS;">You’ve just taken a fascinating journey into the world of
+                word embeddings and vectorization. From understanding how words become numbers to discovering the magic
+                of analogies like <b>king - man + woman = queen</b>, you’ve unlocked the secrets of how machines grasp
+                language at a deeper, mathematical level. It’s no small feat to turn text into meaningful vectors, but
+                now you know how it’s done—and why it’s so powerful.<br><br>Remember, word embeddings aren’t just about
+                numbers. They’re about context, relationships, and finding meaning in the vast ocean of language. You’ve
+                learned how these models can fill in the blanks, make analogies, and even uncover hidden patterns—all by
+                capturing the essence of words in a multidimensional space.<br><br>Keep learning, keep experimenting,
+                and keep pushing boundaries. Language is the most human thing we have—and now you’ve started mastering
+                how to teach it to machines.<br><br></span>
+            <span style="font-family: Comic Sans MS;">The best is yet to come!
+                <br>
+                <br>Now do re-read</span><b><span style="font-family: Comic Sans MS;"> </span></b><span
+                style="font-family: Comic Sans MS;">the
+                whole thing again. Until you can understand every concept. Take a pen
+                and paper; and make notes. Revise. And remember, nothing is tough. You
+                just need to have the hunger for knowledge.</span>
+            <br>
+        </div>
+
+    </main>
+
+    <nav aria-label="Page navigation" class="mt-4">
+        <ul class="pagination justify-content-center">
+          <li class="page-item">
+            <a class="page-link" href="day11" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item"><a class="page-link" href="day11">11</a></li>
+        </ul>
+      </nav>
+
+    <hr>
+
+    <div class="mx-5 my-4">
+        <p>If you found this content helpful and would like to support, feel free to contribute. Your support isn’t just a donation—it’s a step toward building something bigger, together.</p>
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#scannerModal">
+          UPI (for Indians)
+        </button>
+      <a href="https://paypal.me/regenerationdetox?country.x=IN&locale.x=en_GB" class="btn btn-primary me-2" target="_blank">Donate via PayPal</a>
+    </div>
+    <div 
+        id="scannerModal" 
+        class="modal fade" 
+        tabindex="-1" 
+        aria-labelledby="scannerModalLabel" 
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="scannerModalLabel">My Scanner</h5>
+              <button 
+                type="button" 
+                class="btn-close" 
+                data-bs-dismiss="modal" 
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body d-flex justify-content-center align-items-center">
+              <img 
+                src="assets/images/scanner.png" 
+                alt="Scanner" 
+                class="img-fluid rounded"
+              />
+            </div>
+            <div class="modal-footer">
+              <button 
+                type="button" 
+                class="btn btn-secondary" 
+                data-bs-dismiss="modal">
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+    <footer class="footer">
+        &copy; 2025 Stable Diffusion Blog
+    </footer>
+    
+    
+</body>
+<script src="assets/js/jquery-3.7.0.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/prism.js"></script>
+<script src="assets/js/navigate.js"></script>
+<script src="assets/js/donation.js"></script>
+
+</html>
